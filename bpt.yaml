@@ -1,0 +1,14 @@
+name: curly
+version: 0.0.1
+
+readme: README.md
+
+description: |
+  Curly is a simple Lisp language.
+
+repository: https://github.com/oraqlle/curly
+
+license: MIT
+
+authors:
+  - Tyler Swann <oraqlle@github.com>

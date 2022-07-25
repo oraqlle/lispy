@@ -1,0 +1,52 @@
+# Build folders
+build/*
+_build/*
+
+# Dependency folders
+deps/*
+_deps/*
+
+# Source Distributions
+*.tar.gz
+
+# Project configuration folders
+.vscode/*
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Text Files
+*.txt
+
+# caches
+.cache/*
