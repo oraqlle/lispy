@@ -1,6 +1,9 @@
 name: curly
 version: 0.0.1
 
+dependencies:
+  - mpc@0.9.0 using mpc
+
 readme: README.md
 
 description: |
