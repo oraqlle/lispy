@@ -41,7 +41,7 @@ typedef struct lval
 /// - LVAL_NUM : Number type
 /// - LVAL_SYM : Symbol type
 /// - LVAL_SEXPR : S-Expression type
-enum { LVAL_ERR, LVAL_NUM, LVAL_SYM, LVAL_SEXPR };
+enum { LVAL_ERR, LVAL_NUM, LVAL_SYM, LVAL_SEXPR, LVAL_QEXPR };
 
 /// \brief Creates an lval of type LVAL_NUM.
 ///
