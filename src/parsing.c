@@ -127,8 +127,6 @@ lval* lval_read(mpc_ast_t* t)
     return x;
 }
 
-void lval_print(lval* v);
-
 void lval_expr_print(lval* v, char open, char close)
 {
     putchar(open);
@@ -236,7 +234,13 @@ lval* builtin_op(lval* a, char* op)
     return x;
 }
 
-lval* lval_eval(lval* v);
+lval* lval_eval(lval* v)
+{
+    if (v->type == LVAL_SEXPR)
+        return lval_eval_sexpr(v);
+
+    return v;
+}   
 
 lval* lval_eval_sexpr(lval* v)
 {
@@ -266,12 +270,4 @@ lval* lval_eval_sexpr(lval* v)
     lval_del(f);
 
     return result;
-}
-
-lval* lval_eval(lval* v)
-{
-    if (v->type == LVAL_SEXPR)
-        return lval_eval_sexpr(v);
-
-    return v;
 }

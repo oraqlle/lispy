@@ -8,6 +8,7 @@ int main()
     mpc_parser_t* Number = mpc_new("number");
     mpc_parser_t* Symbol = mpc_new("symbol");
     mpc_parser_t* Sexpr = mpc_new("sexpr");
+    mpc_parser_t* Qexpr = mpc_new("qexpr");
     mpc_parser_t* Expr = mpc_new("expr");
     mpc_parser_t* Curly = mpc_new("curly");
 
@@ -17,13 +18,14 @@ int main()
             number      : /-?[0-9]+/ ;                                  \
             symbol      : '+' | '-' | '*' | '/' ;                       \
             sexpr       : '(' <expr>* ')' ;                             \
-            expr        : <number> | <symbol> | <sexpr> ;               \
+            qexpr       : '{' <expr>* '}' ;                             \
+            expr        : <number> | <symbol> | <sexpr> | <qexpr> ;     \
             curly       : /^/ <expr>* /$/ ;                             \
         ",
-        Number, Symbol, Sexpr, Expr, Curly);
+        Number, Symbol, Sexpr, Qexpr, Expr, Curly);
 
 
-    puts("Curly v0.0.2");
+    puts("Curly v0.0.11");
     puts("Press Ctrl+C to exit.\n");
 
     while(1)
@@ -49,7 +51,7 @@ int main()
         free(input);
     }
 
-    mpc_cleanup(5, Number, Symbol, Sexpr, Expr, Curly);
+    mpc_cleanup(6, Number, Symbol, Sexpr, Qexpr, Expr, Curly);
 
     return 0;
 }
