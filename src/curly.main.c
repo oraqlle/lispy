@@ -16,7 +16,8 @@ int main()
     mpca_lang(MPCA_LANG_DEFAULT,
         "                                                               \
             number      : /-?[0-9]+/ ;                                  \
-            symbol      : '+' | '-' | '*' | '/' ;                       \
+            symbol      : \"list\" | \"head\" | \"tail\"                \
+                        | \"join\" | \"eval\" | '+' | '-' | '*' | '/' ; \
             sexpr       : '(' <expr>* ')' ;                             \
             qexpr       : '{' <expr>* '}' ;                             \
             expr        : <number> | <symbol> | <sexpr> | <qexpr> ;     \
@@ -25,7 +26,7 @@ int main()
         Number, Symbol, Sexpr, Qexpr, Expr, Curly);
 
 
-    puts("Curly v0.0.11");
+    puts("Curly v0.0.12");
     puts("Press Ctrl+C to exit.\n");
 
     while(1)

@@ -200,3 +200,70 @@ lval* lval_eval(lval* v);
 /// \param v - type: lval*
 /// \return lval*
 lval* lval_eval_sexpr(lval* v);
+
+/// \brief Joins the Q-Expression `y` to `x`.
+///
+/// \details Joins the Q-Expression `y` to `x` 
+/// by continually popping the first element 
+/// off `y` and adding it to `x`. Returns `x`.
+///
+/// \param x - type: lval*
+/// \param y - type: lval*
+/// \return lval*
+lval* lval_join(lval* x, lval* y);
+
+/// \brief Returns the head of a Q-Expression.
+///
+/// \details Returns the head of a Q-Expression
+/// and discards the tail.
+///
+/// \param a - type: lval*
+/// \return lval*
+lval* builtin_head(lval* a);
+
+/// \brief Returns the tail of a Q-Expression.
+///
+/// \details Returns the tail of a Q-Expression
+/// and discards the head.
+///
+/// \param a - type: lval*
+/// \return lval*
+lval* builtin_tail(lval* a);
+
+/// \brief Converts a S-Expression to a Q-Expression.
+///
+/// \details Converts a S-Expression to a Q-Expression
+/// and returns it.
+///
+/// \param a - type: lval*
+/// \return lval*
+lval* builtin_list(lval* a);
+
+/// \brief Evaluates a Q-Expression as an S-Expression.
+///
+/// \details Evaluates a Q-Expression as an S-Expression
+/// using lval_eval. Returns an error if the Q-Expression 
+/// contains another Q-Expression.
+///
+/// \param a - type: lval*
+/// \return lval*
+lval* builtin_eval(lval* a);
+
+/// \brief Joins multiple Q-Expressions into a single Q-Expression.
+///
+/// \details Joins multiple Q-Expressions into a single Q-Expression
+/// using lval_join returns the resulting Q-Expression.
+///
+/// \param a - type: lval*
+/// \return lval*
+lval* builtin_join(lval* a);
+
+/// \brief Dispatches the builtin function `f` to the lval `a`.
+///
+/// \details Dispatches the builtin function `f` to the lval `a`.
+/// Returns an error if `f` is not a builtin function.
+///
+/// \param a - type: lval*
+/// \param f - type: char*
+/// \return lval*
+lval* builtin(lval* a, char* func);
