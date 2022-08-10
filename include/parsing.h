@@ -24,15 +24,12 @@
 /// - sym       : char* corresponding to a symbol or operator (optional)
 /// - count     : int corresponding to the number of elements in the `cell` array
 /// - cell      : lval** corresponding to an array of lvals
-typedef struct lval 
-{
-    int type;
-    long num;
-    char* err;
-    char* sym;
-    int count;
-    struct lval** cell;
-} lval;
+struct lval;
+typedef struct lval lval;
+
+
+struct lenv;
+typedef struct lenv lenv;
 
 /// \brief Enum for possible lval types
 ///
@@ -41,7 +38,11 @@ typedef struct lval
 /// - LVAL_NUM : Number type
 /// - LVAL_SYM : Symbol type
 /// - LVAL_SEXPR : S-Expression type
-enum { LVAL_ERR, LVAL_NUM, LVAL_SYM, LVAL_SEXPR, LVAL_QEXPR };
+enum { LVAL_ERR, LVAL_NUM, LVAL_SYM, 
+       LVAL_FUN, LVAL_SEXPR, LVAL_QEXPR };
+
+
+typedef lval*(*lbuiltin)(lenv*, lval*);
 
 /// \brief Creates an lval of type LVAL_NUM.
 ///
@@ -105,6 +106,9 @@ void lval_del(lval* v);
 /// \param v - type: lval*
 /// \param x - type: lval*
 lval* lval_add(lval* v, lval* x);
+
+
+lval* lval_fun(lbuiltin func);
 
 /// \brief Returns lval number type from the AST.
 ///

@@ -20,6 +20,19 @@
     void add_history(char* unused) {}
 #endif
 
+struct lval
+{
+    int type;
+
+    long num;
+    char* err;
+    char* sym;
+    lbuiltin fun;
+
+    int count;
+    struct lval** cell;
+};
+
 lval* lval_num(long x)
 {
     lval* v = malloc(sizeof(lval));
@@ -79,6 +92,9 @@ void lval_del(lval* v)
             free(v->sym);
             break;
 
+        case LVAL_FUN:
+            break;
+
         case LVAL_QEXPR:
         case LVAL_SEXPR:
             for (int i = 0; i < v->count; i++)
@@ -96,6 +112,14 @@ lval* lval_add(lval* v, lval* x)
     v->count++;
     v->cell = realloc(v->cell, sizeof(lval*) * v->count);
     v->cell[v->count-1] = x;
+    return v;
+}
+
+lval* lval_fun(lbuiltin func)
+{
+    lval* v = malloc(sizeof(lval));
+    v->type = LVAL_FUN;
+    v->fun = func;
     return v;
 }
 
@@ -178,6 +202,10 @@ void lval_print(lval* v)
         
         case LVAL_SYM:
             printf("%s", v->sym);
+            break;
+
+        case LVAL_FUN:
+            printf("<function>");
             break;
 
         case LVAL_SEXPR:
