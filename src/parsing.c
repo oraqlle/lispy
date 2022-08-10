@@ -115,6 +115,43 @@ lval* lval_add(lval* v, lval* x)
     return v;
 }
 
+lval* lval_copy(lval* v)
+{
+    lval* x = malloc(sizeof(lval));
+    x->type = v->type;
+
+    switch (v->type)
+    {
+        case LVAL_FUN:
+            x->fun = v->fun;
+            break;
+
+        case LVAL_NUM:
+            x->num = v->num;
+            break;
+
+        case LVAL_ERR:
+            x->err = malloc(strlen(v->err) + 1);
+            strcpy(x->err, v->err);
+            break;
+
+        case LVAL_SYM:
+            x->sym = malloc(strlen(v->sym) + 1);
+            strcpy(x->sym, v->sym);
+            break;
+
+        case LVAL_SEXPR:
+        case LVAL_QEXPR:
+            x->count = v->count;
+            x->cell = malloc(sizeof(lval*) * x->count);
+            for (int i = 0; i < x->count; i++)
+                x->cell[i] = lval_copy(v->cell[i]);
+            break;
+    }
+
+    return x;
+}
+
 lval* lval_fun(lbuiltin func)
 {
     lval* v = malloc(sizeof(lval));

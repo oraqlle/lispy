@@ -108,6 +108,9 @@ void lval_del(lval* v);
 lval* lval_add(lval* v, lval* x);
 
 
+lval* lval_copy(lval* v);
+
+
 lval* lval_fun(lbuiltin func);
 
 /// \brief Returns lval number type from the AST.
