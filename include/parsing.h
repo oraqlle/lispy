@@ -105,12 +105,26 @@ void lval_del(lval* v);
 ///
 /// \param v - type: lval*
 /// \param x - type: lval*
+/// \return lval*
 lval* lval_add(lval* v, lval* x);
 
-
+/// \brief Copies an lval.
+///
+/// \details Copies an lval and all of its children
+/// (if any) as well as any other allocated resources.
+///
+/// \param v - type: lval*
+/// \return lval*
 lval* lval_copy(lval* v);
 
-
+/// \brief Constructs an lval of type LVAL_FUN.
+///
+/// \details Constructs an lval of type LVAL_FUN
+/// and sets the value to the provided builtin
+/// function `func`.
+///
+/// \param func - type: lbuiltin
+/// \return lval*
 lval* lval_fun(lbuiltin func);
 
 /// \brief Returns lval number type from the AST.
@@ -274,3 +288,40 @@ lval* builtin_join(lval* a);
 /// \param f - type: char*
 /// \return lval*
 lval* builtin(lval* a, char* func);
+
+/// \brief Constructs a new lenv.
+///
+/// \details Constructs a new lenv.
+///
+/// \return lenv*
+lenv* lenv_new(void);
+
+/// \brief Destroys the lenv `e`.
+///
+/// \details Destroys the lenv `e` by
+/// freeing all of its entries.
+///
+/// \param e - type: lenv*
+void lenv_del(lenv* e);
+
+/// \brief Gets an lval from an lenv.
+/// 
+/// \details Returns a copy of the lval 
+/// `k` from the lenv `e` if it exists 
+/// otherwise returns an error.
+///
+/// \param e - type: lenv*
+/// \param k - type: lval*
+/// \return lval*
+lval* lenv_get(lenv* e, lval* k);
+
+/// \brief Sets an lval in an lenv.
+///
+/// \details Sets an lval in an lenv.
+/// Replaces any existing entry with 
+/// the same key.
+///
+/// \param e - type: lenv*
+/// \param k - type: lval*
+/// \param v - type: lval*
+void lenv_put(lenv* e, lval* k, lval* v);
