@@ -61,7 +61,7 @@ lval* lval_num(long x);
 /// 
 /// \param m - type: char*
 /// \return lval* 
-lval* lval_err(char* m);
+lval* lval_err(char* fmt, ...);
 
 /// \brief Creates an lval of type LVAL_SYM.
 ///
@@ -397,3 +397,12 @@ void lenv_add_builtins(lenv* e);
 /// \param name - type: char*
 /// \return lval*
 lval* builtin_def(lenv* e, lval* a);
+
+/// \brief Returns the name of a type
+///
+/// \details Returns a string of of the passed
+/// type's name.
+///
+/// \param t - type int
+/// \return char*
+char* ltype_name(int t);

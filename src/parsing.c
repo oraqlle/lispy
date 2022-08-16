@@ -1,7 +1,12 @@
 #include <parsing.h>
 
-#define LASSERT(args, cond, err) \
-    if (!(cond)) { lval_del(args); return lval_err(err); }
+#define LASSERT(args, cond, fmt, ...)               \
+    if (!(cond))                                    \
+    {                                               \
+        lval* err = lval_err(fmt, ##__VA_ARGS__);   \
+        lval_del(args);                             \
+        return err;                                 \
+    }
 
 #ifdef _WIN32
 
@@ -11,7 +16,7 @@
     {
         fputs(prompt, stdout);
         fgets(buffer, 2048, stdin);
-        char* cpy = malloc(strlen(buffer)+1);
+        char* cpy = malloc(strlen(buffer) + 1);
         strcpy(cpy, buffer);
         cpy[strlen(cpy)-1] = '\0';
         return cpy;
@@ -48,12 +53,20 @@ lval* lval_num(long x)
     return v;
 }
 
-lval* lval_err(char* m)
+lval* lval_err(char* fmt, ...)
 {
     lval* v = malloc(sizeof(lval));
     v->type = LVAL_ERR;
-    v->err = malloc(strlen(m) + 1);
-    strcpy(v->err, m);
+    
+    va_list va;
+    va_start(va, fmt);
+
+    v->err = malloc(512);
+    vsnprintf(v->err, 511, fmt, va);
+
+    v->err = realloc(v->err, strlen(v->err) + 1);
+
+    va_end(va);
     return v;
 }
 
@@ -408,9 +421,15 @@ lval* lval_join(lval* x, lval* y)
 
 lval* builtin_head(lenv* e, lval* a)
 {
-    LASSERT(a, a->count == 1, "Function 'head' passed too many arguments!");
+    LASSERT(a, a->count == 1, 
+    "Function 'head' passed too many arguments! "
+    "Got %i, expected %i. ",
+    a->count, 1);
 
-    LASSERT(a, a->cell[0]->type == LVAL_QEXPR, "Function 'head' passed incorrect type!");
+    LASSERT(a, a->cell[0]->type == LVAL_QEXPR, 
+    "Function 'head' passed incorrect type for argument 0. "
+    "Got %s, expected %s.",
+    ltype_name(a->cell[0]->type), ltype_name(LVAL_QEXPR));
 
     LASSERT(a, a->cell[0]->count != 0, "Function 'head' passed empty Q-expression! `{}`");
 
@@ -520,7 +539,7 @@ lval* lenv_get(lenv* e, lval* k)
         if (strcmp(e->syms[i], k->sym) == 0)
             return lval_copy(e->vals[i]);
     
-    return lval_err("Unbound symbol!");
+    return lval_err("Unbound symbol! '%s'", k->sym);
 }
 
 void lenv_put(lenv* e, lval* k, lval* v)
@@ -581,12 +600,33 @@ lval* builtin_def(lenv* e, lval* a)
     }
 
     LASSERT(a, syms->count == a->count - 1,
-    "Function 'def' cannot define incorrect \
-    number of values to symbols!");
+    "Function 'def' cannot define incorrect "
+    "number of values to symbols!");
 
     for (int i = 0; i < syms->count; i++)
         lenv_put(e, syms->cell[i], a->cell[i + 1]);
 
     lval_del(a);
     return lval_sexpr();
+}
+
+char* ltype_name(int t)
+{
+    switch (t)
+    {
+        case LVAL_FUN:
+            return "Function";
+        case LVAL_NUM:
+            return "Number";
+        case LVAL_ERR:
+            return "Error";
+        case LVAL_SYM:
+            return "Symbol";
+        case LVAL_SEXPR:
+            return "S-Expression";
+        case LVAL_QEXPR:
+            return "Q-Expression";
+        default:
+            return "Unknown";
+    }
 }
