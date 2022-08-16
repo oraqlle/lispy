@@ -28,6 +28,9 @@ int main()
     puts("Curly v0.0.13");
     puts("Press Ctrl+C to exit.\n");
 
+    lenv* e = lenv_new();
+    lenv_add_builtins(e);
+
     while(1)
     {
         char* input = readline("curly> ");
@@ -38,7 +41,7 @@ int main()
 
         if (mpc_parse("<stdin>", input, Curly, &r))
         {
-            lval* x = lval_eval(lval_read(r.output));
+            lval* x = lval_eval(e, lval_read(r.output));
             lval_println(x);
             lval_del(x);
         }
@@ -51,6 +54,7 @@ int main()
         free(input);
     }
 
+    lenv_del(e);
     mpc_cleanup(6, Number, Symbol, Sexpr, Qexpr, Expr, Curly);
 
     return 0;

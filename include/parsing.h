@@ -197,9 +197,47 @@ lval* lval_take(lval* v, int i);
 /// Returns an error if `a`'s children are not of type
 /// LVAL_NUM.
 ///
+/// \param e - type: lenv*
 /// \param a - type: lval*
 /// \param op - type: char*
-lval* builtin_op(lval* a, char* op);
+/// \return lval*
+lval* builtin_op(lenv* e, lval* a, char* op);
+
+/// \brief Built-in addition operator.
+///
+/// \details Curly's built-in addition operator.
+/// 
+/// \param e - type: lenv*
+/// \param a - type: lval*
+/// \return lval*
+lval* builtin_add(lenv* e, lval* a);
+
+/// \brief Built-in subtraction operator.
+///
+/// \details Curly's built-in subtraction operator.
+///
+/// \param e - type: lenv*
+/// \param a - type: lval*
+/// \return lval*
+lval* builtin_sub(lenv* e, lval* a);
+
+/// \brief Built-in multiplication operator.
+///
+/// \details Curly's built-in multiplication operator.
+///
+/// \param e - type: lenv*
+/// \param a - type: lval*
+/// \return lval*
+lval* builtin_mul(lenv* e, lval* a);
+
+/// \brief Built-in division operator.
+///
+/// \details Curly's built-in division operator.
+///
+/// \param e - type: lenv*
+/// \param a - type: lval*
+/// \return lval*
+lval* builtin_div(lenv* e, lval* a);
 
 /// \brief Evaluates the lval `v`.
 ///
@@ -207,9 +245,10 @@ lval* builtin_op(lval* a, char* op);
 /// Returns `v` as-is it is not an 
 /// S-Expression.
 ///
+/// \param e - type: lenv*
 /// \param v - type: lval*
 /// \return lval*
-lval* lval_eval(lval* v);
+lval* lval_eval(lenv* e, lval* v);
 
 /// \brief Evaluates the lval `v` as an S-Expression.
 ///
@@ -218,9 +257,10 @@ lval* lval_eval(lval* v);
 /// child if it only has one child. Returns an error if the
 /// child does not start with a symbol.
 ///
+/// \param e - type: lenv*
 /// \param v - type: lval*
 /// \return lval*
-lval* lval_eval_sexpr(lval* v);
+lval* lval_eval_sexpr(lenv* e, lval* v);
 
 /// \brief Joins the Q-Expression `y` to `x`.
 ///
@@ -238,27 +278,30 @@ lval* lval_join(lval* x, lval* y);
 /// \details Returns the head of a Q-Expression
 /// and discards the tail.
 ///
+/// \param e - type: lenv*
 /// \param a - type: lval*
 /// \return lval*
-lval* builtin_head(lval* a);
+lval* builtin_head(lenv* e, lval* a);
 
 /// \brief Returns the tail of a Q-Expression.
 ///
 /// \details Returns the tail of a Q-Expression
 /// and discards the head.
 ///
+/// \param e - type: lenv*
 /// \param a - type: lval*
 /// \return lval*
-lval* builtin_tail(lval* a);
+lval* builtin_tail(lenv* e, lval* a);
 
 /// \brief Converts a S-Expression to a Q-Expression.
 ///
 /// \details Converts a S-Expression to a Q-Expression
 /// and returns it.
 ///
+/// \param e - type: lenv*
 /// \param a - type: lval*
 /// \return lval*
-lval* builtin_list(lval* a);
+lval* builtin_list(lenv* e, lval* a);
 
 /// \brief Evaluates a Q-Expression as an S-Expression.
 ///
@@ -266,28 +309,31 @@ lval* builtin_list(lval* a);
 /// using lval_eval. Returns an error if the Q-Expression 
 /// contains another Q-Expression.
 ///
+/// \param e - type: lenv*
 /// \param a - type: lval*
 /// \return lval*
-lval* builtin_eval(lval* a);
+lval* builtin_eval(lenv* e, lval* a);
 
 /// \brief Joins multiple Q-Expressions into a single Q-Expression.
 ///
 /// \details Joins multiple Q-Expressions into a single Q-Expression
 /// using lval_join returns the resulting Q-Expression.
 ///
+/// \param e - type: lenv*
 /// \param a - type: lval*
 /// \return lval*
-lval* builtin_join(lval* a);
+lval* builtin_join(lenv* e, lval* a);
 
 /// \brief Dispatches the builtin function `f` to the lval `a`.
 ///
 /// \details Dispatches the builtin function `f` to the lval `a`.
 /// Returns an error if `f` is not a builtin function.
 ///
+/// \param e - type: lenv*
 /// \param a - type: lval*
 /// \param f - type: char*
 /// \return lval*
-lval* builtin(lval* a, char* func);
+lval* builtin(lenv* e, lval* a, char* func);
 
 /// \brief Constructs a new lenv.
 ///
@@ -325,3 +371,20 @@ lval* lenv_get(lenv* e, lval* k);
 /// \param k - type: lval*
 /// \param v - type: lval*
 void lenv_put(lenv* e, lval* k, lval* v);
+
+/// \brief Adds a builtin function to the environment.
+///
+/// \details Adds a builtin function to the environment
+/// with the name `name` and the function signature `func`.
+///
+/// \param e - type: lenv*
+/// \param name - type: char*
+/// \param f - type: lbuiltin
+void lenv_add_builtin(lenv* e, char* name, lbuiltin func);
+
+/// \brief Adds all the builtin functions to the environment.
+///
+/// \details Adds all the builtin functions to the environment.
+///
+/// \param e - type: lenv*
+void lenv_add_builtins(lenv* e);
