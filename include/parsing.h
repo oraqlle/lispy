@@ -388,3 +388,12 @@ void lenv_add_builtin(lenv* e, char* name, lbuiltin func);
 ///
 /// \param e - type: lenv*
 void lenv_add_builtins(lenv* e);
+
+/// \brief Allows the definition of new functions in the environment.
+///
+/// \details Allows the definition of new functions in the environment.
+///
+/// \param e - type: lenv*
+/// \param name - type: char*
+/// \return lval*
+lval* builtin_def(lenv* e, lval* a);
