@@ -32,7 +32,9 @@ struct lval
     long num;
     char* err;
     char* sym;
+
     lbuiltin fun;
+    
 
     int count;
     struct lval** cell;
@@ -301,11 +303,10 @@ lval* lval_take(lval* v, int i)
 lval* builtin_op(lenv* e, lval* a, char* op)
 {
     for (int i = 0; i < a->count; i++)
-        if (a->cell[i]->type != LVAL_NUM)
-        {
-            lval_del(a);
-            return lval_err("Cannot operate on non-number!");
-        }
+        LASSERT(a, a->cell[i]->type == LVAL_NUM,
+        "Cannot operate on non-number. "
+        "Got '%s', expected '%s'",
+        ltype_name(a->cell[i]->type), ltype_name(LVAL_NUM));
 
     lval* x = lval_pop(a, 0);
 
@@ -473,7 +474,10 @@ lval* builtin_eval(lenv* e, lval* a)
 lval* builtin_join(lenv* e, lval* a)
 {
     for (int i = 0; i < a->count; i++)
-        LASSERT(a, a->cell[i]->type == LVAL_QEXPR, "Function 'join' passed incorrect type!");
+        LASSERT(a, a->cell[i]->type == LVAL_QEXPR,
+        "Function 'join' passed incorrect type!"
+        "Got %s, expected %s.",
+        ltype_name(a->cell[i]->type), ltype_name(LVAL_QEXPR));
     
     lval* x = lval_pop(a, 0);
     
@@ -589,19 +593,25 @@ void lenv_add_builtins(lenv* e)
 lval* builtin_def(lenv* e, lval* a)
 {
     LASSERT(a, a->cell[0]->type == LVAL_QEXPR, 
-    "Function 'def' passed incorrect type!");
+    "Function 'def' passed incorrect type!"
+    "Got '%s', expected '%s'.", 
+    ltype_name(a->cell[0]->type), ltype_name(LVAL_QEXPR));
 
     lval* syms = a->cell[0];
 
     for (int i = 0; i < syms->count; i++)
     {
         LASSERT(a, syms->cell[i]->type == LVAL_SYM,
-        "Function 'def' cannot define non-symbol!");
+        "Function 'def' cannot define non-symbol!"
+        "Got '%s', expected '%s'.",
+        ltype_name(syms->cell[i]->type), ltype_name(LVAL_SYM));
     }
 
     LASSERT(a, syms->count == a->count - 1,
     "Function 'def' cannot define incorrect "
-    "number of values to symbols!");
+    "number of values to symbols!",
+    "Got %i, expected %i.",
+    syms->count, a->count - 1);
 
     for (int i = 0; i < syms->count; i++)
         lenv_put(e, syms->cell[i], a->cell[i + 1]);
