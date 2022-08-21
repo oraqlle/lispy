@@ -406,3 +406,22 @@ lval* builtin_def(lenv* e, lval* a);
 /// \param t - type int
 /// \return char*
 char* ltype_name(int t);
+
+/// \brief Constructs a lambda lval.
+///
+/// \details Constructs a lambda lval.
+///
+/// \param formals - type: lval*
+/// \param body - type: lval*
+/// \return lval*
+lval* lval_lambda(lval* formals, lval* body);
+
+/// \brief Defines the lambda operator
+///
+/// \details Defines the lambda operator
+/// as the `\` character.
+///
+/// \param e - type: lenv*
+/// \param a - type: lval*
+/// \return lval*
+lval* builtin_lambda(lenv* e, lval* a);
