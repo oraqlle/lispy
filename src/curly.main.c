@@ -25,7 +25,7 @@ int main()
         Number, Symbol, Sexpr, Qexpr, Expr, Curly);
 
 
-    puts("Curly v0.0.16");
+    puts("Curly v0.0.17");
     puts("Press Ctrl+C to exit.\n");
 
     lenv* e = lenv_new();
