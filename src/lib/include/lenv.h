@@ -49,7 +49,7 @@ void lenv_del(lenv* e);
 lval* lenv_get(lenv* e, lval* k);
 
 
-
+/// TODO
 lenv* lenv_copy(lenv* e);
 
 
@@ -63,6 +63,10 @@ lenv* lenv_copy(lenv* e);
 /// \param k - type: lval*
 /// \param v - type: lval*
 void lenv_put(lenv* e, lval* k, lval* v);
+
+
+/// TODO
+void lenv_def(lenv* e, lval* k, lval* v);
 
 
 /// \brief Adds a builtin function to the environment.

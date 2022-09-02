@@ -73,7 +73,7 @@ lval* lval_fun(lbuiltin func)
 {
     lval* v = malloc(sizeof(lval));
     v->type = LVAL_FUN;
-    v->fun = func;
+    v->builtin = func;
     return v;
 }
 
@@ -224,7 +224,44 @@ lval* lval_eval(lenv* e, lval* v)
         return lval_eval_sexpr(e, v);
 
     return v;
-}  
+}
+
+
+lval* lval_call(lenv* e, lval* f, lval* a)
+{
+    if (f->builtin)
+        return f->builtin(e, a);
+
+    int given = a->count;
+    int total = f->formals->count;
+
+    while (a->count)
+    {
+        if (f->formals->count == 0)
+        {
+            lval_del(a);
+            return lval_err("Function passed too many arguments. "
+                            "Got %i, Expected %i. ", given, total);
+        }
+
+        lval* sym = lval_pop(f->formals, 0);
+        lval* val = lval_pop(a, 0);
+        lenv_put(f->env, sym, val);
+
+        lval_del(sym);
+        lval_del(val);
+    }
+
+    lval_del(a);
+
+    if (f->formals->count == 0)
+    {
+        f->env->par = e;
+        return builtin_eval(f->env, lval_add(lval_sexpr(), lval_copy(f->body)));
+    }
+    else
+        return lval_copy(f);
+}
 
 
 lval* lval_eval_sexpr(lenv* e, lval* v)
@@ -246,12 +283,16 @@ lval* lval_eval_sexpr(lenv* e, lval* v)
 
     if (f->type != LVAL_FUN)
     {
-        lval_del(v);
+        lval* err = lval_err("S-Expression starts with incorrect type. ",
+                             "Got %s, Expected %s. ",
+                             ltype_name(f->type), ltype_name(LVAL_FUN));
+
         lval_del(f);
-        return lval_err("First item is not a function!");
+        lval_del(v);
+        return err;
     }
 
-    lval* result = f->fun(e, v);
+    lval* result = lval_call(e, f, v);
     lval_del(f);
 
     return result;

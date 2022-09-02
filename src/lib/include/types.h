@@ -51,6 +51,7 @@ enum { LVAL_ERR, LVAL_NUM, LVAL_SYM,
 
 typedef struct lenv 
 {
+    lenv* par;
     int count;
     char** syms;
     lval** vals;

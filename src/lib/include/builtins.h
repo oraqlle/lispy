@@ -155,9 +155,12 @@ lval* builtin_join(lenv* e, lval* a);
 lval* builtin_lambda(lenv* e, lval* a);
 
 
-/// \brief Allows the definition of new functions in the environment.
+/// FIX
+/// \brief Allows the definition of new functions in 
+/// the environment.
 ///
-/// \details Allows the definition of new functions in the environment.
+/// \details Allows the definition of new functions in 
+/// the environment.
 ///
 /// \param e - type: lenv*
 /// \param name - type: char*
@@ -165,5 +168,11 @@ lval* builtin_lambda(lenv* e, lval* a);
 lval* builtin_def(lenv* e, lval* a);
 
 
+/// TODO
+lval* builtin_put(lenv* e, lval* a);
+
+
+/// TODO
+lval* builtin_var(lenv* e, lval* a, char* func);
 
 #endif  /// CURLY_BUILTINS_H

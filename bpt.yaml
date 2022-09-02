@@ -2,7 +2,7 @@ name: curly
 version: 0.0.16
 
 libraries:
-  - name: libcurly
+  - name: curlyc
     path: src/lib
 
 dependencies:

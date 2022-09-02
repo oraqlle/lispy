@@ -155,6 +155,10 @@ lval* lval_take(lval* v, int i);
 lval* lval_eval(lenv* e, lval* v);
 
 
+/// TODO
+lval* lval_call(lenv* e, lval* f, lval* a);
+
+
 /// \brief Evaluates the lval `v` as an S-Expression.
 ///
 /// \details Evaluates the lval `v` as an S-Expression.

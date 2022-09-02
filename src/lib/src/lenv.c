@@ -13,6 +13,7 @@
 lenv* lenv_new(void)
 {
     lenv* e = malloc(sizeof(lenv));
+    e->par = NULL;
     e->count = 0;
     e->syms = NULL;
     e->vals = NULL;
@@ -48,7 +49,10 @@ lval* lenv_get(lenv* e, lval* k)
         if (strcmp(e->syms[i], k->sym) == 0)
             return lval_copy(e->vals[i]);
     
-    return lval_err("Unbound symbol! '%s'", k->sym);
+    if (e->par)
+        return lenv_get(e->par, k);
+    else
+        return lval_err("Unbound symbol '%s'", k->sym);
 }
 
 
@@ -91,6 +95,15 @@ lenv* lenv_copy(lenv* e)
 }
 
 
+void lenv_def(lenv* e, lval* k, lval* v)
+{
+    while (e->par)
+        e = e->par;
+
+    lenv_put(e, k, v);
+}
+
+
 void lenv_add_builtin(lenv* e, char* name, lbuiltin func)
 {
     lval* k = lval_sym(name);
@@ -104,6 +117,8 @@ void lenv_add_builtin(lenv* e, char* name, lbuiltin func)
 void lenv_add_builtins(lenv* e)
 {
     lenv_add_builtin(e, "\\", builtin_lambda);
+    lenv_add_builtin(e, "def", builtin_def);
+    lenv_add_builtin(e, "=", builtin_put);
 
     lenv_add_builtin(e, "list", builtin_list);
     lenv_add_builtin(e, "head", builtin_head);
@@ -115,6 +130,4 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "-", builtin_sub);
     lenv_add_builtin(e, "*", builtin_mul);
     lenv_add_builtin(e, "/", builtin_div);
-
-    lenv_add_builtin(e, "def", builtin_def);
 }
