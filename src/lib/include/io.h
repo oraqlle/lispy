@@ -2,6 +2,7 @@
 #define CURLY_IO_H
 
 #include <mpc.h>
+#include <lval.h>
 
 
 /////////////////////////

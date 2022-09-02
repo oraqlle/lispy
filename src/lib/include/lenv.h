@@ -1,8 +1,11 @@
 #ifndef CURLY_LENV_H
 #define CURLY_LENV_H
 
-struct lenv;
-typedef struct lenv lenv;
+#include <builtins.h>
+#include <lval.h>
+#include <types.h>
+
+#include <stdlib.h>
 
 
 ///////////////////////////
@@ -44,6 +47,10 @@ void lenv_del(lenv* e);
 /// \param k - type: lval*
 /// \return lval*
 lval* lenv_get(lenv* e, lval* k);
+
+
+
+lenv* lenv_copy(lenv* e);
 
 
 /// \brief Sets an lval in an lenv.

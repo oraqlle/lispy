@@ -1,10 +1,7 @@
 #ifndef CURLY_BUILTINS_H
 #define CURLY_BUILTINS_H
 
-#include <lval.h>
-#include <lenv.h>
-
-typedef lval*(*lbuiltin)(lenv*, lval*);
+#include <types.h>
 
 
 //////////////////////////

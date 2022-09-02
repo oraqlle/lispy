@@ -1,11 +1,9 @@
+#include <builtins.h>
 #include <lenv.h>
+#include <lval.h>
 
-struct lenv 
-{
-    int count;
-    char** syms;
-    lval** vals;
-};
+#include <stdlib.h>
+#include <string.h>
 
 
 ///////////////////////////
@@ -71,6 +69,25 @@ void lenv_put(lenv* e, lval* k, lval* v)
     e->vals[e->count - 1] = lval_copy(v);
     e->syms[e->count - 1] = malloc(strlen(k->sym) + 1);
     strcpy(e->syms[e->count - 1], k->sym);
+}
+
+lenv* lenv_copy(lenv* e)
+{
+    lenv* n = malloc(sizeof(lenv));
+    n->par = e->par;
+    n->count = e->count;
+
+    n->syms = malloc(sizeof(char*) * n->count);
+    n->vals = malloc(sizeof(lval*) * n->count);
+
+    for (int i = 0; i < e->count; i++) 
+    {
+        n->syms[i] = malloc(strlen(e->syms[i]) + 1);
+        strcpy(n->syms[i], e->syms[i]);
+        n->vals[i] = lval_copy(e->vals[i]);
+    }
+    
+    return n;
 }
 
 

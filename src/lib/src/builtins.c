@@ -1,4 +1,8 @@
 #include <builtins.h>
+#include <macros.h>
+#include <utilities.h>
+
+#include <string.h>
 
 //////////////////////////
 /// Builtin Evaluaters ///

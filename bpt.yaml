@@ -1,8 +1,12 @@
 name: curly
 version: 0.0.16
 
+libraries:
+  - name: libcurly
+    path: src/lib
+
 dependencies:
-  - mpc@0.9.0 using mpc
+  - mpc@0.9.0
 
 readme: README.md
 

@@ -1,6 +1,10 @@
 #ifndef CURLY_MACROS_H
 #define CURLY_MACROS_H
 
+#include <lval.h>
+#include <lenv.h>
+#include <utilities.h>
+
 #define LASSERT(args, cond, fmt, ...)               \
     if (!(cond))                                    \
     {                                               \

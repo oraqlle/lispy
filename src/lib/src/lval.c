@@ -1,21 +1,11 @@
 #include <lval.h>
+#include <builtins.h>
+#include <lenv.h>
 
-struct lval
-{
-    int type;
-
-    long num;
-    char* err;
-    char* sym;
-
-    lbuiltin builtin;
-    lenv* env;
-    lval* formals;
-    lval* body;
-
-    int count;
-    struct lval** cell;
-};
+#include <stdarg.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 
 ///////////////////////////
@@ -83,7 +73,7 @@ lval* lval_fun(lbuiltin func)
 {
     lval* v = malloc(sizeof(lval));
     v->type = LVAL_FUN;
-    v-> = func;
+    v->fun = func;
     return v;
 }
 
@@ -261,7 +251,7 @@ lval* lval_eval_sexpr(lenv* e, lval* v)
         return lval_err("First item is not a function!");
     }
 
-    lval* result = f->(e, v);
+    lval* result = f->fun(e, v);
     lval_del(f);
 
     return result;
