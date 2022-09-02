@@ -7,9 +7,9 @@
 typedef lval*(*lbuiltin)(lenv*, lval*);
 
 
-////////////////////////
-/// Builtin Evaluate ///
-////////////////////////
+//////////////////////////
+/// Builtin Evaluaters ///
+//////////////////////////
 
 /// \brief Dispatches the builtin function `f` to the lval `a`.
 ///
