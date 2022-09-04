@@ -55,4 +55,8 @@ void lval_println(lval* v);
 /// \param close - type: char
 void lval_expr_print(lval* v, char open, char close);
 
+
+/// TODO
+void lval_print_str(lval* v);
+
 #endif  /// CURLY_IO_H

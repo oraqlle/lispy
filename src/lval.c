@@ -49,6 +49,16 @@ lval* lval_sym(char* s)
 }
 
 
+lval* lval_str(char* s)
+{
+    lval* v = malloc(sizeof(lval));
+    v->type = LVAL_STR;
+    v->str = malloc(strlen(s) + 1);
+    strcpy(v->str, s);
+    return v;
+}
+
+
 lval* lval_sexpr(void)
 {
     lval* v = malloc(sizeof(lval));
@@ -110,6 +120,10 @@ void lval_del(lval* v)
 
         case LVAL_SYM:
             free(v->sym);
+            break;
+
+        case LVAL_STR:
+            free(v->str);
             break;
 
         case LVAL_FUN:
@@ -178,6 +192,11 @@ lval* lval_copy(lval* v)
         case LVAL_SYM:
             x->sym = malloc(strlen(v->sym) + 1);
             strcpy(x->sym, v->sym);
+            break;
+
+        case LVAL_STR:
+            x->str = malloc(strlen(v->str) + 1);
+            strcpy(x->str, v->str);
             break;
 
         case LVAL_SEXPR:
@@ -360,6 +379,9 @@ int lval_eq(lval* x, lval* y)
 
         case LVAL_SYM:
             return (strcmp(x->sym, y->sym) == 0);
+
+        case LVAL_STR:
+            return (strcmp(x->str, y->str) == 0);
 
         case LVAL_FUN:
             if (x->builtin || x->builtin)

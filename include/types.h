@@ -27,6 +27,7 @@ typedef struct lval
     long num;
     char* err;
     char* sym;
+    char* str;
 
     lbuiltin builtin;
     lenv* env;
@@ -44,8 +45,11 @@ typedef struct lval
 /// - LVAL_ERR : Error type
 /// - LVAL_NUM : Number type
 /// - LVAL_SYM : Symbol type
+/// - LVAL_STR : String type
+/// - LVAL_FUN : Function type
 /// - LVAL_SEXPR : S-Expression type
-enum { LVAL_ERR, LVAL_NUM, LVAL_SYM, 
+/// - LVAL_QEXPR : Q-Expression type
+enum { LVAL_ERR, LVAL_NUM, LVAL_SYM, LVAL_STR, 
        LVAL_FUN, LVAL_SEXPR, LVAL_QEXPR };
 
 

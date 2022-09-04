@@ -42,6 +42,10 @@ lval* lval_err(char* fmt, ...);
 lval* lval_sym(char* s);
 
 
+/// TODO
+lval* lval_str(char* s);
+
+
 /// \brief Creates an lval of type LVAL_SEXPR.
 ///
 /// \details Creates an lval of type LVAL_SEXPR

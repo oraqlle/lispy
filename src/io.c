@@ -1,4 +1,5 @@
 #include <io.h>
+#include <mpc.h>
 
 /////////////////////////
 /// `lval` IO Methods ///
@@ -88,6 +89,10 @@ void lval_print(lval* v)
             printf("%s", v->sym);
             break;
 
+        case LVAL_STR:
+            lval_print_str(v);
+            break;
+
         case LVAL_FUN:
             if (v->builtin)
                 printf("<builtin>");
@@ -116,4 +121,15 @@ void lval_println(lval* v)
 {
     lval_print(v);
     putchar('\n');
+}
+
+void lval_print_str(lval* v)
+{
+    char* escaped = malloc(strlen(v) + 1);
+    strcpy(escaped, v->str);
+
+    escaped = mpcf_escape(escaped);
+    printf("\"%s\"", escaped);
+
+    free(escaped);
 }
