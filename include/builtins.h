@@ -215,4 +215,12 @@ lval* builtin_eq(lenv* e, lval* a);
 /// TODO
 lval* builtin_ne(lenv* e, lval* a);
 
+
+////////////////////////////
+/// Comparison Functions ///
+////////////////////////////
+
+/// TODO
+lval* builtin_if(lenv* e, lval* a);
+
 #endif  /// CURLY_BUILTINS_H

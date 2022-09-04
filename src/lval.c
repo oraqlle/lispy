@@ -353,7 +353,7 @@ int lval_eq(lval* x, lval* y)
     switch (x->type)
     {
         case LVAL_NUM:
-            return (x->num == x->num);
+            return (x->num == y->num);
 
         case LVAL_ERR:
             return (strcmp(x->err, y->err) == 0);
