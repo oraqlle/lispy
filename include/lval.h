@@ -183,4 +183,8 @@ lval* lval_eval_sexpr(lenv* e, lval* v);
 /// \return lval*
 lval* lval_join(lval* x, lval* y);
 
+
+/// TODO
+int lval_eq(lval* x, lval* y);
+
 #endif  /// CURLY_LVAL_H

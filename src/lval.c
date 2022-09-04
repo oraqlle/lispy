@@ -343,3 +343,44 @@ lval* lval_join(lval* x, lval* y)
     lval_del(y);
     return x;
 }
+
+
+int lval_eq(lval* x, lval* y)
+{
+    if (x->type != y->type)
+        return 0;
+
+    switch (x->type)
+    {
+        case LVAL_NUM:
+            return (x->num == x->num);
+
+        case LVAL_ERR:
+            return (strcmp(x->err, y->err) == 0);
+
+        case LVAL_SYM:
+            return (strcmp(x->sym, y->sym) == 0);
+
+        case LVAL_FUN:
+            if (x->builtin || x->builtin)
+                return (x->builtin == y->builtin);
+            else
+                return (lval_eq(x->formals, y->formals) 
+                        && lval_eq(x->body, y->body));
+
+        case LVAL_QEXPR:
+        case LVAL_SEXPR:
+            if (x->count != y->count)
+                return 0;
+            
+            for (int i = 0; i < x->count; ++i)
+                if (!lval_eq(x->cell[i], y->cell[i]))
+                    return 0;
+
+            return 1;
+
+        break;
+    }
+
+    return 0;
+}

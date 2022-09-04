@@ -199,4 +199,20 @@ lval* builtin_ge(lenv* e, lval* a);
 /// TODO
 lval* builtin_le(lenv* e, lval* a);
 
+
+//////////////////////////
+/// Equality Operators ///
+//////////////////////////
+
+/// TODO
+lval* builtin_cmp(lenv* e, lval* a, char* op);
+
+
+/// TODO
+lval* builtin_eq(lenv* e, lval* a);
+
+
+/// TODO
+lval* builtin_ne(lenv* e, lval* a);
+
 #endif  /// CURLY_BUILTINS_H
