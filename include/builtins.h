@@ -175,4 +175,28 @@ lval* builtin_put(lenv* e, lval* a);
 /// TODO
 lval* builtin_var(lenv* e, lval* a, char* func);
 
+
+//////////////////////////
+/// Ordering Operators ///
+//////////////////////////
+
+/// TODO
+lval* builtin_ord(lenv* e, lval* a, char* op);
+
+
+/// TODO
+lval* builtin_gt(lenv* e, lval* a);
+
+
+/// TODO
+lval* builtin_lt(lenv* e, lval* a);
+
+
+/// TODO
+lval* builtin_ge(lenv* e, lval* a);
+
+
+/// TODO
+lval* builtin_le(lenv* e, lval* a);
+
 #endif  /// CURLY_BUILTINS_H
