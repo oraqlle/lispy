@@ -223,4 +223,12 @@ lval* builtin_ne(lenv* e, lval* a);
 /// TODO
 lval* builtin_if(lenv* e, lval* a);
 
+
+//////////////////////////
+/// File Load Function ///
+//////////////////////////
+
+/// TODO
+lval* builtin_load(lenv* e, lval* a);
+
 #endif  /// CURLY_BUILTINS_H

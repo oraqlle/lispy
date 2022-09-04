@@ -5,9 +5,9 @@
 #include <lval.h>
 
 
-/////////////////////////
-/// `lval` IO Methods ///
-/////////////////////////
+//////////////////////
+/// `lval` Reading ///
+//////////////////////
 
 /// \brief Returns lval number type from the AST.
 ///
@@ -31,6 +31,10 @@ lval* lval_read_num(mpc_ast_t* t);
 lval* lval_read(mpc_ast_t* t);
 
 
+///////////////////////
+/// `lval` Printing ///
+///////////////////////
+
 /// \brief Prints the lval
 ///
 /// \details Prints the lval to stdout.
@@ -45,6 +49,10 @@ void lval_print(lval* v);
 void lval_println(lval* v);
 
 
+///////////////////////////
+/// Expression Printing ///
+///////////////////////////
+
 /// \brief Prints the lval as an expression to stdout.
 ///
 /// \details Prints the lval as an expression surrounded
@@ -56,11 +64,22 @@ void lval_println(lval* v);
 void lval_expr_print(lval* v, char open, char close);
 
 
+/////////////////
+/// String IO ///
+/////////////////
+
 /// TODO
 void lval_print_str(lval* v);
 
 
 /// TODO
 lval* lval_read_str(mpc_ast_t* t);
+
+
+/////////////////////
+/// Load Function ///
+/////////////////////
+
+
 
 #endif  /// CURLY_IO_H
