@@ -82,7 +82,7 @@ lval* lval_fun(lbuiltin func);
 /// \param formals - type: lval*
 /// \param body - type: lval*
 /// \return lval*
-lval* lval_lambda(lval* formals, lval* body);
+lval* lval_lambda(lval* formals, lval* body, mpc_parser_t* pid);
 
 
 /////////////////////////

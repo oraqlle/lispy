@@ -17,7 +17,7 @@
 /// \details Constructs a new lenv.
 ///
 /// \return lenv*
-lenv* lenv_new(void);
+lenv* lenv_new(mpc_parser_t* pid);
 
 
 //////////////////////////

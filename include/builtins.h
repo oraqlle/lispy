@@ -144,6 +144,7 @@ lval* builtin_join(lenv* e, lval* a);
 /// Builtin Function Operators ///
 //////////////////////////////////
 
+/// FIX
 /// \brief Defines the lambda operator
 ///
 /// \details Defines the lambda operator
@@ -229,7 +230,7 @@ lval* builtin_if(lenv* e, lval* a);
 ////////////////////////////
 
 /// TODO
-lval* builtin_load(lenv* e, lval* a, mpc_parser_t* lang_expr);
+lval* builtin_load(lenv* e, lval* a);
 
 
 /// TODO

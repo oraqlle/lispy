@@ -8,9 +8,6 @@
 
 #include <string.h>
 
-mpc_parser_t* Curly = CURLY_NEW;
-
-
 //////////////////////////
 /// Builtin Evaluaters ///
 //////////////////////////
@@ -244,7 +241,7 @@ lval* builtin_lambda(lenv* e, lval* a)
     lval* formals = lval_pop(a, 0);
     lval* body = lval_pop(a, 0);
     lval_del(a);
-    return lval_lambda(formals, body);
+    return lval_lambda(formals, body, e->parser_id);
 }
 
 
@@ -371,7 +368,7 @@ lval* builtin_load(lenv* e, lval* a)
 
     mpc_result_t r;
 
-    if (mpc_parse_contents(a->cell[0]->str, Curly, &r))
+    if (mpc_parse_contents(a->cell[0]->str, e->parser_id, &r))
     {
         lval* expr = lval_read(r.output);
         mpc_ast_delete(r.output);
@@ -396,7 +393,7 @@ lval* builtin_load(lenv* e, lval* a)
         char* err_msg = mpc_err_string(r.error);
         mpc_err_delete(r.error);
 
-        lval* err = lval_err("Could not load Library %s. ", err_msg);
+        lval* err = lval_err("Could not load Library %s", err_msg);
         free(err_msg);
         lval_del(a);
 

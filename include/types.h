@@ -60,9 +60,12 @@ enum { LVAL_ERR, LVAL_NUM, LVAL_SYM, LVAL_STR,
 typedef struct lenv 
 {
     lenv* par;
+    
     int count;
     char** syms;
     lval** vals;
+
+    mpc_parser_t* parser_id;
 } lenv;
 
 #endif  // CURLY_TYPES_H

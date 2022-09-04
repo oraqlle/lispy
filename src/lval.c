@@ -89,14 +89,14 @@ lval* lval_fun(lbuiltin func)
 }
 
 
-lval* lval_lambda(lval* formals, lval* body)
+lval* lval_lambda(lval* formals, lval* body, mpc_parser_t* pid)
 {
     lval* v = malloc(sizeof(lval));
     v->type = LVAL_FUN;
 
     v->builtin = NULL;
 
-    v->env = lenv_new();
+    v->env = lenv_new(pid);
 
     v->formals = formals;
     v->body = body;

@@ -29,13 +29,13 @@ int main(int argc, char* argv[])
         ",
         Number, Symbol, String, Comment, Sexpr, Qexpr, Expr, Curly);
 
-    lenv* e = lenv_new();
+    lenv* e = lenv_new(Curly);
     lenv_add_builtins(e);
 
     if (argc == 1)
     {
 
-        puts("Curly v0.0.19");
+        puts("Curly v0.0.20");
         puts("Press Ctrl+C to exit.\n");
 
         while(1)
@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
         for (int i = 1; i < argc; ++i)
         {
             lval* args = lval_add(lval_sexpr(), lval_str(argv[i]));
-            lval* x = builtin_load(e, args, Curly);
+            lval* x = builtin_load(e, args);
 
             if (x->type == LVAL_ERR)
                 lval_println(x);
