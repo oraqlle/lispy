@@ -26,9 +26,6 @@ lval* lval_read(mpc_ast_t* t)
     if (strstr(t->tag, "string"))
         return lval_read_str(t);
 
-    if (strstr(t->tag, "comment"))
-        continue;
-
     lval* x = NULL;
     if (strcmp(t->tag, ">") == 0)
         x = lval_sexpr();
@@ -41,6 +38,9 @@ lval* lval_read(mpc_ast_t* t)
 
     for (int i = 0; i < t->children_num; i++)
     {
+        if (strstr(t->children[i]->tag, "comment"))
+            continue;
+
         if (strcmp(t->children[i]->contents, "(") == 0)
             continue;
 
@@ -131,7 +131,7 @@ void lval_println(lval* v)
 
 void lval_print_str(lval* v)
 {
-    char* escaped = malloc(strlen(v) + 1);
+    char* escaped = malloc(strlen(v->str) + 1);
     strcpy(escaped, v->str);
 
     escaped = mpcf_escape(escaped);
