@@ -26,6 +26,9 @@ lval* lval_read(mpc_ast_t* t)
     if (strstr(t->tag, "string"))
         return lval_read_str(t);
 
+    if (strstr(t->tag, "comment"))
+        continue;
+
     lval* x = NULL;
     if (strcmp(t->tag, ">") == 0)
         x = lval_sexpr();
