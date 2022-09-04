@@ -59,4 +59,8 @@ void lval_expr_print(lval* v, char open, char close);
 /// TODO
 void lval_print_str(lval* v);
 
+
+/// TODO
+lval* lval_read_str(mpc_ast_t* t);
+
 #endif  /// CURLY_IO_H

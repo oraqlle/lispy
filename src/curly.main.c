@@ -9,20 +9,22 @@ int main()
     mpc_parser_t* Symbol = mpc_new("symbol");
     mpc_parser_t* Sexpr = mpc_new("sexpr");
     mpc_parser_t* Qexpr = mpc_new("qexpr");
+    mpc_parser_t* String = mpc_new("string");
     mpc_parser_t* Expr = mpc_new("expr");
     mpc_parser_t* Curly = mpc_new("curly");
 
 
     mpca_lang(MPCA_LANG_DEFAULT,
-        "                                                               \
-            number      : /-?[0-9]+/ ;                                  \
-            symbol      : /[a-zA-Z0-9_+\\-*\\/\\\\=<>!&]+/ ;             \
-            sexpr       : '(' <expr>* ')' ;                             \
-            qexpr       : '{' <expr>* '}' ;                             \
-            expr        : <number> | <symbol> | <sexpr> | <qexpr> ;     \
-            curly       : /^/ <expr>* /$/ ;                             \
+        "                                                                       \
+            number      : /-?[0-9]+/ ;                                          \
+            symbol      : /[a-zA-Z0-9_+\\-*\\/\\\\=<>!&]+/ ;                    \
+            sexpr       : '(' <expr>* ')' ;                                     \
+            qexpr       : '{' <expr>* '}' ;                                     \
+            string      : /\"(\\\\.|[^\"])*\"/ ;                                \
+            expr        : <number> | <symbol> | <sexpr> | <qexpr> | <string> ;  \
+            curly       : /^/ <expr>* /$/ ;                                     \
         ",
-        Number, Symbol, Sexpr, Qexpr, Expr, Curly);
+        Number, Symbol, Sexpr, Qexpr, String, Expr, Curly);
 
 
     puts("Curly v0.0.18");
@@ -55,7 +57,7 @@ int main()
     }
 
     lenv_del(e);
-    mpc_cleanup(6, Number, Symbol, Sexpr, Qexpr, Expr, Curly);
+    mpc_cleanup(6, Number, Symbol, Sexpr, Qexpr, String, Expr, Curly);
 
     return 0;
 }
