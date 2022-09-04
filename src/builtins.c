@@ -8,6 +8,9 @@
 
 #include <string.h>
 
+mpc_parser_t* Curly = CURLY_NEW;
+
+
 //////////////////////////
 /// Builtin Evaluaters ///
 //////////////////////////
@@ -361,14 +364,14 @@ lval* builtin_if(lenv* e, lval* a)
 /// Builtin IO functions ///
 ////////////////////////////
 
-lval* builtin_load(lenv* e, lval* a, mpc_parser_t* lang_expr)
+lval* builtin_load(lenv* e, lval* a)
 {
     LASSERT_NUM("load", a, 1);
     LASSERT_TYPE("load", a, 0, LVAL_STR);
 
     mpc_result_t r;
 
-    if (mpc_parse_contents(a->cell[0]->str, lang_expr, &r))
+    if (mpc_parse_contents(a->cell[0]->str, Curly, &r))
     {
         lval* expr = lval_read(r.output);
         mpc_ast_delete(r.output);

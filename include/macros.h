@@ -27,8 +27,10 @@
     "Got %i, Expected %i.",                                                 \
     func, args->count, num)
 
+
 #define LASSERT_NOT_EMPTY(func, args, index)                                \
   LASSERT(args, args->cell[index]->count != 0,                              \
     "Function '%s' passed {} for argument %i.", func, index);
+
 
 #endif  /// CURLY_MACROS_H

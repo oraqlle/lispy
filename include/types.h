@@ -12,6 +12,8 @@ typedef struct lenv lenv;
 
 typedef lval*(*lbuiltin)(lenv*, lval*);
 
+// typedef lval*(*builtinload)(lenv*, lval*, mpc_parser_t*);
+
 
 /// \brief Represents a Lisp Value 
 /// 
