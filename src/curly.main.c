@@ -3,16 +3,16 @@
 
 #include <stdlib.h>
 
-int main()
+int main(int argc, char* argv[])
 {
-    Number = mpc_new("number");
-    Symbol = mpc_new("symbol");
-    String = mpc_new("string");
-    Comment = mpc_new("comment");
-    Sexpr = mpc_new("sexpr");
-    Qexpr = mpc_new("qexpr");
-    Expr = mpc_new("expr");
-    Curly = mpc_new("curly");
+    mpc_parser_t* Number = mpc_new("number");
+    mpc_parser_t* Symbol = mpc_new("symbol");
+    mpc_parser_t* String = mpc_new("string");
+    mpc_parser_t* Comment = mpc_new("comment");
+    mpc_parser_t* Sexpr = mpc_new("sexpr");
+    mpc_parser_t* Qexpr = mpc_new("qexpr");
+    mpc_parser_t* Expr = mpc_new("expr");
+    mpc_parser_t* Curly = mpc_new("curly");
 
 
     mpca_lang(MPCA_LANG_DEFAULT,
@@ -29,35 +29,50 @@ int main()
         ",
         Number, Symbol, String, Comment, Sexpr, Qexpr, Expr, Curly);
 
-
-    puts("Curly v0.0.19");
-    puts("Press Ctrl+C to exit.\n");
-
     lenv* e = lenv_new();
     lenv_add_builtins(e);
 
-    while(1)
+    if (argc == 1)
     {
-        char* input = readline("curly> ");
 
-        add_history(input);
+        puts("Curly v0.0.19");
+        puts("Press Ctrl+C to exit.\n");
 
-        mpc_result_t r;
-
-        if (mpc_parse("<stdin>", input, Curly, &r))
+        while(1)
         {
-            lval* x = lval_eval(e, lval_read(r.output));
-            lval_println(x);
+            char* input = readline("curly> ");
+
+            add_history(input);
+
+            mpc_result_t r;
+
+            if (mpc_parse("<stdin>", input, Curly, &r))
+            {
+                lval* x = lval_eval(e, lval_read(r.output));
+                lval_println(x);
+                lval_del(x);
+            }
+            else
+            {
+                mpc_err_print(r.error);
+                mpc_err_delete(r.error);
+            }
+
+            free(input);
+        }
+    }
+
+    if (argc >= 2)
+        for (int i = 1; i < argc; ++i)
+        {
+            lval* args = lval_add(lval_sexpr(), lval_str(argv[i]));
+            lval* x = builtin_load(e, args, Curly);
+
+            if (x->type == LVAL_ERR)
+                lval_println(x);
+
             lval_del(x);
         }
-        else
-        {
-            mpc_err_print(r.error);
-            mpc_err_delete(r.error);
-        }
-
-        free(input);
-    }
 
     lenv_del(e);
     mpc_cleanup(8, Number, Symbol, String, Comment, Sexpr, Qexpr, Expr, Curly);

@@ -224,11 +224,23 @@ lval* builtin_ne(lenv* e, lval* a);
 lval* builtin_if(lenv* e, lval* a);
 
 
-//////////////////////////
-/// File Load Function ///
-//////////////////////////
+////////////////////////////
+/// Builtin IO functions ///
+////////////////////////////
 
 /// TODO
-lval* builtin_load(lenv* e, lval* a);
+lval* builtin_load(lenv* e, lval* a, mpc_parser_t* lang_expr);
+
+
+/// TODO
+lval* builtin_print(lenv* e, lval* a);
+
+
+/// TODO
+// lval* builtin_input(lenv* e, lval* a);
+
+
+/// TODO
+lval* builtin_error(lenv* e, lval* a);
 
 #endif  /// CURLY_BUILTINS_H

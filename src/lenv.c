@@ -116,6 +116,11 @@ void lenv_add_builtin(lenv* e, char* name, lbuiltin func)
 
 void lenv_add_builtins(lenv* e)
 {
+    lenv_add_builtin(e, "load", builtin_load);    
+    lenv_add_builtin(e, "print", builtin_print);    
+    // lenv_add_builtin(e, "input", builtin_);
+    lenv_add_builtin(e, "error", builtin_error);
+
     lenv_add_builtin(e, "\\", builtin_lambda);
     lenv_add_builtin(e, "def", builtin_def);
     lenv_add_builtin(e, "=", builtin_put);

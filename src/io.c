@@ -1,9 +1,9 @@
 #include <io.h>
 #include <mpc.h>
 
-/////////////////////////
-/// `lval` IO Methods ///
-/////////////////////////
+//////////////////////
+/// `lval` Reading ///
+//////////////////////
 
 lval* lval_read_num(mpc_ast_t* t)
 {
@@ -63,21 +63,9 @@ lval* lval_read(mpc_ast_t* t)
 }
 
 
-void lval_expr_print(lval* v, char open, char close)
-{
-    putchar(open);
-
-    for (int i = 0; i < v->count; i++)
-    {
-        lval_print(v->cell[i]);
-
-        if (i != v->count - 1)
-            putchar(' ');
-    }
-
-    putchar(close);
-}
-
+///////////////////////
+/// `lval` Printing ///
+///////////////////////
 
 void lval_print(lval* v)
 {
@@ -128,6 +116,31 @@ void lval_println(lval* v)
     lval_print(v);
     putchar('\n');
 }
+
+
+///////////////////////////
+/// Expression Printing ///
+///////////////////////////
+
+void lval_expr_print(lval* v, char open, char close)
+{
+    putchar(open);
+
+    for (int i = 0; i < v->count; i++)
+    {
+        lval_print(v->cell[i]);
+
+        if (i != v->count - 1)
+            putchar(' ');
+    }
+
+    putchar(close);
+}
+
+
+/////////////////
+/// String IO ///
+/////////////////
 
 void lval_print_str(lval* v)
 {

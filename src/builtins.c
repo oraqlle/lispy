@@ -1,6 +1,8 @@
 #include <builtins.h>
 #include <macros.h>
 #include <utilities.h>
+#include <types.h>
+#include <io.h>
 
 #include <mpc.h>
 
@@ -355,18 +357,18 @@ lval* builtin_if(lenv* e, lval* a)
 }
 
 
-//////////////////////////
-/// File Load Function ///
-//////////////////////////
+////////////////////////////
+/// Builtin IO functions ///
+////////////////////////////
 
-lval* builtin_load(lenv* e, lval* a)
+lval* builtin_load(lenv* e, lval* a, mpc_parser_t* lang_expr)
 {
     LASSERT_NUM("load", a, 1);
     LASSERT_TYPE("load", a, 0, LVAL_STR);
 
     mpc_result_t r;
 
-    if (mpc_parse_contents(a->cell[0]->str, Curly, &r))
+    if (mpc_parse_contents(a->cell[0]->str, lang_expr, &r))
     {
         lval* expr = lval_read(r.output);
         mpc_ast_delete(r.output);
@@ -397,4 +399,35 @@ lval* builtin_load(lenv* e, lval* a)
 
         return err;
     }
+}
+
+
+lval* builtin_print(lenv* e, lval* a)
+{
+    for (int i = 0; i < a->count; ++i)
+    {
+        lval_print(a->cell[i]);
+        putchar(' ');
+    }
+
+    putchar('\n');
+    lval_del(a);
+
+    return lval_sexpr();
+}
+
+
+/// TODO
+// lval* builtin_input(lenv* e, lval* a);
+
+
+lval* builtin_error(lenv* e, lval* a)
+{
+    LASSERT_NUM("error", a, 1);
+    LASSERT_TYPE("error", a, 0, LVAL_STR);
+
+    lval* err = lval_err(a->cell[0]->str);
+    lval_del(a);
+
+    return err;
 }

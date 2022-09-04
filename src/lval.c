@@ -1,6 +1,7 @@
 #include <lval.h>
 #include <builtins.h>
 #include <lenv.h>
+#include <utilities.h>
 
 #include <stdarg.h>
 #include <stdlib.h>
