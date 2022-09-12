@@ -15,3 +15,102 @@
 
 ; Pack List Function
 (fun {pack f & xs} {f xs})
+
+; Curried and Uncurried calling
+(def {curry} unpack)
+(def {uncurry} pack)
+
+; List Functions
+
+;; First, Second and Third items in a list
+(fun {fst l} { eval (head l) })
+(fun {snd l} { eval (head (tail l)) })
+(fun {trd l} { eval (head (tail (tail l))) })
+
+;; Length of List
+(fun {len l} {
+    if (== l Nil)
+        {0}
+        {+ 1 (len (tail l))}
+})
+
+;; Nth Item
+(fun {nth n l} {
+    if (== n 0)
+        {fst l}
+        {nth (- n 1) (tail l)}
+})
+
+;; Last Item
+(fun {last l} {nth (- (len l) 1) l})
+
+;; Take N Items
+(fun {take n l} {
+    if (== n 0)
+        {Nil}
+        {join (head l) (take (- n 1) (tail l))}
+})
+
+;; Drop N Items
+(fun {drop n l} {
+    if (== n 0)
+        {l}
+        {drop (- n 1) (tail l)}
+})
+
+;; Split at Nth
+(fun {split n l} {list (take n l) (drop n l)})
+
+;; Element exist in list
+(fun {elem-in x l} {
+    if (== l Nil)
+        {False}
+        {if (== x (fst l)) {True} {elem x (tail l)}}
+})
+
+;; Map
+(fun {map f l} {
+    if (== l Nil)
+        {Nil}
+        {join (list (f (fst l))) (map f (tail l))}
+})
+
+;; Filter
+(fun {filter f l} {
+    if (== l Nil)
+        {Nil}
+        {join (if (f (fst l)) {head l} {Nil}) (filter f (tail l))}
+})
+
+;; Fold Left
+(fun {foldl f z l} {
+    if (== l Nil)
+        {z}
+        {foldl f (f z (fst l)) (tail l)}
+})
+
+;; Sum and Product
+(fun {sum l} {foldl + 0 l})
+(fun {product l} {foldl * 1 l})
+
+; do operation : for-each
+(fun {do & l} {
+    if (== l Nil)
+        {Nil}
+        {last l}
+})
+
+; Open new scope
+(fun {let a} {
+    ((\ {_} a) ())
+})
+
+; Logical Functions
+(fun {not x} {- 1 x})
+(fun {or x y} {+ x y})
+(fun {and x y} {* x y})
+
+; Utility Functions
+(fun {flip f a b} {f b a})
+(fun {ghost & xs} {eval xs})
+(fun {comp f g x} {f (g x)})
