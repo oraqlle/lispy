@@ -1,0 +1,17 @@
+; Atoms
+(def {Nil} {})
+(def {True} 1)
+(def {False} 0)
+
+; Function Definitions
+(def {fun} (\ {f a} {
+    def (head f) (\ (tail f) a)
+}))
+
+; Unpack List Function
+(fun {unpack f l} {
+    eval (join (list f) l)
+})
+
+; Pack List Function
+(fun {pack f & xs} {f xs})
