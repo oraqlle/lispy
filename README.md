@@ -19,6 +19,8 @@ Requires editline package (WIP for bpt package)
   - [x] lookup
 - [ ] ~~Make `.` the builtin compose operator~~
 - [ ] Add partial binding
+- [ ] Make lambdas capture outside scope
+- [ ] Proper function composition
 - [ ] Flesh out examples
 - [ ] syntax highlighting for *.cly files
 - [ ] Find better extension than *.cly
