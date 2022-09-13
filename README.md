@@ -5,19 +5,20 @@ Requires editline package (WIP for bpt package)
 ## TODO
 
 - [ ] Include prelude automatically in interpreter and file execution.
-- [ ] Add algorithms to prelude
-  - [ ] zip
-  - [ ] unzip
-  - [ ] max
-  - [ ] min
-  - [ ] foldr
-  - [ ] empty
-  - [ ] init
-  - [ ] reverse
-  - [ ] take-while
-  - [ ] drop-while
-  - [ ] lookup
-- [ ] Make `.` the builtin compose operator
+- [x] Add algorithms to prelude
+  - [x] zip
+  - [x] unzip
+  - [x] max
+  - [x] min
+  - [x] foldr
+  - [x] empty
+  - [x] init
+  - [x] reverse
+  - [x] take-while
+  - [x] drop-while
+  - [x] lookup
+- [ ] ~~Make `.` the builtin compose operator~~
+- [ ] Add partial binding
 - [ ] Flesh out examples
 - [ ] syntax highlighting for *.cly files
 - [ ] Find better extension than *.cly

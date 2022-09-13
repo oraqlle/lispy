@@ -1,0 +1,7 @@
+(load "./prelude.cly")
+
+(fun {sqr xs} {
+    (map (\ {a} {* a a}) xs)
+})
+
+(print (compose sum sqr {1 2 3 4 5}))

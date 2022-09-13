@@ -1,9 +1,0 @@
-(load "./prelude.cly")
-
-(fun {sqr xs} {
-    if (== xs Nil)
-        {Nil}
-        {join (list (* (fst xs) (fst xs))) (sqr (tail xs))}
-})
-
-(print (compose sum sqr {1 2 3 4 5}))
