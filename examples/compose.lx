@@ -1,4 +1,4 @@
-(load "./prelude.cly")
+(load "./stdlib/prelude.cly")
 
 (fun {sqr xs} {
     (map (\ {a} {* a a}) xs)

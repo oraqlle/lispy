@@ -1,5 +1,5 @@
-#ifndef CURLY_WINDOWS_H
-#define CURLY_WINDOWS_H
+#ifndef LIX_WINDOWS_H
+#define LIX_WINDOWS_H
 
 #ifdef _WIN32
 
@@ -12,4 +12,4 @@
     #include <editline/history.h>
 #endif
 
-#endif  /// CURLY_WINDOWS_H
+#endif  /// LIX_WINDOWS_H

@@ -1,5 +1,5 @@
-#ifndef CURLY_BUILTINS_H
-#define CURLY_BUILTINS_H
+#ifndef LIX_BUILTINS_H
+#define LIX_BUILTINS_H
 
 #include <types.h>
 
@@ -244,4 +244,4 @@ lval* builtin_print(lenv* e, lval* a);
 /// TODO
 lval* builtin_error(lenv* e, lval* a);
 
-#endif  /// CURLY_BUILTINS_H
+#endif  /// LIX_BUILTINS_H

@@ -1,5 +1,5 @@
-#ifndef CURLY_C_H
-#define CURLY_C_H
+#ifndef LIX_H
+#define LIX_H
 
 #include <builtins.h>
 #include <io.h>
@@ -8,4 +8,4 @@
 #include <macros.h>
 #include <windows.h>
 
-#endif  /// CURLY_C_H
+#endif  /// LIX_H

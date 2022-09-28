@@ -1,5 +1,5 @@
-#ifndef CURLY_LENV_H
-#define CURLY_LENV_H
+#ifndef LIX_LENV_H
+#define LIX_LENV_H
 
 #include <builtins.h>
 #include <lval.h>
@@ -88,4 +88,4 @@ void lenv_add_builtin(lenv* e, char* name, lbuiltin func);
 void lenv_add_builtins(lenv* e);
 
 
-#endif  /// CURLY_LENV_H
+#endif  /// LIX_LENV_H

@@ -9,7 +9,7 @@
 #include <string.h>
 
 //////////////////////////
-/// Builtin Evaluaters ///
+/// Builtin Evaluators ///
 //////////////////////////
 
 lval* builtin(lenv* e, lval* a, char* func)

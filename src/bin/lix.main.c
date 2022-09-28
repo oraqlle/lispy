@@ -1,4 +1,4 @@
-#include <curlyc.h>
+#include <lix.h>
 #include <mpc.h>
 
 #include <stdlib.h>
@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
     if (argc == 1)
     {
 
-        puts("Curly v0.0.20");
+        puts("Curly v0.1.1");
         puts("Press Ctrl+C to exit.\n");
 
         while(1)

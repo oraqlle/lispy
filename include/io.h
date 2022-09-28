@@ -1,5 +1,5 @@
-#ifndef CURLY_IO_H
-#define CURLY_IO_H
+#ifndef LIX_IO_H
+#define LIX_IO_H
 
 #include <mpc.h>
 #include <lval.h>
@@ -82,4 +82,4 @@ lval* lval_read_str(mpc_ast_t* t);
 
 
 
-#endif  /// CURLY_IO_H
+#endif  /// LIX_IO_H

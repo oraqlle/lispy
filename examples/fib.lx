@@ -1,4 +1,4 @@
-(load "./prelude.cly")
+(load "./stdlib/prelude.cly")
 
 ; Fibonacci
 (fun {fib n} {

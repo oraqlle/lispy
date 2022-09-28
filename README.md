@@ -1,4 +1,8 @@
-# `curly` - A Simple Lisp
+# Lix
+
+A simple programing language. Part of the Lisp family.
+
+## Notes
 
 Requires editline package (WIP for bpt package)
 
@@ -17,14 +21,13 @@ Requires editline package (WIP for bpt package)
   - [x] take-while
   - [x] drop-while
   - [x] lookup
-- [ ] ~~Make `.` the builtin compose operator~~
+- [x] ~~!Make `.` the builtin compose operator~~
 - [ ] Add partial binding
 - [ ] Make lambdas capture outside scope
 - [ ] Proper function composition
 - [ ] Flesh out examples
-- [ ] syntax highlighting for *.cly files
-- [ ] Find better extension than *.cly
+- [ ] syntax highlighting for `*.lx` files (was `*.cly)
+- [x] Find better extension than `*.cly` (now `*.lx`)
 - [ ] Combinator operators
 - [ ] List literals
-- [ ] Rewrite in C++
-- [ ] Rewrite in Rust
+- [ ] Rewrite in C++ or Rust (maybe both)

@@ -1,5 +1,5 @@
-#ifndef CURLY_UTILITIES_H
-#define CURLY_UTILITIES_H
+#ifndef LIX_UTILITIES_H
+#define LIX_UTILITIES_H
 
 #include <types.h>
 
@@ -18,4 +18,4 @@ char* ltype_name(int t);
 /// TODO
 // lbuiltin partial(builtinload load, mpc_parser_t* parser_id);
 
-#endif  /// CURLY_UTILITIES_H
+#endif  /// LIX_UTILITIES_H
