@@ -407,3 +407,37 @@ int lval_eq(lval* x, lval* y)
 
     return 0;
 }
+
+
+////////////////////
+/// Prelude Load ///
+////////////////////
+
+lval* load_prelude(lenv* e)
+{
+    #define PRELUDE_PATH_SIZE 100
+
+    char prelude_path[PRELUDE_PATH_SIZE];
+    char *envvar = "HOME";
+
+    if (!getenv(envvar))
+    {
+        fprintf(stderr, "The environment variable %s was not found.\n", envvar);
+        exit(1);
+    }
+
+ 
+    if (snprintf(prelude_path, PRELUDE_PATH_SIZE, "%s/.lix/stdlib/prelude.lx", getenv(envvar)) >= PRELUDE_PATH_SIZE)
+    {
+        fprintf(stderr, "PRELUDE_PATH_SIZE of %d was too small. Aborting\n", PRELUDE_PATH_SIZE);
+        exit(1);
+    }    
+    
+    lval* prelude = lval_add(lval_sexpr(), lval_str(prelude_path));
+    lval* p = builtin_load(e, prelude);
+
+    if (p->type == LVAL_ERR)
+        lval_println(p);
+
+    return p;
+}

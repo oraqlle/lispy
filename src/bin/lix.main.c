@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 
+
 int main(int argc, char* argv[])
 {
     mpc_parser_t* Number = mpc_new("number");
@@ -31,6 +32,7 @@ int main(int argc, char* argv[])
 
     lenv* e = lenv_new(Lix);
     lenv_add_builtins(e);
+    lval* p = load_prelude(e);
 
     if (argc == 1)
     {
@@ -74,6 +76,7 @@ int main(int argc, char* argv[])
             lval_del(x);
         }
 
+    lval_del(p);
     lenv_del(e);
     mpc_cleanup(8, Number, Symbol, String, Comment, Sexpr, Qexpr, Expr, Lix);
 

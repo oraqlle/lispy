@@ -30,13 +30,3 @@ char* ltype_name(int t)
             return "Unknown";
     }
 }
-
-// lbuiltin partial(builtinload load, mpc_parser_t* parser_id)
-// {
-//     lval* partial_builtin_load(lenv* e, lval* a)
-//     {
-//         return load(e, a, parser_id);
-//     }
-
-//     return partial_builtin_load;
-// }
