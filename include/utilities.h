@@ -5,6 +5,18 @@
 
 #include <mpc.h>
 
+#ifdef _WIN32
+
+    char* readline(char* prompt);
+
+    void add_history(char* unused);
+
+#else
+    #include <editline/readline.h>
+    #include <editline/history.h>
+#endif
+
+
 /// \brief Returns the name of a type
 ///
 /// \details Returns a string of of the passed
@@ -15,7 +27,6 @@
 char* ltype_name(int t);
 
 
-/// TODO
-// lbuiltin partial(builtinload load, mpc_parser_t* parser_id);
+
 
 #endif  /// LIX_UTILITIES_H

@@ -4,11 +4,12 @@ A simple programing language. Part of the Lisp family.
 
 ## Notes
 
-Requires editline package (WIP for bpt package)
+Lix is a work-in-progress and experimental language.
+Requires editline package (WIP for bpt package).
 
 ## TODO
 
-- [ ] Include prelude automatically in interpreter and file execution.
+- [x] Include prelude automatically in interpreter and file execution.
 - [x] Add algorithms to prelude
   - [x] zip
   - [x] unzip
@@ -22,7 +23,7 @@ Requires editline package (WIP for bpt package)
   - [x] drop-while
   - [x] lookup
 - [x] ~~!Make `.` the builtin compose operator~~
-- [ ] Add partial binding
+- [ ] Add partial binding operation/builtin
 - [ ] Make lambdas capture outside scope
 - [ ] Proper function composition
 - [ ] Flesh out examples
@@ -31,3 +32,4 @@ Requires editline package (WIP for bpt package)
 - [ ] Combinator operators
 - [ ] List literals
 - [ ] Rewrite in C++ or Rust (maybe both)
+- [ ] Install bash/PowerShell script

@@ -6,6 +6,5 @@
 #include <lval.h>
 #include <lenv.h>
 #include <macros.h>
-#include <windows.h>
 
 #endif  /// LIX_H

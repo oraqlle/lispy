@@ -418,7 +418,12 @@ lval* load_prelude(lenv* e)
     #define PRELUDE_PATH_SIZE 100
 
     char prelude_path[PRELUDE_PATH_SIZE];
-    char *envvar = "HOME";
+
+    #ifdef _WIN32
+        char* envvar = "USERPROFILE";
+    #else
+        char* envvar = "HOME";
+    #endif  /// _WIN32
 
     if (!getenv(envvar))
     {
