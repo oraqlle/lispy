@@ -1,5 +1,5 @@
-#ifndef CURLY_TYPES_H
-#define CURLY_TYPES_H
+#ifndef LIX_TYPES_H
+#define LIX_TYPES_H
 
 #include <mpc.h>
 
@@ -68,4 +68,4 @@ typedef struct lenv
     mpc_parser_t* parser_id;
 } lenv;
 
-#endif  // CURLY_TYPES_H
+#endif  // LIX_TYPES_H

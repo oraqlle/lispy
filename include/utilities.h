@@ -1,9 +1,21 @@
-#ifndef CURLY_UTILITIES_H
-#define CURLY_UTILITIES_H
+#ifndef LIX_UTILITIES_H
+#define LIX_UTILITIES_H
 
 #include <types.h>
 
 #include <mpc.h>
+
+#ifdef _WIN32
+
+    char* readline(char* prompt);
+
+    void add_history(char* unused);
+
+#else
+    #include <editline/readline.h>
+    #include <editline/history.h>
+#endif
+
 
 /// \brief Returns the name of a type
 ///
@@ -15,7 +27,6 @@
 char* ltype_name(int t);
 
 
-/// TODO
-// lbuiltin partial(builtinload load, mpc_parser_t* parser_id);
 
-#endif  /// CURLY_UTILITIES_H
+
+#endif  /// LIX_UTILITIES_H

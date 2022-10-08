@@ -1,7 +1,8 @@
-#include <curlyc.h>
+#include <lix.h>
 #include <mpc.h>
 
 #include <stdlib.h>
+
 
 int main(int argc, char* argv[])
 {
@@ -12,7 +13,7 @@ int main(int argc, char* argv[])
     mpc_parser_t* Sexpr = mpc_new("sexpr");
     mpc_parser_t* Qexpr = mpc_new("qexpr");
     mpc_parser_t* Expr = mpc_new("expr");
-    mpc_parser_t* Curly = mpc_new("curly");
+    mpc_parser_t* Lix = mpc_new("lix");
 
 
     mpca_lang(MPCA_LANG_DEFAULT,
@@ -25,28 +26,29 @@ int main(int argc, char* argv[])
             qexpr       : '{' <expr>* '}' ;                         \
             expr        : <number>  | <symbol> | <string>           \
                         | <comment> | <sexpr>  | <qexpr>  ;         \
-            curly       : /^/ <expr>* /$/ ;                         \
+            lix         : /^/ <expr>* /$/ ;                         \
         ",
-        Number, Symbol, String, Comment, Sexpr, Qexpr, Expr, Curly);
+        Number, Symbol, String, Comment, Sexpr, Qexpr, Expr, Lix);
 
-    lenv* e = lenv_new(Curly);
+    lenv* e = lenv_new(Lix);
     lenv_add_builtins(e);
+    lval* p = load_prelude(e);
 
     if (argc == 1)
     {
 
-        puts("Curly v0.0.20");
+        puts("Lix v0.1.1");
         puts("Press Ctrl+C to exit.\n");
 
         while(1)
         {
-            char* input = readline("curly> ");
+            char* input = readline("lix> ");
 
             add_history(input);
 
             mpc_result_t r;
 
-            if (mpc_parse("<stdin>", input, Curly, &r))
+            if (mpc_parse("<stdin>", input, Lix, &r))
             {
                 lval* x = lval_eval(e, lval_read(r.output));
                 lval_println(x);
@@ -74,8 +76,9 @@ int main(int argc, char* argv[])
             lval_del(x);
         }
 
+    lval_del(p);
     lenv_del(e);
-    mpc_cleanup(8, Number, Symbol, String, Comment, Sexpr, Qexpr, Expr, Curly);
+    mpc_cleanup(8, Number, Symbol, String, Comment, Sexpr, Qexpr, Expr, Lix);
 
     return 0;
 }

@@ -1,5 +1,5 @@
-#ifndef CURLY_MACROS_H
-#define CURLY_MACROS_H
+#ifndef LIX_MACROS_H
+#define LIX_MACROS_H
 
 #include <lval.h>
 #include <lenv.h>
@@ -33,4 +33,4 @@
     "Function '%s' passed {} for argument %i.", func, index);
 
 
-#endif  /// CURLY_MACROS_H
+#endif  /// LIX_MACROS_H

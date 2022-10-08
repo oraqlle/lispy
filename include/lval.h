@@ -1,5 +1,5 @@
-#ifndef CURLY_LVAL_H
-#define CURLY_LVAL_H
+#ifndef LIX_LVAL_H
+#define LIX_LVAL_H
 
 #include <builtins.h>
 #include <lenv.h>
@@ -191,4 +191,12 @@ lval* lval_join(lval* x, lval* y);
 /// TODO
 int lval_eq(lval* x, lval* y);
 
-#endif  /// CURLY_LVAL_H
+
+////////////////////
+/// Prelude Load ///
+////////////////////
+
+/// TODO
+lval* load_prelude(lenv* e);
+
+#endif  /// LIX_LVAL_H
