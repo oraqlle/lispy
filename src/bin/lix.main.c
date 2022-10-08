@@ -1,36 +1,12 @@
 #include <lix.h>
-#include <mpc.h>
+
 
 #include <stdlib.h>
 
 
 int main(int argc, char* argv[])
 {
-    mpc_parser_t* Number = mpc_new("number");
-    mpc_parser_t* Symbol = mpc_new("symbol");
-    mpc_parser_t* String = mpc_new("string");
-    mpc_parser_t* Comment = mpc_new("comment");
-    mpc_parser_t* Sexpr = mpc_new("sexpr");
-    mpc_parser_t* Qexpr = mpc_new("qexpr");
-    mpc_parser_t* Expr = mpc_new("expr");
-    mpc_parser_t* Lix = mpc_new("lix");
-
-
-    mpca_lang(MPCA_LANG_DEFAULT,
-        "                                                           \
-            number      : /-?[0-9]+/ ;                              \
-            symbol      : /[a-zA-Z0-9_+\\-*\\/\\\\=<>!&]+/ ;        \
-            string      : /\"(\\\\.|[^\"])*\"/ ;                    \
-            comment     : /;[^\\r\\n]*/ ;                           \
-            sexpr       : '(' <expr>* ')' ;                         \
-            qexpr       : '{' <expr>* '}' ;                         \
-            expr        : <number>  | <symbol> | <string>           \
-                        | <comment> | <sexpr>  | <qexpr>  ;         \
-            lix         : /^/ <expr>* /$/ ;                         \
-        ",
-        Number, Symbol, String, Comment, Sexpr, Qexpr, Expr, Lix);
-
-    lenv* e = lenv_new(Lix);
+    lenv* e = lenv_new();
     lenv_add_builtins(e);
     lval* p = load_prelude(e);
 
@@ -49,6 +25,8 @@ int main(int argc, char* argv[])
             int pos = 0;
             lval* expr = lval_read_expr(input, &pos, '\0');
             lval* x = lval_eval(e, expr);
+            lval_println(x);
+            lval_del(x);
 
             free(input);
         }
@@ -68,7 +46,6 @@ int main(int argc, char* argv[])
 
     lval_del(p);
     lenv_del(e);
-    mpc_cleanup(8, Number, Symbol, String, Comment, Sexpr, Qexpr, Expr, Lix);
 
     return 0;
 }

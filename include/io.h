@@ -1,34 +1,13 @@
 #ifndef LIX_IO_H
 #define LIX_IO_H
 
-#include <mpc.h>
+
 #include <lval.h>
 
 
 //////////////////////
 /// `lval` Reading ///
 //////////////////////
-
-/// \brief Returns lval number type from the AST.
-///
-/// \details Reads a value from the AST and 
-/// returns the result as an lval LVAL_NUM type
-/// or an LVAL_ERR lval if the value is not an 
-/// number.
-///
-/// \param v - type: mpc_ast_t*
-/// \return lval*
-lval* lval_read_num(mpc_ast_t* t);
-
-
-/// \brief Parses the AST.
-///
-/// \details Parses the AST and returns the resulting
-/// as an lval's.
-///
-/// \param t - type: mpc_ast_t*
-/// \return lval*
-lval* lval_read(mpc_ast_t* t);
 
 
 ///////////////////////
@@ -70,15 +49,6 @@ void lval_expr_print(lval* v, char open, char close);
 
 /// TODO
 void lval_print_str(lval* v);
-
-
-/// TODO
-lval* lval_read_str(mpc_ast_t* t);
-
-
-/////////////////////
-/// Load Function ///
-/////////////////////
 
 
 

@@ -1,11 +1,11 @@
 #include <builtins.h>
-#include <macros.h>
-#include <utilities.h>
-#include <types.h>
 #include <io.h>
+#include <macros.h>
+#include <parser.h>
+#include <types.h>
+#include <utilities.h>
 
 #include <stdio.h>
-
 #include <string.h>
 
 //////////////////////////
@@ -241,7 +241,7 @@ lval* builtin_lambda(lenv* e, lval* a)
     lval* formals = lval_pop(a, 0);
     lval* body = lval_pop(a, 0);
     lval_del(a);
-    return lval_lambda(formals, body, e->parser_id);
+    return lval_lambda(formals, body);
 }
 
 
@@ -366,7 +366,7 @@ lval* builtin_load(lenv* e, lval* a)
     LASSERT_NUM("load", a, 1);
     LASSERT_TYPE("load", a, 0, LVAL_STR);
 
-    FILE* f  fopen(a->cell[0]->str, "rb");
+    FILE* f = fopen(a->cell[0]->str, "rb");
 
     if (f == NULL)
     {
@@ -386,7 +386,7 @@ lval* builtin_load(lenv* e, lval* a)
     lval* expr = lval_read_expr(input, &pos, '\0');
     free(input);
 
-    if (expr->type == LVAL_ERR)
+    if (expr->type != LVAL_ERR)
         while (expr->count)
         {
             lval* x = lval_eval(e, lval_pop(expr, 0));
