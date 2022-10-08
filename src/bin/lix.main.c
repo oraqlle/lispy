@@ -46,19 +46,9 @@ int main(int argc, char* argv[])
 
             add_history(input);
 
-            mpc_result_t r;
-
-            if (mpc_parse("<stdin>", input, Lix, &r))
-            {
-                lval* x = lval_eval(e, lval_read(r.output));
-                lval_println(x);
-                lval_del(x);
-            }
-            else
-            {
-                mpc_err_print(r.error);
-                mpc_err_delete(r.error);
-            }
+            int pos = 0;
+            lval* expr = lval_read_expr(input, &pos, '\0');
+            lval* x = lval_eval(e, expr);
 
             free(input);
         }
