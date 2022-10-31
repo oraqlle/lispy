@@ -243,11 +243,11 @@
 })
 
 ;; Maximum
-(fun {min & xs} {
+(fun {max & xs} {
     if (== (tail xs) Nil) {fst xs}
     {do
         (= {rest} (unpack min (tail xs)))
         (= {item} (fst xs))
-        (if (< item rest) {item} {rest})
+        (if (> item rest) {item} {rest})
     }
 })
