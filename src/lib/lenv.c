@@ -10,7 +10,7 @@
 /// `lenv` Constructors ///
 ///////////////////////////
 
-lenv* lenv_new(mpc_parser_t* pid)
+lenv* lenv_new(void)
 {
     lenv* e = malloc(sizeof(lenv));
 
@@ -19,8 +19,6 @@ lenv* lenv_new(mpc_parser_t* pid)
     e->count = 0;
     e->syms = NULL;
     e->vals = NULL;
-
-    e->parser_id = pid;
 
     return e;
 }
@@ -39,7 +37,6 @@ void lenv_del(lenv* e)
     }
 
     e->par = NULL;
-    e->parser_id = NULL;
 
     free(e->syms);
     free(e->vals);
@@ -88,7 +85,6 @@ lenv* lenv_copy(lenv* e)
     lenv* n = malloc(sizeof(lenv));
     n->par = e->par;
     n->count = e->count;
-    n->parser_id = e->parser_id;
 
     n->syms = malloc(sizeof(char*) * n->count);
     n->vals = malloc(sizeof(lval*) * n->count);

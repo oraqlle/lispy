@@ -1,7 +1,7 @@
 #ifndef LIX_TYPES_H
 #define LIX_TYPES_H
 
-#include <mpc.h>
+
 
 struct lval;
 typedef struct lval lval;
@@ -64,8 +64,6 @@ typedef struct lenv
     int count;
     char** syms;
     lval** vals;
-
-    mpc_parser_t* parser_id;
 } lenv;
 
 #endif  // LIX_TYPES_H

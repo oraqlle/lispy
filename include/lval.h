@@ -26,7 +26,7 @@ lval* lval_num(long x);
 /// and sets the value to the provided error
 /// message `x`.
 /// 
-/// \param m - type: char*
+/// \param fmt - type: char*
 /// \return lval* 
 lval* lval_err(char* fmt, ...);
 
@@ -82,7 +82,7 @@ lval* lval_fun(lbuiltin func);
 /// \param formals - type: lval*
 /// \param body - type: lval*
 /// \return lval*
-lval* lval_lambda(lval* formals, lval* body, mpc_parser_t* pid);
+lval* lval_lambda(lval* formals, lval* body);
 
 
 /////////////////////////

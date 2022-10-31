@@ -1,11 +1,11 @@
 #include <builtins.h>
-#include <macros.h>
-#include <utilities.h>
-#include <types.h>
 #include <io.h>
+#include <macros.h>
+#include <parser.h>
+#include <types.h>
+#include <utilities.h>
 
-#include <mpc.h>
-
+#include <stdio.h>
 #include <string.h>
 
 //////////////////////////
@@ -241,7 +241,7 @@ lval* builtin_lambda(lenv* e, lval* a)
     lval* formals = lval_pop(a, 0);
     lval* body = lval_pop(a, 0);
     lval_del(a);
-    return lval_lambda(formals, body, e->parser_id);
+    return lval_lambda(formals, body);
 }
 
 
@@ -366,39 +366,42 @@ lval* builtin_load(lenv* e, lval* a)
     LASSERT_NUM("load", a, 1);
     LASSERT_TYPE("load", a, 0, LVAL_STR);
 
-    mpc_result_t r;
+    FILE* f = fopen(a->cell[0]->str, "rb");
 
-    if (mpc_parse_contents(a->cell[0]->str, e->parser_id, &r))
+    if (f == NULL)
     {
-        lval* expr = lval_read(r.output);
-        mpc_ast_delete(r.output);
+        lval* err = lval_err("Could not load library %s", a->cell[0]->str);
+        lval_del(a);
+        return err;
+    }
 
+    fseek(f, 0, SEEK_END);
+    long length = ftell(f);
+    fseek(f, 0, SEEK_SET);
+    char* input = calloc(length + 1, 1);
+    fread(input, 1, length, f);
+    fclose(f);
+
+    int pos = 0;
+    lval* expr = lval_read_expr(input, &pos, '\0');
+    free(input);
+
+    if (expr->type != LVAL_ERR)
         while (expr->count)
         {
             lval* x = lval_eval(e, lval_pop(expr, 0));
-
             if (x->type == LVAL_ERR)
                 lval_println(x);
-
+            
             lval_del(x);
         }
-
-        lval_del(expr);
-        lval_del(a);
-
-        return lval_sexpr();
-    }
     else
-    {
-        char* err_msg = mpc_err_string(r.error);
-        mpc_err_delete(r.error);
+        lval_println(expr);
 
-        lval* err = lval_err("Could not load Library %s", err_msg);
-        free(err_msg);
-        lval_del(a);
+    lval_del(expr);
+    lval_del(a);
 
-        return err;
-    }
+    return lval_sexpr();
 }
 
 
