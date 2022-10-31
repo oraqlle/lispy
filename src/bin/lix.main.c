@@ -1,6 +1,5 @@
 #include <lix.h>
 
-
 #include <stdlib.h>
 
 
@@ -13,7 +12,7 @@ int main(int argc, char* argv[])
     if (argc == 1)
     {
 
-        puts("Lix v0.1.1");
+        puts("Lix v0.3.1");
         puts("Press Ctrl+C to exit.\n");
 
         while(1)
