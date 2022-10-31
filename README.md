@@ -5,7 +5,7 @@ The original implementation of Lix in C. Lix is a small but robust programming l
 ## Notes
 
 - This implementation of Lix is toy-like and has no real production testing. It has fundamental, yet limited feature set.
-- A more complete version of lix is being developed on the [Lix]() repository as well as well as a Rust implementation on the [Rust-Lix](https://github.com/oraqlle/rust-lix) repository.
+- A more complete version of lix is being developed on the [Lix](https://github.com/oraqlle/lix) repository as well as well as a Rust implementation on the [Rust-Lix](https://github.com/oraqlle/rust-lix) repository.
 - Lix is a personal project aimed for me to explore programming language design and implementation.
 
 ## Credit
