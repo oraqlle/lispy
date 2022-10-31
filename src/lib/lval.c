@@ -415,237 +415,31 @@ int lval_eq(lval* x, lval* y)
 
 lval* load_prelude(lenv* e)
 {
-    static char* prelude = "; Atoms                                         \
-(def {Nil} {})                                                              \
-(def {True} 1)                                                              \
-(def {False} 0)                                                             \
-                                                                            \
-; Function Definitions                                                      \
-(def {fun} (\\ {f a} {                                                      \
-    def (head f) (\\ (tail f) a)                                            \
-}))                                                                         \
-                                                                            \
-; Unpack List Function                                                      \
-(fun {unpack f l} {                                                         \
-    eval (join (list f) l)                                                  \
-})                                                                          \
-                                                                            \
-; Pack List Function                                                        \
-(fun {pack f & xs} {f xs})                                                  \
-                                                                            \
-; Curried and Uncurried calling                                             \
-(def {curry} unpack)                                                        \
-(def {uncurry} pack)                                                        \
-                                                                            \
-; Open new scope                                                            \
-(fun {let a} {                                                              \
-    ((\\ {_} a) ())                                                         \
-})                                                                          \
-                                                                            \
-; is                                                                        \
-(fun {is x y} {                                                             \
-    if (== x y)                                                             \
-        {True}                                                              \
-        {False}                                                             \
-})                                                                          \
-                                                                            \
-; Logical Functions                                                         \
-(fun {not x} {- 1 x})                                                       \
-(fun {or x y} {+ x y})                                                      \
-(fun {and x y} {* x y})                                                     \
-                                                                            \
-; Utility Functions                                                         \
-(fun {flip f a b} {f b a})                                                  \
-(fun {ghost & xs} {eval xs})                                                \
-(fun {compose f g x} {f (g x)})                                             \
-                                                                            \
-; do block                                                                  \
-(fun {do & l} {                                                             \
-    if (== l Nil)                                                           \
-        {Nil}                                                               \
-        {last l}                                                            \
-})                                                                          \
-                                                                            \
-; List Algorithms                                                           \
-                                                                            \
-;; First, Second and Third items in a list                                  \
-(fun {fst l} { eval (head l) })                                             \
-(fun {snd l} { eval (head (tail l)) })                                      \
-(fun {trd l} { eval (head (tail (tail l))) })                               \
-                                                                            \
-;; Length of List                                                           \
-(fun {len l} {                                                              \
-    if (== l Nil)                                                           \
-        {0}                                                                 \
-        {+ 1 (len (tail l))}                                                \
-})                                                                          \
-                                                                            \
-;; All elements but the last                                                \
-(fun {init l} {                                                             \
-    if (== (tail l) Nil)                                                    \
-        {Nil}                                                               \
-        {join (head l) (init (tail l))}                                     \
-})                                                                          \
-                                                                            \
-;; Reverse                                                                  \
-(fun {reverse l} {                                                          \
-    if (== l Nil)                                                           \
-        {Nil}                                                               \
-        {join (reverse (tail l)) (head l)}                                  \
-})                                                                          \
-                                                                            \
-;; Nth Item                                                                 \
-(fun {nth n l} {                                                            \
-    if (== n 0)                                                             \
-        {fst l}                                                             \
-        {nth (- n 1) (tail l)}                                              \
-})                                                                          \
-                                                                            \
-;; Last Item                                                                \
-(fun {last l} {nth (- (len l) 1) l})                                        \
-                                                                            \
-;; Take N Items                                                             \
-(fun {take n l} {                                                           \
-    if (== n 0)                                                             \
-        {Nil}                                                               \
-        {join (head l) (take (- n 1) (tail l))}                             \
-})                                                                          \
-                                                                            \
-;; Take While                                                               \
-(fun {take-while f l} {                                                     \
-    if (not (unpack f (head l)))                                            \
-        {Nil}                                                               \
-        {join (head l) (take-while f (tail l))}                             \
-})                                                                          \
-                                                                            \
-;; Drop N Items                                                             \
-(fun {drop n l} {                                                           \
-    if (== n 0)                                                             \
-        {l}                                                                 \
-        {drop (- n 1) (tail l)}                                             \
-})                                                                          \
-                                                                            \
-;; Drop While                                                               \
-(fun {drop-while f l} {                                                     \
-    if (not (unpack f (head l)))                                            \
-        {l}                                                                 \
-        {drop-while f (tail l)}                                             \
-})                                                                          \
-                                                                            \
-;; Split at Nth                                                             \
-(fun {split n l} {list (take n l) (drop n l)})                              \
-                                                                            \
-;; Element exist in list                                                    \
-(fun {in x l} {                                                             \
-    if (== l Nil)                                                           \
-        {False}                                                             \
-        {if (== x (fst l)) {True} {elem x (tail l)}}                        \
-})                                                                          \
-                                                                            \
-(fun {lookup x l} {                                                         \
-    if (== l Nil)                                                           \
-        {error \"No Element Found\"}                                        \
-        {do                                                                 \
-            (= {key} (fst (fst l)))                                         \
-            (= {val} (snd (fst l)))                                         \
-            (if (== key x) {val} {lookup x (tail l)})                       \
-        }                                                                   \
-})                                                                          \
-                                                                            \
-;; Zip                                                                      \
-(fun {zip x y} {                                                            \
-    if (or (== x Nil) (== y Nil))                                           \
-        {Nil}                                                               \
-        {join (list (join (head x) (head y))) (zip (tail x) (tail y))}      \
-})                                                                          \
-                                                                            \
-;; Unzip                                                                    \
-(fun {unzip l} {                                                            \
-    if (== l Nil)                                                           \
-        {{Nil Nil}}                                                         \
-        {do                                                                 \
-            (= {x} (fst l))                                                 \
-            (= {xs} (unzip (tail l)))                                       \
-            (list (join (head x) (fst xs)) (join (tail x) (snd xs)))        \
-        }                                                                   \
-})                                                                          \
-                                                                            \
-;; Map                                                                      \
-(fun {map f l} {                                                            \
-    if (== l Nil)                                                           \
-        {Nil}                                                               \
-        {join (list (f (fst l))) (map f (tail l))}                          \
-})                                                                          \
-                                                                            \
-;; Filter                                                                   \
-(fun {filter f l} {                                                         \
-    if (== l Nil)                                                           \
-        {Nil}                                                               \
-        {join (if (f (fst l)) {head l} {Nil}) (filter f (tail l))}          \
-})                                                                          \
-                                                                            \
-;; Fold Left                                                                \
-(fun {foldl f z l} {                                                        \
-    if (== l Nil)                                                           \
-        {z}                                                                 \
-        {foldl f (f z (fst l)) (tail l)}                                    \
-})                                                                          \
-                                                                            \
-;; Fold Right                                                               \
-(fun {foldr f z l} {                                                        \
-    if (== l Nil)                                                           \
-        {z}                                                                 \
-        {f (fst l) (foldr f z (tail l))}                                    \
-})                                                                          \
-                                                                            \
-;; Sum and Product                                                          \
-(fun {sum l} {foldl + 0 l})                                                 \
-(fun {product l} {foldl * 1 l})                                             \
-                                                                            \
-; Conditional Expression                                                    \
-                                                                            \
-;; Select                                                                   \
-(fun {select & cs} {                                                        \
-    if (== cs Nil)                                                          \
-        {error \"No Selection Found\"}                                      \
-        {if (fst (fst cs)) {snd (fst cs)} {unpack select (tail cs)}}        \
-})                                                                          \
-                                                                            \
-;; Otherwise                                                                \
-(def {otherwise} True)                                                      \
-                                                                            \
-;; Case                                                                     \
-(fun {case x & cs} {                                                        \
-    if (== cs Nil)                                                          \
-        {error \"No Case Found\"}                                           \
-        {if (== x (fst (fst cs))) {snd (fst cs)} {                          \
-            unpack case (join (list x) (tail cs))}}                         \
-})                                                                          \
-                                                                            \
-; Numeric Functions                                                         \
-                                                                            \
-;; Minimum                                                                  \
-(fun {min & xs} {                                                           \
-    if (== (tail xs) Nil) {fst xs}                                          \
-    {do                                                                     \
-        (= {rest} (unpack min (tail xs)))                                   \
-        (= {item} (fst xs))                                                 \
-        (if (< item rest) {item} {rest})                                    \
-    }                                                                       \
-})                                                                          \
-                                                                            \
-;; Maximum                                                                  \
-(fun {min & xs} {                                                           \
-    if (== (tail xs) Nil) {fst xs}                                          \
-    {do                                                                     \
-        (= {rest} (unpack min (tail xs)))                                   \
-        (= {item} (fst xs))                                                 \
-        (if (< item rest) {item} {rest})                                    \
-    }                                                                       \
-})\n";
+    #define PRELUDE_PATH_SIZE 100
+
+    char prelude_path[PRELUDE_PATH_SIZE];
+
+    #ifdef _WIN32
+        char* envvar = "USERPROFILE";
+    #else
+        char* envvar = "HOME";
+    #endif  /// _WIN32
+
+    if (!getenv(envvar))
+    {
+        fprintf(stderr, "The environment variable %s was not found.\n", envvar);
+        exit(1);
+    }
+
+ 
+    if (snprintf(prelude_path, PRELUDE_PATH_SIZE, "%s/.lix/stdlib/prelude.lx", getenv(envvar)) >= PRELUDE_PATH_SIZE)
+    {
+        fprintf(stderr, "PRELUDE_PATH_SIZE of %d was too small. Aborting\n", PRELUDE_PATH_SIZE);
+        exit(1);
+    }    
     
-    lval* lval_prelude = lval_add(lval_sexpr(), lval_str(prelude));
-    lval* p = builtin_load(e, lval_prelude);
+    lval* prelude = lval_add(lval_sexpr(), lval_str(prelude_path));
+    lval* p = builtin_load(e, prelude);
 
     if (p->type == LVAL_ERR)
         lval_println(p);
