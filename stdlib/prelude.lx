@@ -125,6 +125,7 @@
         {if (== x (fst l)) {True} {elem x (tail l)}}
 })
 
+;; Find element in list of pairs
 (fun {lookup x l} {
     if (== l Nil)
         {error "No Element Found"}
@@ -197,17 +198,6 @@
 ;; Otherwise
 (def {otherwise} True)
 
-;;; eg.
-
-;;; Print Day of Month suffix
-;;; (fun {month-day-suffix i} {
-;;;     select
-;;;         {(== i 0)  "st"}
-;;;         {(== i 1)  "nd"}
-;;;         {(== i 3)  "rd"}
-;;;         {otherwise "th"}
-;;; })
-
 ;; Case
 (fun {case x & cs} {
     if (== cs Nil)
@@ -215,20 +205,6 @@
         {if (== x (fst (fst cs))) {snd (fst cs)} {
             unpack case (join (list x) (tail cs))}}
 })
-
-;;; eg.
-
-;;; Day of the week
-;;; (fun {day-name x} {
-;;;     case x
-;;;         {0 "Monday"}
-;;;         {1 "Tuesday"}
-;;;         {2 "Wednesday"}
-;;;         {3 "Thursday"}
-;;;         {4 "Friday"}
-;;;         {5 "Saturday"}
-;;;         {6 "Sunday"}
-;;; })
 
 ; Numeric Functions
 
@@ -246,7 +222,7 @@
 (fun {max & xs} {
     if (== (tail xs) Nil) {fst xs}
     {do
-        (= {rest} (unpack min (tail xs)))
+        (= {rest} (unpack max (tail xs)))
         (= {item} (fst xs))
         (if (> item rest) {item} {rest})
     }
