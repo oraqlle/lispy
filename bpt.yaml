@@ -6,9 +6,9 @@ readme: README.md
 description: |
   A simple programming language part of the Lisp family.
 
-repository: https://github.com/oraqlle/lix
+repository: https://github.com/oraqlle/c-lix
 
 license: MIT
 
 authors:
-  - Tyler Swann <oraqlle@github.com>
+  - Tyler Swann <tyler.swann05@gmail.com>
