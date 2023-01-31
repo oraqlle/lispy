@@ -1,5 +1,5 @@
-#ifndef LIX_H
-#define LIX_H
+#ifndef LISPY_H
+#define LISPY_H
 
 #include <builtins.h>
 #include <io.h>
@@ -7,5 +7,6 @@
 #include <lenv.h>
 #include <macros.h>
 #include <parser.h>
+#include <utilities.h>
 
-#endif  /// LIX_H
+#endif  /// LISPY_H

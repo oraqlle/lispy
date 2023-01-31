@@ -75,7 +75,7 @@ lval* lval_read(char* s, int* i)
 }
 
 
-lval* lval_read_str(char*s , int* i)
+lval* lval_read_str(char* s, int* i)
 {
     char* part = calloc(1, 1);
 

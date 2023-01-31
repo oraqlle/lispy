@@ -86,7 +86,7 @@ lval* builtin_op(lenv* e, lval* a, char* op)
 
 
 ////////////////////////////////////
-/// Builtin Arithmatic Operators ///
+/// Builtin Arithmetic Operators ///
 ////////////////////////////////////
 
 lval* builtin_add(lenv* e, lval* a)
@@ -236,7 +236,7 @@ lval* builtin_lambda(lenv* e, lval* a)
     for (int i = 0; i < a->cell[0]->count; i++)
         LASSERT(a, (a->cell[0]->cell[i]->type == LVAL_SYM),
                 "Cannot define non-symbol. Got %s, Expected %s.",
-                ltype_name(a->cell[0]->cell[i]->type),ltype_name(LVAL_SYM));
+                ltype_name(a->cell[0]->cell[i]->type), ltype_name(LVAL_SYM));
 
     lval* formals = lval_pop(a, 0);
     lval* body = lval_pop(a, 0);

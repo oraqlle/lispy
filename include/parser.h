@@ -1,5 +1,5 @@
-#ifndef LIX_PARSER_H
-#define LIX_PARSER_H
+#ifndef LISPY_PARSER_H
+#define LISPY_PARSER_H
 
 #include <lval.h>
 
@@ -28,4 +28,4 @@ char lval_str_unescape(char x);
 char* lval_str_escape(char x);
 
 
-#endif  // LIX_PARSER_H
+#endif  // LISPY_PARSER_H

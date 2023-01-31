@@ -1,8 +1,7 @@
-#ifndef LIX_UTILITIES_H
-#define LIX_UTILITIES_H
+#ifndef LISPY_UTILITIES_H
+#define LISPY_UTILITIES_H
 
 #include <types.h>
-
 
 
 #ifdef _WIN32
@@ -26,7 +25,4 @@
 /// \return char*
 char* ltype_name(int t);
 
-
-
-
-#endif  /// LIX_UTILITIES_H
+#endif  /// LISPY_UTILITIES_H

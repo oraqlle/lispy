@@ -1,6 +1,5 @@
-#ifndef LIX_TYPES_H
-#define LIX_TYPES_H
-
+#ifndef LISPY_TYPES_H
+#define LISPY_TYPES_H
 
 
 struct lval;
@@ -19,7 +18,7 @@ typedef lval*(*lbuiltin)(lenv*, lval*);
 /// 
 /// A `lval` consists of a:
 /// - type      : int corresponding to an enum value 
-/// - num       : long coresonding to a number
+/// - num       : long corresponding to a number
 /// - err       : char* corresponding to an error message (optional)
 /// - sym       : char* corresponding to a symbol or operator (optional)
 /// - count     : int corresponding to the number of elements in the `cell` array
@@ -66,4 +65,4 @@ typedef struct lenv
     lval** vals;
 } lenv;
 
-#endif  // LIX_TYPES_H
+#endif  // LISPY_TYPES_H

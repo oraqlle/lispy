@@ -1,5 +1,5 @@
-#ifndef LIX_LENV_H
-#define LIX_LENV_H
+#ifndef LISPY_LENV_H
+#define LISPY_LENV_H
 
 #include <builtins.h>
 #include <lval.h>
@@ -88,4 +88,4 @@ void lenv_add_builtin(lenv* e, char* name, lbuiltin func);
 void lenv_add_builtins(lenv* e);
 
 
-#endif  /// LIX_LENV_H
+#endif  /// LISPY_LENV_H

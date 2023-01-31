@@ -1,4 +1,4 @@
 #! /bin/bash
 
-mkdir -p "$HOME/.lix/stdlib"
-cp "./stdlib/prelude.lx" "$HOME/.lix/stdlib/prelude.lx"
+mkdir -p "$HOME/.lispy/stdlib"
+cp "./stdlib/prelude.lx" "$HOME/.lispy/stdlib/prelude.lx"

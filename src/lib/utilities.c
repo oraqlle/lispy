@@ -1,7 +1,9 @@
 #include <utilities.h>
 #include <types.h>
 
+
 #ifdef _WIN32
+    #include <stdio.h>
 
     static char buffer[2048];
 

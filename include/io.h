@@ -1,5 +1,5 @@
-#ifndef LIX_IO_H
-#define LIX_IO_H
+#ifndef LISPY_IO_H
+#define LISPY_IO_H
 
 
 #include <lval.h>
@@ -52,4 +52,4 @@ void lval_print_str(lval* v);
 
 
 
-#endif  /// LIX_IO_H
+#endif  /// LISPY_IO_H

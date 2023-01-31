@@ -1,4 +1,4 @@
-#include <lix.h>
+#include <lispy.h>
 
 #include <stdlib.h>
 
@@ -12,12 +12,12 @@ int main(int argc, char* argv[])
     if (argc == 1)
     {
 
-        puts("Lix v0.3.1");
+        puts("Lispy v0.3.1");
         puts("Press Ctrl+C to exit.\n");
 
         while(1)
         {
-            char* input = readline("lix> ");
+            char* input = readline("lispy> ");
 
             add_history(input);
 

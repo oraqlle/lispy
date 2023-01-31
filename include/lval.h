@@ -1,5 +1,5 @@
-#ifndef LIX_LVAL_H
-#define LIX_LVAL_H
+#ifndef LISPY_LVAL_H
+#define LISPY_LVAL_H
 
 #include <builtins.h>
 #include <lenv.h>
@@ -199,4 +199,4 @@ int lval_eq(lval* x, lval* y);
 /// TODO
 lval* load_prelude(lenv* e);
 
-#endif  /// LIX_LVAL_H
+#endif  /// LISPY_LVAL_H

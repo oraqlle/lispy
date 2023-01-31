@@ -1,5 +1,5 @@
-#ifndef LIX_MACROS_H
-#define LIX_MACROS_H
+#ifndef LISPY_MACROS_H
+#define LISPY_MACROS_H
 
 #include <lval.h>
 #include <lenv.h>
@@ -33,4 +33,4 @@
     "Function '%s' passed {} for argument %i.", func, index);
 
 
-#endif  /// LIX_MACROS_H
+#endif  /// LISPY_MACROS_H

@@ -223,6 +223,7 @@ lval* lval_pop(lval* v, int i)
     return x;
 }
 
+
 lval* lval_take(lval* v, int i)
 {
     lval* x = lval_pop(v, i);
@@ -276,10 +277,10 @@ lval* lval_call(lenv* e, lval* f, lval* a)
                                 "Symbol '&' not followed by single symbol.");
             }
 
-            lval* nsym = lval_pop(f->formals, 0);
-            lenv_put(f->env, nsym, builtin_list(e, a));
+            lval* nextsym = lval_pop(f->formals, 0);
+            lenv_put(f->env, nextsym, builtin_list(e, a));
             lval_del(sym);
-            lval_del(nsym);
+            lval_del(nextsym);
             break;
         }
 
@@ -307,7 +308,8 @@ lval* lval_call(lenv* e, lval* f, lval* a)
         lval* val = lval_qexpr();
         
         lenv_put(f->env, sym, val);
-        lval_del(sym); lval_del(val);
+        lval_del(sym);
+        lval_del(val);
     }
 
     if (f->formals->count == 0)
@@ -432,7 +434,7 @@ lval* load_prelude(lenv* e)
     }
 
  
-    if (snprintf(prelude_path, PRELUDE_PATH_SIZE, "%s/.lix/stdlib/prelude.lx", getenv(envvar)) >= PRELUDE_PATH_SIZE)
+    if (snprintf(prelude_path, PRELUDE_PATH_SIZE, "%s/.lispy/stdlib/prelude.lpy", getenv(envvar)) >= PRELUDE_PATH_SIZE)
     {
         fprintf(stderr, "PRELUDE_PATH_SIZE of %d was too small. Aborting\n", PRELUDE_PATH_SIZE);
         exit(1);
