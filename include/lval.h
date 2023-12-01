@@ -17,7 +17,7 @@
 /// 
 /// @param num - type: const long
 /// @return lval* 
-lval* lval_num(long num);
+lval* lval_num(long num);  // NOLINT(google-runtime-int)
 
 
 /// @brief Creates an lval of type LVAL_ERR.
@@ -133,7 +133,7 @@ lval* lval_copy(const lval* obj);
 /// @param v - type: lval*
 /// @param ith - type: int
 /// @return lval*
-lval* lval_pop(lval* obj, int ith);
+lval* lval_pop(lval* obj, unsigned ith);
 
 
 /// @brief Takes the ith element off of the lval `obj`.
@@ -145,7 +145,7 @@ lval* lval_pop(lval* obj, int ith);
 /// @param obj - type: lval*
 /// @param ith - type: int
 /// @return lval*
-lval* lval_take(lval* obj, int ith);
+lval* lval_take(lval* obj, unsigned ith);
 
 /// @brief Evaluates the lval `obj`.
 ///

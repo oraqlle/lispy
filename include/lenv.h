@@ -77,7 +77,7 @@ void lenv_def(lenv* env, const lval* key, lval* value);
 /// @param e - type: lenv*
 /// @param name - type: char*
 /// @param f - type: lbuiltin
-void lenv_add_builtin(lenv* env, const char* namenv, lbuiltin func);
+void lenv_add_builtin(lenv* env, const char* name, lbuiltin func);
 
 
 /// @brief Adds all the builtin functions to the environment.

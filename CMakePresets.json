@@ -10,7 +10,7 @@
             "name": "dev-mode",
             "hidden": true,
             "cacheVariables": {
-                "cmake-init-example-c_DEVELOPER_MODE": "ON",
+                "lispy_interpreter_DEVELOPER_MODE": "ON",
                 "VCPKG_MANIFEST_FEATURES": "test"
             }
         },

@@ -34,7 +34,7 @@ lval* lval_err(const char* fmt, ...)
     va_start(var_list, fmt);
 
     nerrval->err = malloc(MAX_ERR_STR_SIZE);
-    vsnprintf(nerrval->err, MAX_ERR_STR_SIZE - 1, fmt, var_list);
+    vsnprintf(nerrval->err, MAX_ERR_STR_SIZE - 1, fmt, var_list);  // NOLINT(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling, clang-diagnostic-format-nonliteral)
 
     nerrval->err = realloc(nerrval->err, strlen(nerrval->err) + 1);
 
@@ -48,7 +48,7 @@ lval* lval_sym(const char* sym)
     lval* nsymval = malloc(sizeof(lval));
     nsymval->type = LVAL_SYM;
     nsymval->sym = malloc(strlen(sym) + 1);
-    strcpy(nsymval->sym, sym);
+    strcpy(nsymval->sym, sym);  // NOLINT(clang-analyzer-security.insecureAPI.strcpy)
     return nsymval;
 }
 
@@ -58,7 +58,7 @@ lval* lval_str(const char* str)
     lval* nstrval = malloc(sizeof(lval));
     nstrval->type = LVAL_STR;
     nstrval->str = malloc(strlen(str) + 1);
-    strcpy(nstrval->str, str);
+    strcpy(nstrval->str, str);  // NOLINT(clang-analyzer-security.insecureAPI.strcpy)
     return nstrval;
 }
 
@@ -92,7 +92,7 @@ lval* lval_fun(lbuiltin func)
 }
 
 
-lval* lval_lambda(lval* formals, lval* body)
+lval* lval_lambda(lval* formals, lval* body)  // NOLINT(bugprone-easily-swappable-parameters)
 {
     lval* nlambdaval = malloc(sizeof(lval));
     nlambdaval->type = LVAL_FUN;
@@ -174,9 +174,9 @@ lval* lval_copy(const lval* obj)
     switch (obj->type)
     {
         case LVAL_FUN:
-            if (obj->builtin)
+            if (obj->builtin) {
                 nval->builtin = obj->builtin;
-            else
+            } else
             {
                 nval->builtin = NULL;
                 nval->env = lenv_copy(obj->env);
@@ -191,25 +191,27 @@ lval* lval_copy(const lval* obj)
 
         case LVAL_ERR:
             nval->err = malloc(strlen(obj->err) + 1);
-            strcpy(nval->err, obj->err);
+            strcpy(nval->err, obj->err);  // NOLINT(clang-analyzer-security.insecureAPI.strcpy)
             break;
 
         case LVAL_SYM:
             nval->sym = malloc(strlen(obj->sym) + 1);
-            strcpy(nval->sym, obj->sym);
+            strcpy(nval->sym, obj->sym);  // NOLINT(clang-analyzer-security.insecureAPI.strcpy)
             break;
 
         case LVAL_STR:
             nval->str = malloc(strlen(obj->str) + 1);
-            strcpy(nval->str, obj->str);
+            strcpy(nval->str, obj->str);  // NOLINT(clang-analyzer-security.insecureAPI.strcpy)
             break;
 
         case LVAL_SEXPR:
         case LVAL_QEXPR:
             nval->count = obj->count;
             nval->cell = malloc(sizeof(lval*) * nval->count);
-            for (unsigned i = 0; i < nval->count; i++)
+            for (unsigned i = 0; i < nval->count; i++) {
                 nval->cell[i] = lval_copy(obj->cell[i]);
+            }
+
             break;
     }
 
@@ -217,18 +219,23 @@ lval* lval_copy(const lval* obj)
 }
 
 
-lval* lval_pop(lval* obj, int ith)
+lval* lval_pop(lval* obj, unsigned ith)
 {
+    if (obj->count == 0) {
+        return lval_err("Symbol: '%s' has no children", obj->sym);
+    }
+
     lval* popd = obj->cell[ith];
-    memmove(&obj->cell[ith], &obj->cell[ith + 1], sizeof(lval*) * (obj->count - ith - 1));
+    memmove(&obj->cell[ith], &obj->cell[ith + 1], sizeof(lval*) * (obj->count - ith - 1));  // NOLINT(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
     obj->count--;
     obj->cell = realloc(obj->cell, sizeof(lval*) * obj->count);
 
     return popd;
+
 }
 
 
-lval* lval_take(lval* obj, int ith)
+lval* lval_take(lval* obj, unsigned ith)
 {
     lval* popd = lval_pop(obj, ith);
     lval_del(obj);
@@ -245,8 +252,9 @@ lval* lval_eval(lenv* env, lval* obj)
         return sub;
     }
 
-    if (obj->type == LVAL_SEXPR)
+    if (obj->type == LVAL_SEXPR) {
         return lval_eval_sexpr(env, obj);
+    }
 
     return obj;
 }
@@ -254,11 +262,12 @@ lval* lval_eval(lenv* env, lval* obj)
 
 lval* lval_call(lenv* env, lval* func, lval* arg)
 {
-    if (func->builtin)
+    if (func->builtin) {
         return func->builtin(env, arg);
+    }
 
-    int given = arg->count;
-    int total = func->formals->count;
+    unsigned given = arg->count;
+    unsigned total = func->formals->count;
 
     while (arg->count)
     {
@@ -328,18 +337,23 @@ lval* lval_call(lenv* env, lval* func, lval* arg)
 
 lval* lval_eval_sexpr(lenv* env, lval* sexpr)
 {
-    for (unsigned i = 0; i < sexpr->count; i++)
+    for (unsigned i = 0; i < sexpr->count; i++) {
         sexpr->cell[i] = lval_eval(env, sexpr->cell[i]);
+    }
 
-    for (unsigned i = 0; i < sexpr->count; i++)
-        if (sexpr->cell[i]->type == LVAL_ERR)
+    for (unsigned i = 0; i < sexpr->count; i++) {
+        if (sexpr->cell[i]->type == LVAL_ERR) {
             return lval_take(sexpr, i);
+        }
+    }
 
-    if (sexpr->count == 0)
+    if (sexpr->count == 0) {
         return sexpr;
+    }
 
-    if (sexpr->count == 1)
+    if (sexpr->count == 1) {
         return lval_take(sexpr, 0);
+    }
 
     lval* func = lval_pop(sexpr, 0);
 
@@ -363,8 +377,9 @@ lval* lval_eval_sexpr(lenv* env, lval* sexpr)
 
 lval* lval_join(lval* l_arg, lval* r_arg)
 {
-    while (r_arg->count)
+    while (r_arg->count) {
         l_arg = lval_add(l_arg, lval_pop(r_arg, 0));
+    }
 
     lval_del(r_arg);
     return l_arg;
@@ -373,8 +388,9 @@ lval* lval_join(lval* l_arg, lval* r_arg)
 
 int lval_eq(lval* l_arg, lval* r_arg)
 {
-    if (l_arg->type != r_arg->type)
+    if (l_arg->type != r_arg->type) {
         return 0;
+    }
 
     switch (l_arg->type)
     {
@@ -439,17 +455,17 @@ lval* load_prelude(lenv* env)
         const char* envvar = "HOME";
     #endif  /// _WIN32
 
-    if (!getenv(envvar))
+    if (!getenv(envvar))  // NOLINT(concurrency-mt-unsafe)
     {
         fprintf(stderr, "The environment variable %s was not found.\n", envvar);
-        exit(1);
+        exit(1);  // NOLINT(concurrency-mt-unsafe)
     }
 
  
-    if (snprintf(prelude_path, PRELUDE_PATH_SIZE, "%s/.lispy/stdlib/prelude.lpy", getenv(envvar)) >= PRELUDE_PATH_SIZE)
+    if (snprintf(prelude_path, PRELUDE_PATH_SIZE, "%s/.lispy/stdlib/prelude.lpy", getenv(envvar)) >= PRELUDE_PATH_SIZE)  // NOLINT(concurrency-mt-unsafe, clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
     {
         fprintf(stderr, "PRELUDE_PATH_SIZE of %d was too small. Aborting\n", PRELUDE_PATH_SIZE);
-        exit(1);
+        exit(1);  // NOLINT(concurrency-mt-unsafe)
     }    
     
     lval* prelude = lval_add(lval_sexpr(), lval_str(prelude_path));

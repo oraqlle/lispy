@@ -27,7 +27,7 @@ typedef struct lval
 {
     int type;
 
-    long num;
+    long num;  // NOLINT(google-runtime-int)
     char* err;
     char* sym;
     char* str;

@@ -12,7 +12,7 @@
 /// Builtin Evaluators ///
 //////////////////////////
 
-lval* builtin(lenv* env, lval* arg, char* func)
+lval* builtin(lenv* env, lval* arg, const char* func)
 {
     if (strcmp(func, "list") == 0){
         return builtin_list(env, arg);
@@ -47,7 +47,7 @@ lval* builtin(lenv* env, lval* arg, char* func)
 /// Builtin Operators ///
 /////////////////////////
 
-lval* builtin_op(lenv* env, lval* arg, char* operand)
+lval* builtin_op(lenv* env, lval* arg, const char* operand)
 {
     for (unsigned i = 0; i < arg->count; i++){
         LASSERT_TYPE(operand, arg, i, LVAL_NUM)
@@ -63,14 +63,17 @@ lval* builtin_op(lenv* env, lval* arg, char* operand)
     {
         lval* r_expr = lval_pop(arg, 0);
 
-        if (strcmp(operand, "+") == 0)
+        if (strcmp(operand, "+") == 0) {
             l_expr->num += r_expr->num;
+        }
 
-        if (strcmp(operand, "-") == 0)
+        if (strcmp(operand, "-") == 0) {
             l_expr->num -= r_expr->num;
+        }
 
-        if (strcmp(operand, "*") == 0)
+        if (strcmp(operand, "*") == 0) {
             l_expr->num *= r_expr->num;
+        }
 
         if (strcmp(operand, "/") == 0)
         {
@@ -127,14 +130,15 @@ lval* builtin_div(lenv* env, lval* arg)
 
 lval* builtin_head(lenv* env, lval* arg)
 {
-    LASSERT_NUM("head", arg, 1);
-    LASSERT_TYPE("head", arg, 0, LVAL_QEXPR);
-    LASSERT_NOT_EMPTY("head", arg, 0);
+    LASSERT_NUM("head", arg, 1)
+    LASSERT_TYPE("head", arg, 0, LVAL_QEXPR)
+    LASSERT_NOT_EMPTY("head", arg, 0)
 
     lval* taken = lval_take(arg, 0);
 
-    while (taken->count > 1)
+    while (taken->count > 1) {
         lval_del(lval_pop(taken, 1));
+    }
 
     return taken;
 }
@@ -142,9 +146,9 @@ lval* builtin_head(lenv* env, lval* arg)
 
 lval* builtin_tail(lenv* env, lval* arg)
 {
-    LASSERT_NUM("tail", arg, 1);
-    LASSERT_TYPE("tail", arg, 0, LVAL_QEXPR);
-    LASSERT_NOT_EMPTY("tail", arg, 0);
+    LASSERT_NUM("tail", arg, 1)
+    LASSERT_TYPE("tail", arg, 0, LVAL_QEXPR)
+    LASSERT_NOT_EMPTY("tail", arg, 0)
     
     lval* taken = lval_take(arg, 0);
     lval_del(lval_pop(taken, 0));
@@ -161,8 +165,8 @@ lval* builtin_list(lenv* env, lval* arg)
 
 lval* builtin_eval(lenv* env, lval* arg)
 {
-    LASSERT(arg, arg->count == 1, "Function 'eval' passed too many arguments!");
-    LASSERT(arg, arg->cell[0]->type == LVAL_QEXPR, "Function 'eval' passed incorrect type!");
+    LASSERT(arg, arg->count == 1, "Function 'eval' passed too many arguments!")
+    LASSERT(arg, arg->cell[0]->type == LVAL_QEXPR, "Function 'eval' passed incorrect type!")
 
     lval* taken = lval_take(arg, 0);
     taken->type = LVAL_SEXPR;
@@ -172,8 +176,9 @@ lval* builtin_eval(lenv* env, lval* arg)
 
 lval* builtin_join(lenv* env, lval* arg)
 {
-    for (unsigned i = 0; i < arg->count; i++)
-    LASSERT_TYPE("join", arg, i, LVAL_QEXPR);
+    for (unsigned i = 0; i < arg->count; i++) {
+    LASSERT_TYPE("join", arg, i, LVAL_QEXPR)
+    }
     
     lval* l_arg = lval_pop(arg, 0);
     
@@ -204,30 +209,33 @@ lval* builtin_put(lenv* env, lval* arg)
 }
 
 
-lval* builtin_var(lenv* env, lval* arg, char* func)
+lval* builtin_var(lenv* env, lval* arg, const char* func)
 {
     LASSERT_TYPE(func, arg, 0, LVAL_QEXPR);
 
     const lval* syms = arg->cell[0];
 
-    for (unsigned i = 0; i < syms->count; ++i)
+    for (unsigned i = 0; i < syms->count; ++i) {
         LASSERT(arg, (syms->cell[i]->type == LVAL_SYM),
                 "Function '%s' cannot define non-symbol. "
                 "Got %s, Expected %s.", func,
                 ltype_name(syms->cell[i]->type),
                 ltype_name(LVAL_SYM))
+    }
 
     LASSERT(arg, (syms->count == arg->count - 1),
             "Function %s passed too many arguments for symbols. "
             "Got %i, Expected %i.", func, syms->count, arg->count - 1)
 
-    for (int i = 0; i < syms->count; ++i)
+    for (unsigned i = 0; i < syms->count; ++i)
     {
-        if (strcmp(func, "def") == 0)
+        if (strcmp(func, "def") == 0) {
             lenv_def(env, syms->cell[i], arg->cell[i + 1]);
+        }
 
-        if (strcmp(func, "=") == 0)
+        if (strcmp(func, "=") == 0) {
             lenv_put(env, syms->cell[i], arg->cell[i + 1]);
+        }
     }
 
     lval_del(arg);
@@ -237,14 +245,15 @@ lval* builtin_var(lenv* env, lval* arg, char* func)
 
 lval* builtin_lambda(lenv* env, lval* arg)
 {
-    LASSERT_NUM("\\", arg, 2);
-    LASSERT_TYPE("\\", arg, 0, LVAL_QEXPR);
-    LASSERT_TYPE("\\", arg, 1, LVAL_QEXPR);
+    LASSERT_NUM("\\", arg, 2)
+    LASSERT_TYPE("\\", arg, 0, LVAL_QEXPR)
+    LASSERT_TYPE("\\", arg, 1, LVAL_QEXPR)
 
-    for (int i = 0; i < arg->cell[0]->count; i++)
+    for (unsigned i = 0; i < arg->cell[0]->count; i++) {
         LASSERT(arg, (arg->cell[0]->cell[i]->type == LVAL_SYM),
                 "Cannot define non-symbol. Got %s, Expected %s.",
-                ltype_name(arg->cell[0]->cell[i]->type), ltype_name(LVAL_SYM));
+                ltype_name(arg->cell[0]->cell[i]->type), ltype_name(LVAL_SYM))
+    }
 
     lval* formals = lval_pop(arg, 0);
     lval* body = lval_pop(arg, 0);
@@ -257,7 +266,7 @@ lval* builtin_lambda(lenv* env, lval* arg)
 /// Ordering Operators ///
 //////////////////////////
 
-lval* builtin_ord(lenv* env, lval* arg, char* operand)
+lval* builtin_ord(lenv* env, lval* arg, const char* operand)
 {
     LASSERT_NUM(operand, arg, 2);
     LASSERT_TYPE(operand, arg, 0, LVAL_NUM);
@@ -313,7 +322,7 @@ lval* builtin_le(lenv* env, lval* arg)
 /// Equality Operators ///
 //////////////////////////
 
-lval* builtin_cmp(lenv* env, lval* arg, char* operand)
+lval* builtin_cmp(lenv* env, lval* arg, const char* operand)
 {
     LASSERT_NUM(operand, arg, 2)
 
@@ -391,7 +400,7 @@ lval* builtin_load(lenv* env, lval* arg)
     }
 
     fseek(file, 0, SEEK_END);
-    long length = ftell(file);
+    unsigned long length = (unsigned long)ftell(file);
     fseek(file, 0, SEEK_SET);
     char* input = calloc(length + 1, 1);
     fread(input, 1, length, file);
@@ -441,7 +450,7 @@ lval* builtin_print(lenv* env, lval* arg)
 // lval* builtin_input(lenv* env, lval* arg);
 
 
-lval* builtin_error(const lenv* env, lval* arg)
+lval* builtin_error(lenv* env, lval* arg)
 {
     LASSERT_NUM("error", arg, 1)
     LASSERT_TYPE("error", arg, 0, LVAL_STR)

@@ -5,7 +5,7 @@
 
 
 //////////////////////////
-/// Builtin Evaluaters ///
+/// Builtin Evaluators ///
 //////////////////////////
 
 /// @brief Dispatches the builtin function `f` to the lval `a`.
@@ -17,7 +17,7 @@
 /// @param a - type: lval*
 /// @param f - type: char*
 /// @return lval*
-lval* builtin(lenv* env, lval* arg, char* func);
+lval* builtin(lenv* env, lval* arg, const char* func);
 
 
 /////////////////////////
@@ -34,11 +34,11 @@ lval* builtin(lenv* env, lval* arg, char* func);
 /// @param a - type: lval*
 /// @param op - type: char*
 /// @return lval*
-lval* builtin_op(lenv* env, lval* arg, char* operand);
+lval* builtin_op(lenv* env, lval* arg, const char* operand);
 
 
 ////////////////////////////////////
-/// Builtin Arithmatic Operators ///
+/// Builtin Arithmetic Operators ///
 ////////////////////////////////////
 
 /// @brief Built-in addition operator.
@@ -174,7 +174,7 @@ lval* builtin_put(lenv* env, lval* arg);
 
 
 /// TODO
-lval* builtin_var(lenv* env, lval* arg, char* func);
+lval* builtin_var(lenv* env, lval* arg, const char* func);
 
 
 //////////////////////////
@@ -182,7 +182,7 @@ lval* builtin_var(lenv* env, lval* arg, char* func);
 //////////////////////////
 
 /// TODO
-lval* builtin_ord(lenv* env, lval* arg, char* operand);
+lval* builtin_ord(lenv* env, lval* arg, const char* operand);
 
 
 /// TODO
@@ -206,7 +206,7 @@ lval* builtin_le(lenv* env, lval* arg);
 //////////////////////////
 
 /// TODO
-lval* builtin_cmp(lenv* env, lval* arg, char* operand);
+lval* builtin_cmp(lenv* env, lval* arg, const char* operand);
 
 
 /// TODO
@@ -242,6 +242,6 @@ lval* builtin_print(lenv* env, lval* arg);
 
 
 /// TODO
-lval* builtin_error(const lenv* env, lval* arg);
+lval* builtin_error(lenv* env, lval* arg);
 
 #endif  /// LISPY_BUILTINS_H

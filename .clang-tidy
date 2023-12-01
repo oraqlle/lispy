@@ -11,7 +11,18 @@ Checks: "*,\
   -llvm-include-order,\
   -llvmlibc-*,\
   -modernize-use-nodiscard,\
-  -misc-non-private-member-variables-in-classes"
+  -misc-non-private-member-variables-in-classes,\
+  -misc-no-recursion,\
+  -clang-diagnostic-gnu-zero-variadic-macro-arguments,\
+  -android-cloexec-fopen,\
+  -cert-err33-c,\
+  -hicpp-deprecated-headers,\
+  -modernize-deprecated-headers,\
+  -modernize-use-using,\
+  -modernize-use-trailing-return-type,\
+  -cppcoreguidelines-*,\
+  -clang-diagnostic-unused-parameter,\
+  -misc-unused-parameters"
 WarningsAsErrors: ""
 CheckOptions:
   - key: "bugprone-argument-comment.StrictMode"

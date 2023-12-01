@@ -81,7 +81,7 @@ void lenv_put(lenv* env, const lval* key, lval* value)
 
     env->vals[env->count - 1] = lval_copy(value);
     env->syms[env->count - 1] = malloc(strlen(key->sym) + 1);
-    strcpy(env->syms[env->count - 1], key->sym);
+    strcpy(env->syms[env->count - 1], key->sym);  // NOLINT(clang-analyzer-security.insecureAPI.strcpy)
 }
 
 lenv* lenv_copy(const lenv* env)
@@ -96,7 +96,7 @@ lenv* lenv_copy(const lenv* env)
     for (unsigned i = 0; i < env->count; i++) 
     {
         nenv->syms[i] = malloc(strlen(env->syms[i]) + 1);
-        strcpy(nenv->syms[i], env->syms[i]);
+        strcpy(nenv->syms[i], env->syms[i]); // NOLINT(clang-analyzer-security.insecureAPI.strcpy)
         nenv->vals[i] = lval_copy(env->vals[i]);
     }
     

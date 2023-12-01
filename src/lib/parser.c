@@ -110,7 +110,14 @@ lval* lval_read_str(const char* str, int* idx)
             }
         }
 
+        char* old_part = part;
         part = realloc(part, strlen(part) + 2);
+        
+        if (!part) {
+            free(old_part);
+            exit(1);  // NOLINT(concurrency-mt-unsafe)
+        }
+
         part[strlen(part) + 1] = '\0';
         part[strlen(part) + 0] = chr;
         (*idx)++;
@@ -135,7 +142,14 @@ lval* lval_read_sym(const char* str, int* idx)
            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
            "0123456789_+-*\\/=<>!&", str[*idx]) && str[*idx] != '\0')
     {
+        char* old_part = part;
         part = realloc(part, strlen(part) + 2);
+        
+        if (!part) {
+            free(old_part);
+            exit(1);  // NOLINT(concurrency-mt-unsafe)
+        }
+
         part[strlen(part) + 1] = '\0';
         part[strlen(part) + 0] = str[*idx];
         (*idx)++;
@@ -160,7 +174,7 @@ lval* lval_read_sym(const char* str, int* idx)
     if (is_num)
     {
         errno = 0;
-        long num = strtol(part, NULL, 10);
+        long num = strtol(part, NULL, 10);  // NOLINT(readability-magic-numbers)
         rexpr = (errno != ERANGE) ? lval_num(num) : lval_err("Invalid Number %s", part);
     }
     else{
@@ -197,9 +211,9 @@ char lval_str_unescape(char chr)
             return '\'';
         case '\"':
             return '\"';
+        default:
+            return '\0';
     }
-
-    return '\0';
 }
 
 
