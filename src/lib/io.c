@@ -8,53 +8,57 @@
 /// `lval` Printing ///
 ///////////////////////
 
-void lval_print(lval* v)
+void lval_print(const lval* obj)
 {
-    switch (v->type)
+    switch (obj->type)
     {
         case LVAL_NUM:
-            printf("%li", v->num);
+            printf("%li", obj->num);
             break;
 
         case LVAL_ERR:
-            printf("Error: %s", v->err);
+            printf("Error: %s", obj->err);
             break;
         
         case LVAL_SYM:
-            printf("%s", v->sym);
+            printf("%s", obj->sym);
             break;
 
         case LVAL_STR:
-            lval_print_str(v);
+            lval_print_str(obj);
             break;
 
         case LVAL_FUN:
-            if (v->builtin)
+            if (obj->builtin){
                 printf("<builtin>");
-            else
+            } else
             {
                 printf("(\\ ");
-                lval_print(v->formals);
+                lval_print(obj->formals);
                 putchar(' ');
-                lval_print(v->body);
+                lval_print(obj->body);
                 putchar(')');
             }
             break;
 
         case LVAL_SEXPR:
-            lval_expr_print(v, '(', ')');
+            lval_expr_print(obj, '(', ')');
             break;
 
         case LVAL_QEXPR:
-            lval_expr_print(v, '{', '}');
+            lval_expr_print(obj, '{', '}');
+            break;
+
+        default:
+            printf("[Internal] Print Error - Unknown Type ID: %d", obj->type);
             break;
     }
 }
 
 
-void lval_println(lval* v)
+void lval_println(const lval* obj)
 {
-    lval_print(v);
+    lval_print(obj);
     putchar('\n');
 }
 
@@ -63,16 +67,17 @@ void lval_println(lval* v)
 /// Expression Printing ///
 ///////////////////////////
 
-void lval_expr_print(lval* v, char open, char close)
+void lval_expr_print(const lval* obj, char open, char close)
 {
     putchar(open);
 
-    for (int i = 0; i < v->count; i++)
+    for (unsigned i = 0; i < obj->count; i++)
     {
-        lval_print(v->cell[i]);
+        lval_print(obj->cell[i]);
 
-        if (i != v->count - 1)
+        if (i != obj->count - 1) {
             putchar(' ');
+        }
     }
 
     putchar(close);
@@ -83,15 +88,17 @@ void lval_expr_print(lval* v, char open, char close)
 /// String IO ///
 /////////////////
 
-void lval_print_str(lval* v)
+void lval_print_str(const lval* obj)
 {
     putchar('"');
 
-    for (int i = 0; i < strlen(v->str); i++)
-        if (strchr("\a\b\f\n\r\t\v\\\'\"", v->str[i]))
-            printf("%s", lval_str_escape(v->str[i]));
-        else
-            putchar(v->str[i]);
+    for (size_t i = 0; i < strlen(obj->str); i++){
+        if (strchr("\a\b\f\n\r\t\v\\\'\"", obj->str[i])){
+            printf("%s", lval_str_escape(obj->str[i]));
+        } else {
+            putchar(obj->str[i]);
+        }
+    }
 
     putchar('"');
 }

@@ -14,7 +14,7 @@ typedef lval*(*lbuiltin)(lenv*, lval*);
 // typedef lval*(*builtinload)(lenv*, lval*, mpc_parser_t*);
 
 
-/// \brief Represents a Lisp Value 
+/// @brief Represents a Lisp Value 
 /// 
 /// A `lval` consists of a:
 /// - type      : int corresponding to an enum value 
@@ -37,12 +37,12 @@ typedef struct lval
     lval* formals;
     lval* body;
 
-    int count;
+    unsigned int count;
     struct lval** cell;
 } lval;
 
 
-/// \brief Enum for possible lval types
+/// @brief Enum for possible lval types
 ///
 /// The possible lval types are:
 /// - LVAL_ERR : Error type
@@ -60,7 +60,7 @@ typedef struct lenv
 {
     lenv* par;
     
-    int count;
+    unsigned int count;
     char** syms;
     lval** vals;
 } lenv;

@@ -10,78 +10,78 @@
 /// `lval` Constructors ///
 ///////////////////////////
 
-/// \brief Creates an lval of type LVAL_NUM.
+/// @brief Creates an lval of type LVAL_NUM.
 ///
-/// \details Creates an lval of type LVAL_NUM 
-/// and sets the value to the provided number `x`.
+/// @details Creates an lval of type LVAL_NUM 
+/// and sets the obj to the provided number `num`.
 /// 
-/// \param x - type: long
-/// \return lval* 
-lval* lval_num(long x);
+/// @param num - type: const long
+/// @return lval* 
+lval* lval_num(long num);
 
 
-/// \brief Creates an lval of type LVAL_ERR.
+/// @brief Creates an lval of type LVAL_ERR.
 ///
-/// \details Creates an lval of type LVAL_ERR
-/// and sets the value to the provided error
-/// message `x`.
+/// @details Creates an lval of type LVAL_ERR
+/// and sets the obj to the provided error
+/// message l_arg.
 /// 
-/// \param fmt - type: char*
-/// \return lval* 
-lval* lval_err(char* fmt, ...);
+/// @param fmt - type: char*
+/// @return lval* 
+lval* lval_err(const char* fmt, ...);
 
 
-/// \brief Creates an lval of type LVAL_SYM.
+/// @brief Creates an lval of type LVAL_SYM.
 ///
-/// \details Creates an lval of type LVAL_SYM
-/// and sets the value to the provided symbol
-/// or operator `x`.
+/// @details Creates an lval of type LVAL_SYM
+/// and sets the obj to the provided symbol
+/// or operator l_arg.
 ///
-/// \param x - type: char*
-/// \return lval*
-lval* lval_sym(char* s);
+/// @param sym - type: char*
+/// @return lval*
+lval* lval_sym(const char* sym);
 
 
 /// TODO
-lval* lval_str(char* s);
+lval* lval_str(const char* str);
 
 
-/// \brief Creates an lval of type LVAL_SEXPR.
+/// @brief Creates an lval of type LVAL_SEXPR.
 ///
-/// \details Creates an lval of type LVAL_SEXPR
+/// @details Creates an lval of type LVAL_SEXPR
 /// which is an empty S-Expression.
 ///
-/// \return lval*
+/// @return lval*
 lval* lval_sexpr(void);
 
 
-/// \brief Creates an lval of type LVAL_QEXPR.
+/// @brief Creates an lval of type LVAL_QEXPR.
 ///
-/// \details Creates an lval of type LVAL_QEXPR
+/// @details Creates an lval of type LVAL_QEXPR
 /// which is an empty Q-Expression.
 ///
-/// \return lval*
+/// @return lval*
 lval* lval_qexpr(void);
 
 
-/// \brief Constructs an lval of type LVAL_FUN.
+/// @brief Constructs an lval of type LVAL_FUN.
 ///
-/// \details Constructs an lval of type LVAL_FUN
-/// and sets the value to the provided builtin
+/// @details Constructs an lval of type LVAL_FUN
+/// and sets the obj to the provided builtin
 /// function `func`.
 ///
-/// \param func - type: lbuiltin
-/// \return lval*
+/// @param func - type: lbuiltin
+/// @return lval*
 lval* lval_fun(lbuiltin func);
 
 
-/// \brief Constructs a lambda lval.
+/// @brief Constructs a lambda lval.
 ///
-/// \details Constructs a lambda lval.
+/// @details Constructs a lambda lval.
 ///
-/// \param formals - type: lval*
-/// \param body - type: lval*
-/// \return lval*
+/// @param formals - type: lval*
+/// @param body - type: lval*
+/// @return lval*
 lval* lval_lambda(lval* formals, lval* body);
 
 
@@ -89,107 +89,107 @@ lval* lval_lambda(lval* formals, lval* body);
 /// `lval` Destructor ///
 /////////////////////////
 
-/// \brief Frees an lval.
+/// @brief Frees an lval.
 ///
-/// \details Frees an lval and all of its children
+/// @details Frees an lval and all of its children
 /// (if any) as well as any other allocated resources.
 ///
-/// \param v - type: lval*
-void lval_del(lval* v);
+/// @param obj - type: lval*
+void lval_del(lval* obj);
 
 
 //////////////////////
 /// `lval` Methods ///
 //////////////////////
 
-/// \brief Adds the child `x` to the parent `v`.
+/// @brief Adds the child l_arg to the parent `obj`.
 ///
-/// \details Adds the child `x` to the parent `v`.
-/// Allocates memory to `v`'s `cell` array and 
-/// assigns `x` to the last slot of the array.
+/// @details Adds the child l_arg to the parent `obj`.
+/// Allocates memory to `obj`'s `cell` array and 
+/// assigns l_arg to the last slot of the array.
 ///
-/// \param v - type: lval*
-/// \param x - type: lval*
-/// \return lval*
-lval* lval_add(lval* v, lval* x);
+/// @param parent - type: lval*
+/// @param child - type: const lval*
+/// @return lval*
+lval* lval_add(lval* parent, lval* child);
 
 
-/// \brief Copies an lval.
+/// @brief Copies an lval.
 ///
-/// \details Copies an lval and all of its children
+/// @details Copies an lval and all of its children
 /// (if any) as well as any other allocated resources.
 ///
-/// \param v - type: lval*
-/// \return lval*
-lval* lval_copy(lval* v);
+/// @param obj - type: lval*
+/// @return lval*
+lval* lval_copy(const lval* obj);
 
 
-/// \brief Pops the ith element off of the lval `v`.
+/// @brief Pops the ith element off of the lval `obj`.
 ///
-/// \details Pops the ith element off of the lval `v`
+/// @details Pops the ith element off of the lval `obj`
 /// and moves the receding elements up. Returns the
 /// popped element.
 ///
-/// \param v - type: lval*
-/// \param i - type: int
-/// \return lval*
-lval* lval_pop(lval* v, int i);
+/// @param v - type: lval*
+/// @param ith - type: int
+/// @return lval*
+lval* lval_pop(lval* obj, int ith);
 
 
-/// \brief Takes the ith element off of the lval `v`.
+/// @brief Takes the ith element off of the lval `obj`.
 ///
-/// \details Takes the ith element off of the lval `v`
-/// and discards all other values. Returns the taken 
+/// @details Takes the ith element off of the lval `obj`
+/// and discards all other objs. Returns the taken 
 /// element.
 ///
-/// \param v - type: lval*
-/// \param i - type: int
-/// \return lval*
-lval* lval_take(lval* v, int i);
+/// @param obj - type: lval*
+/// @param ith - type: int
+/// @return lval*
+lval* lval_take(lval* obj, int ith);
 
-/// \brief Evaluates the lval `v`.
+/// @brief Evaluates the lval `obj`.
 ///
-/// \details Evaluates the lval `v`.
-/// Returns `v` as-is it is not an 
+/// @details Evaluates the lval `obj`.
+/// Returns `obj` as-is it is not an 
 /// S-Expression.
 ///
-/// \param e - type: lenv*
-/// \param v - type: lval*
-/// \return lval*
-lval* lval_eval(lenv* e, lval* v);
+/// @param env - type: lenv*
+/// @param obj - type: lval*
+/// @return lval*
+lval* lval_eval(lenv* env, lval* obj);
 
 
 /// TODO
-lval* lval_call(lenv* e, lval* f, lval* a);
+lval* lval_call(lenv* env, lval* func, lval* arg);
 
 
-/// \brief Evaluates the lval `v` as an S-Expression.
+/// @brief Evaluates the lval `obj` as an S-Expression.
 ///
-/// \details Evaluates the lval `v` as an S-Expression.
-/// Returns `v` as-is if it has no children or returns the
+/// @details Evaluates the lval `obj` as an S-Expression.
+/// Returns `obj` as-is if it has no children or returns the
 /// child if it only has one child. Returns an error if the
 /// child does not start with a symbol.
 ///
-/// \param e - type: lenv*
-/// \param v - type: lval*
-/// \return lval*
-lval* lval_eval_sexpr(lenv* e, lval* v);
+/// @param env - type: lenv*
+/// @param sexpr - type: lval*
+/// @return lval*
+lval* lval_eval_sexpr(lenv* env, lval* sexpr);
 
 
-/// \brief Joins the Q-Expression `y` to `x`.
+/// @brief Joins the Q-Expression r_arg to l_arg.
 ///
-/// \details Joins the Q-Expression `y` to `x` 
+/// @details Joins the Q-Expression r_arg to l_arg 
 /// by continually popping the first element 
-/// off `y` and adding it to `x`. Returns `x`.
+/// off r_arg and adding it to l_arg. Returns l_arg.
 ///
-/// \param x - type: lval*
-/// \param y - type: lval*
-/// \return lval*
-lval* lval_join(lval* x, lval* y);
+/// @param l_arg - type: lval*
+/// @param r_arg - type: lval*
+/// @return lval*
+lval* lval_join(lval* l_arg, lval* r_arg);
 
 
 /// TODO
-int lval_eq(lval* x, lval* y);
+int lval_eq(lval* l_arg, lval* r_arg);
 
 
 ////////////////////
@@ -197,6 +197,6 @@ int lval_eq(lval* x, lval* y);
 ////////////////////
 
 /// TODO
-lval* load_prelude(lenv* e);
+lval* load_prelude(lenv* env);
 
 #endif  /// LISPY_LVAL_H

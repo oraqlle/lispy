@@ -5,27 +5,27 @@
 
 
 /// TODO
-lval* lval_read_expr(char* s, int* i, char end);
+lval* lval_read_expr(const char* str, int* idx, char end);
 
 
 /// TODO
-lval* lval_read(char* s, int* i);
+lval* lval_read(const char* str, int* idx);
 
 
 /// TODO
-lval* lval_read_str(char*s , int* i);
+lval* lval_read_str(const char* str, int* idx);
 
 
 /// TODO
-lval* lval_read_sym(char* s, int* i);
+lval* lval_read_sym(const char* str, int* idx);
 
 
 /// TODO
-char lval_str_unescape(char x);
+char lval_str_unescape(char chr);
 
 
 /// TODO
-char* lval_str_escape(char x);
+const char* lval_str_escape(char chr);
 
 
 #endif  // LISPY_PARSER_H

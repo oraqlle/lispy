@@ -3,170 +3,179 @@
 #include <errno.h>
 #include <string.h>
 
-lval* lval_read_expr(char* s, int* i, char end)
+lval* lval_read_expr(const char* str, int* idx, char end)
 {
-    lval* x = (end == '}') ? lval_qexpr() : lval_sexpr();
+    lval* rexpr = (end == '}') ? lval_qexpr() : lval_sexpr();
 
-    while (s[*i] != end)
+    while (str[*idx] != end)
     {
-        lval* y = lval_read(s, i);
+        lval* rval = lval_read(str, idx);
 
-        if (y->type == LVAL_ERR)
+        if (rval->type == LVAL_ERR)
         {
-            lval_del(x);
-            return y;
+            lval_del(rexpr);
+            return rval;
         }
-        else
-            lval_add(x, y);
-
+        
+        lval_add(rexpr, rval);
     }
 
-    (*i)++;
+    (*idx)++;
 
-    return x;
+    return rexpr;
 }
 
 
-lval* lval_read(char* s, int* i)
+lval* lval_read(const char* str, int* idx)
 {
-    while (strchr(" \t\v\r\n;", s[*i]) && s[*i] != '\0')
+    while (strchr(" \t\v\r\n;", str[*idx]) && str[*idx] != '\0')
     {
-        if (s[*i] == ';')
-            while (s[*i] != '\n' && s[*i] != '\0')
-                (*i)++;
+        if (str[*idx] == ';') {
+            while (str[*idx] != '\n' && str[*idx] != '\0') {
+                (*idx)++;
+            }
+        }
 
-        (*i)++;
+        (*idx)++;
     }
 
-    lval* x = NULL;
+    lval* rexpr = NULL;
 
-    if (s[*i] == '\0')
+    if (str[*idx] == '\0'){
         return lval_err("Unexpected end of input");
-    else if (s[*i] == '(')
-    {
-        (*i)++;
-        x = lval_read_expr(s, i, ')');
     }
-    else if (s[*i] == '{')
+    
+    if (str[*idx] == '(')
     {
-        (*i)++;
-        x = lval_read_expr(s, i, '}');
+        (*idx)++;
+        rexpr = lval_read_expr(str, idx, ')');
+    }
+    else if (str[*idx] == '{')
+    {
+        (*idx)++;
+        rexpr = lval_read_expr(str, idx, '}');
     }
     else if (strchr(
              "abcdefghijklmnopqrstuvwxyz"
              "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-             "0123456789_+-*\\/=<>!&", s[*i]))
-        x = lval_read_sym(s, i);
-    else if (strchr("\"", s[*i]))
-        x = lval_read_str(s, i);
-    else
-        x = lval_err("Unexpected character %c", s[*i]);
+             "0123456789_+-*\\/=<>!&", str[*idx])){
+        rexpr = lval_read_sym(str, idx);
+             }else if (strchr("\"", str[*idx])){
+        rexpr = lval_read_str(str, idx);
+             }else{
+        rexpr = lval_err("Unexpected character %c", str[*idx]);
+             }
 
-    while (strchr(" \t\v\r\n", s[*i]) && s[*i] != '\0')
+    while (strchr(" \t\v\r\n", str[*idx]) && str[*idx] != '\0')
     {
-        if (s[*i] == ';')
-            while (s[*i] != '\n' && s[*i] != '\0')
-                (*i)++;
+        if (str[*idx] == ';'){
+            while (str[*idx] != '\n' && str[*idx] != '\0'){
+                (*idx)++;
+            }
+        }
 
-        (*i)++;
+        (*idx)++;
     }
 
-    return x;
+    return rexpr;
 }
 
 
-lval* lval_read_str(char* s, int* i)
+lval* lval_read_str(const char* str, int* idx)
 {
     char* part = calloc(1, 1);
 
-    (*i)++;
+    (*idx)++;
 
-    while (s[*i] != '"')
+    while (str[*idx] != '"')
     {
-        char c = s[*i];
+        char chr = str[*idx];
 
-        if (c == '\0')
+        if (chr == '\0')
         {
             free(part);
             return lval_err("Unexpected end of input");
         }
 
-        if (c == '\\')
+        if (chr == '\\')
         {
-            (*i)++;
+            (*idx)++;
 
-            if (strchr("abfnrtv\\\'\"", s[*i]))
-                c = lval_str_unescape(s[*i]);
-            else
+            if (strchr("abfnrtv\\\'\"", str[*idx])){
+                chr = lval_str_unescape(str[*idx]);
+            } else
             {
                 free(part);
-                return lval_err("Invalid escape sequence \\%c", s[*i]);
+                return lval_err("Invalid escape sequence \\%c", str[*idx]);
             }
         }
 
         part = realloc(part, strlen(part) + 2);
         part[strlen(part) + 1] = '\0';
-        part[strlen(part) + 0] = c;
-        (*i)++;
+        part[strlen(part) + 0] = chr;
+        (*idx)++;
     }
 
-    (*i)++;
+    (*idx)++;
 
-    lval* x = lval_str(part);
+    lval* rexpr = lval_str(part);
 
     free(part);
 
-    return x;
+    return rexpr;
 }
 
 
-lval* lval_read_sym(char* s, int* i)
+lval* lval_read_sym(const char* str, int* idx)
 {
     char* part = calloc(1, 1);
 
     while (strchr(
            "abcdefghijklmnopqrstuvwxyz"
            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-           "0123456789_+-*\\/=<>!&", s[*i]) && s[*i] != '\0')
+           "0123456789_+-*\\/=<>!&", str[*idx]) && str[*idx] != '\0')
     {
         part = realloc(part, strlen(part) + 2);
         part[strlen(part) + 1] = '\0';
-        part[strlen(part) + 0] = s[*i];
-        (*i)++;
+        part[strlen(part) + 0] = str[*idx];
+        (*idx)++;
     }
 
     int is_num = strchr("-0123456789", part[0]) != NULL;
 
-    for (int j = 1; j < strlen(part); j++)
+    for (size_t j = 1; j < strlen(part); j++) {
         if (strchr("0123456789", part[j]) == NULL)
         {
             is_num = 0;
             break;
         }
+    }
 
-    if (strlen(part) == 1 && part[0] == '-')
+    if (strlen(part) == 1 && part[0] == '-'){
         is_num = 0;
+    }
 
-    lval* x = NULL;
+    lval* rexpr = NULL;
 
     if (is_num)
     {
         errno = 0;
-        long v = strtol(part, NULL, 10);
-        x = (errno != ERANGE) ? lval_num(v) : lval_err("Invalid Number %s", part);
+        long num = strtol(part, NULL, 10);
+        rexpr = (errno != ERANGE) ? lval_num(num) : lval_err("Invalid Number %s", part);
     }
-    else
-        x = lval_sym(part);
+    else{
+        rexpr = lval_sym(part);
+    }
 
     free(part);
 
-    return x;
+    return rexpr;
 }
 
 
-char lval_str_unescape(char x) 
+char lval_str_unescape(char chr) 
 {
-    switch (x) 
+    switch (chr) 
     {
         case 'a':
             return '\a';
@@ -194,9 +203,9 @@ char lval_str_unescape(char x)
 }
 
 
-char* lval_str_escape(char x)
+const char* lval_str_escape(char chr)
 {
-    switch (x) 
+    switch (chr) 
     {
         case '\a':
             return "\\a";
@@ -218,7 +227,7 @@ char* lval_str_escape(char x)
             return "\\\'";
         case '\"':
             return "\\\"";
+        default:
+            return "";
     }
-
-    return "";
 }

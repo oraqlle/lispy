@@ -1,0 +1,21 @@
+{
+    "name": "lispy-interpreter",
+    "version-semver": "0.1.0",
+    "dependencies": [
+        "replxx"
+    ],
+    "default-features": [],
+    "features": {
+        "test": {
+            "description": "Dependencies for testing",
+            "dependencies": [
+                {
+                    "name": "catch2",
+                    "version>=": "3.4.0"
+                },
+                "replxx"
+            ]
+        }
+    },
+    "builtin-baseline": "962e5e39f8a25f42522f51fffc574e05a3efd26b"
+}

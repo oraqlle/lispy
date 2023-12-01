@@ -1,6 +1,9 @@
 #include <lval.h>
+
 #include <builtins.h>
+#include <io.h>
 #include <lenv.h>
+#include <macros.h>
 #include <utilities.h>
 
 #include <stdarg.h>
@@ -13,94 +16,94 @@
 /// `lval` Constructors ///
 ///////////////////////////
 
-lval* lval_num(long x)
+lval* lval_num(const long num)
 {
-    lval* v = malloc(sizeof(lval));
-    v->type = LVAL_NUM;
-    v->num = x;
-    return v;
+    lval* nnumval = malloc(sizeof(lval));
+    nnumval->type = LVAL_NUM;
+    nnumval->num = num;
+    return nnumval;
 }
 
 
-lval* lval_err(char* fmt, ...)
+lval* lval_err(const char* fmt, ...)
 {
-    lval* v = malloc(sizeof(lval));
-    v->type = LVAL_ERR;
+    lval* nerrval = malloc(sizeof(lval));
+    nerrval->type = LVAL_ERR;
     
-    va_list va;
-    va_start(va, fmt);
+    va_list var_list;
+    va_start(var_list, fmt);
 
-    v->err = malloc(512);
-    vsnprintf(v->err, 511, fmt, va);
+    nerrval->err = malloc(MAX_ERR_STR_SIZE);
+    vsnprintf(nerrval->err, MAX_ERR_STR_SIZE - 1, fmt, var_list);
 
-    v->err = realloc(v->err, strlen(v->err) + 1);
+    nerrval->err = realloc(nerrval->err, strlen(nerrval->err) + 1);
 
-    va_end(va);
-    return v;
+    va_end(var_list);
+    return nerrval;
 }
 
 
-lval* lval_sym(char* s)
+lval* lval_sym(const char* sym)
 {
-    lval* v = malloc(sizeof(lval));
-    v->type = LVAL_SYM;
-    v->sym = malloc(strlen(s) + 1);
-    strcpy(v->sym, s);
-    return v;
+    lval* nsymval = malloc(sizeof(lval));
+    nsymval->type = LVAL_SYM;
+    nsymval->sym = malloc(strlen(sym) + 1);
+    strcpy(nsymval->sym, sym);
+    return nsymval;
 }
 
 
-lval* lval_str(char* s)
+lval* lval_str(const char* str)
 {
-    lval* v = malloc(sizeof(lval));
-    v->type = LVAL_STR;
-    v->str = malloc(strlen(s) + 1);
-    strcpy(v->str, s);
-    return v;
+    lval* nstrval = malloc(sizeof(lval));
+    nstrval->type = LVAL_STR;
+    nstrval->str = malloc(strlen(str) + 1);
+    strcpy(nstrval->str, str);
+    return nstrval;
 }
 
 
 lval* lval_sexpr(void)
 {
-    lval* v = malloc(sizeof(lval));
-    v->type = LVAL_SEXPR;
-    v->count = 0;
-    v->cell = NULL;
-    return v;
+    lval* nsexprval = malloc(sizeof(lval));
+    nsexprval->type = LVAL_SEXPR;
+    nsexprval->count = 0;
+    nsexprval->cell = NULL;
+    return nsexprval;
 }
 
 
 lval* lval_qexpr(void)
 {
-    lval* v = malloc(sizeof(lval));
-    v->type = LVAL_QEXPR;
-    v->count = 0;
-    v->cell = NULL;
-    return v;
+    lval* nqexprval = malloc(sizeof(lval));
+    nqexprval->type = LVAL_QEXPR;
+    nqexprval->count = 0;
+    nqexprval->cell = NULL;
+    return nqexprval;
 }
 
 
 lval* lval_fun(lbuiltin func)
 {
-    lval* v = malloc(sizeof(lval));
-    v->type = LVAL_FUN;
-    v->builtin = func;
-    return v;
+    lval* nfunval = malloc(sizeof(lval));
+    nfunval->type = LVAL_FUN;
+    nfunval->builtin = func;
+    return nfunval;
 }
 
 
 lval* lval_lambda(lval* formals, lval* body)
 {
-    lval* v = malloc(sizeof(lval));
-    v->type = LVAL_FUN;
+    lval* nlambdaval = malloc(sizeof(lval));
+    nlambdaval->type = LVAL_FUN;
 
-    v->builtin = NULL;
+    nlambdaval->builtin = NULL;
 
-    v->env = lenv_new();
+    nlambdaval->env = lenv_new();
 
-    v->formals = formals;
-    v->body = body;
-    return v;
+    nlambdaval->formals = formals;
+    nlambdaval->body = body;
+    return nlambdaval;
 }
 
 
@@ -108,44 +111,45 @@ lval* lval_lambda(lval* formals, lval* body)
 /// `lval` Destructor ///
 /////////////////////////
 
-void lval_del(lval* v)
+void lval_del(lval* obj)
 {
-    switch (v->type)
+    switch (obj->type)
     {
         case LVAL_NUM:
             break;
         
         case LVAL_ERR:
-            free(v->err);
+            free(obj->err);
             break;
 
         case LVAL_SYM:
-            free(v->sym);
+            free(obj->sym);
             break;
 
         case LVAL_STR:
-            free(v->str);
+            free(obj->str);
             break;
 
         case LVAL_FUN:
-            if (!v->builtin)
+            if (!obj->builtin)
             {
-                lenv_del(v->env);
-                lval_del(v->formals);
-                lval_del(v->body);
+                lenv_del(obj->env);
+                lval_del(obj->formals);
+                lval_del(obj->body);
             }
             break;
 
         case LVAL_QEXPR:
         case LVAL_SEXPR:
-            for (int i = 0; i < v->count; i++)
-                lval_del(v->cell[i]);
+            for (unsigned i = 0; i < obj->count; i++){
+                lval_del(obj->cell[i]);
+            }
 
-            free(v->cell);
+            free(obj->cell);
             break;
     }
 
-    free(v);
+    free(obj);
 }
 
 
@@ -153,258 +157,266 @@ void lval_del(lval* v)
 /// `lval` Methods ///
 //////////////////////
 
-lval* lval_add(lval* v, lval* x)
+lval* lval_add(lval* parent, lval* child)
 {
-    v->count++;
-    v->cell = realloc(v->cell, sizeof(lval*) * v->count);
-    v->cell[v->count-1] = x;
-    return v;
+    parent->count++;
+    parent->cell = realloc(parent->cell, sizeof(lval*) * parent->count);
+    parent->cell[parent->count-1] = child;
+    return parent;
 }
 
 
-lval* lval_copy(lval* v)
+lval* lval_copy(const lval* obj)
 {
-    lval* x = malloc(sizeof(lval));
-    x->type = v->type;
+    lval* nval = malloc(sizeof(lval));
+    nval->type = obj->type;
 
-    switch (v->type)
+    switch (obj->type)
     {
         case LVAL_FUN:
-            if (v->builtin)
-                x->builtin = v->builtin;
+            if (obj->builtin)
+                nval->builtin = obj->builtin;
             else
             {
-                x->builtin = NULL;
-                x->env = lenv_copy(v->env);
-                x->formals = lval_copy(v->formals);
-                x->body = lval_copy(v->body);
+                nval->builtin = NULL;
+                nval->env = lenv_copy(obj->env);
+                nval->formals = lval_copy(obj->formals);
+                nval->body = lval_copy(obj->body);
             }
             break;
 
         case LVAL_NUM:
-            x->num = v->num;
+            nval->num = obj->num;
             break;
 
         case LVAL_ERR:
-            x->err = malloc(strlen(v->err) + 1);
-            strcpy(x->err, v->err);
+            nval->err = malloc(strlen(obj->err) + 1);
+            strcpy(nval->err, obj->err);
             break;
 
         case LVAL_SYM:
-            x->sym = malloc(strlen(v->sym) + 1);
-            strcpy(x->sym, v->sym);
+            nval->sym = malloc(strlen(obj->sym) + 1);
+            strcpy(nval->sym, obj->sym);
             break;
 
         case LVAL_STR:
-            x->str = malloc(strlen(v->str) + 1);
-            strcpy(x->str, v->str);
+            nval->str = malloc(strlen(obj->str) + 1);
+            strcpy(nval->str, obj->str);
             break;
 
         case LVAL_SEXPR:
         case LVAL_QEXPR:
-            x->count = v->count;
-            x->cell = malloc(sizeof(lval*) * x->count);
-            for (int i = 0; i < x->count; i++)
-                x->cell[i] = lval_copy(v->cell[i]);
+            nval->count = obj->count;
+            nval->cell = malloc(sizeof(lval*) * nval->count);
+            for (unsigned i = 0; i < nval->count; i++)
+                nval->cell[i] = lval_copy(obj->cell[i]);
             break;
     }
 
-    return x;
+    return nval;
 }
 
 
-lval* lval_pop(lval* v, int i)
+lval* lval_pop(lval* obj, int ith)
 {
-    lval* x = v->cell[i];
-    memmove(&v->cell[i], &v->cell[i + 1], sizeof(lval*) * (v->count - i - 1));
-    v->count--;
-    v->cell = realloc(v->cell, sizeof(lval*) * v->count);
+    lval* popd = obj->cell[ith];
+    memmove(&obj->cell[ith], &obj->cell[ith + 1], sizeof(lval*) * (obj->count - ith - 1));
+    obj->count--;
+    obj->cell = realloc(obj->cell, sizeof(lval*) * obj->count);
 
-    return x;
+    return popd;
 }
 
 
-lval* lval_take(lval* v, int i)
+lval* lval_take(lval* obj, int ith)
 {
-    lval* x = lval_pop(v, i);
-    lval_del(v);
-    return x;
+    lval* popd = lval_pop(obj, ith);
+    lval_del(obj);
+    return popd;
 }
 
 
-lval* lval_eval(lenv* e, lval* v)
+lval* lval_eval(lenv* env, lval* obj)
 {
-    if (v->type == LVAL_SYM)
+    if (obj->type == LVAL_SYM)
     {
-        lval* x = lenv_get(e, v);
-        lval_del(v);
-        return x;
+        lval* sub = lenv_get(env, obj);
+        lval_del(obj);
+        return sub;
     }
 
-    if (v->type == LVAL_SEXPR)
-        return lval_eval_sexpr(e, v);
+    if (obj->type == LVAL_SEXPR)
+        return lval_eval_sexpr(env, obj);
 
-    return v;
+    return obj;
 }
 
 
-lval* lval_call(lenv* e, lval* f, lval* a)
+lval* lval_call(lenv* env, lval* func, lval* arg)
 {
-    if (f->builtin)
-        return f->builtin(e, a);
+    if (func->builtin)
+        return func->builtin(env, arg);
 
-    int given = a->count;
-    int total = f->formals->count;
+    int given = arg->count;
+    int total = func->formals->count;
 
-    while (a->count)
+    while (arg->count)
     {
-        if (f->formals->count == 0)
+        if (func->formals->count == 0)
         {
-            lval_del(a);
+            lval_del(arg);
             return lval_err("Function passed too many arguments. "
                             "Got %i, Expected %i. ", given, total);
         }
 
-        lval* sym = lval_pop(f->formals, 0);
+        lval* sym = lval_pop(func->formals, 0);
 
         if (strcmp(sym->sym, "&") == 0)
         {
-            if (f->formals->count != 1)
+            if (func->formals->count != 1)
             {
-                lval_del(a);
+                lval_del(arg);
 
                 return lval_err("Function format invalid. "
                                 "Symbol '&' not followed by single symbol.");
             }
 
-            lval* nextsym = lval_pop(f->formals, 0);
-            lenv_put(f->env, nextsym, builtin_list(e, a));
+            lval* nextsym = lval_pop(func->formals, 0);
+            lenv_put(func->env, nextsym, builtin_list(env, arg));
             lval_del(sym);
             lval_del(nextsym);
             break;
         }
 
-        lval* val = lval_pop(a, 0);
-        lenv_put(f->env, sym, val);
+        lval* popd = lval_pop(arg, 0);
+        lenv_put(func->env, sym, popd);
 
         lval_del(sym);
-        lval_del(val);
+        lval_del(popd);
     }
 
-    lval_del(a);
+    lval_del(arg);
 
-    if (f->formals->count > 0 && strcmp(f->formals->cell[0]->sym, "&") == 0) 
+    if (func->formals->count > 0 && strcmp(func->formals->cell[0]->sym, "&") == 0) 
     {
     
-        if (f->formals->count != 2) 
+        if (func->formals->count != 2) 
         {
             return lval_err("Function format invalid. "
                             "Symbol '&' not followed by single symbol.");
         }
     
-        lval_del(lval_pop(f->formals, 0));
+        lval_del(lval_pop(func->formals, 0));
         
-        lval* sym = lval_pop(f->formals, 0);
+        lval* sym = lval_pop(func->formals, 0);
         lval* val = lval_qexpr();
         
-        lenv_put(f->env, sym, val);
+        lenv_put(func->env, sym, val);
         lval_del(sym);
         lval_del(val);
     }
 
-    if (f->formals->count == 0)
+    if (func->formals->count == 0)
     {
-        f->env->par = e;
-        return builtin_eval(f->env, lval_add(lval_sexpr(), lval_copy(f->body)));
+        func->env->par = env;
+        return builtin_eval(func->env, lval_add(lval_sexpr(), lval_copy(func->body)));
     }
-    else
-        return lval_copy(f);
+    
+    return lval_copy(func);
 }
 
 
-lval* lval_eval_sexpr(lenv* e, lval* v)
+lval* lval_eval_sexpr(lenv* env, lval* sexpr)
 {
-    for (int i = 0; i < v->count; i++)
-        v->cell[i] = lval_eval(e, v->cell[i]);
+    for (unsigned i = 0; i < sexpr->count; i++)
+        sexpr->cell[i] = lval_eval(env, sexpr->cell[i]);
 
-    for (int i = 0; i < v->count; i++)
-        if (v->cell[i]->type == LVAL_ERR)
-            return lval_take(v, i);
+    for (unsigned i = 0; i < sexpr->count; i++)
+        if (sexpr->cell[i]->type == LVAL_ERR)
+            return lval_take(sexpr, i);
 
-    if (v->count == 0)
-        return v;
+    if (sexpr->count == 0)
+        return sexpr;
 
-    if (v->count == 1)
-        return lval_take(v, 0);
+    if (sexpr->count == 1)
+        return lval_take(sexpr, 0);
 
-    lval* f = lval_pop(v, 0);
+    lval* func = lval_pop(sexpr, 0);
 
-    if (f->type != LVAL_FUN)
+    if (func->type != LVAL_FUN)
     {
         lval* err = lval_err("S-Expression starts with incorrect type. ",
                              "Got %s, Expected %s. ",
-                             ltype_name(f->type), ltype_name(LVAL_FUN));
+                             ltype_name(func->type), ltype_name(LVAL_FUN));
 
-        lval_del(f);
-        lval_del(v);
+        lval_del(func);
+        lval_del(sexpr);
         return err;
     }
 
-    lval* result = lval_call(e, f, v);
-    lval_del(f);
+    lval* result = lval_call(env, func, sexpr);
+    lval_del(func);
 
     return result;
 }
 
 
-lval* lval_join(lval* x, lval* y)
+lval* lval_join(lval* l_arg, lval* r_arg)
 {
-    while (y->count)
-        x = lval_add(x, lval_pop(y, 0));
+    while (r_arg->count)
+        l_arg = lval_add(l_arg, lval_pop(r_arg, 0));
 
-    lval_del(y);
-    return x;
+    lval_del(r_arg);
+    return l_arg;
 }
 
 
-int lval_eq(lval* x, lval* y)
+int lval_eq(lval* l_arg, lval* r_arg)
 {
-    if (x->type != y->type)
+    if (l_arg->type != r_arg->type)
         return 0;
 
-    switch (x->type)
+    switch (l_arg->type)
     {
         case LVAL_NUM:
-            return (x->num == y->num);
+            return (l_arg->num == r_arg->num);
 
         case LVAL_ERR:
-            return (strcmp(x->err, y->err) == 0);
+            return (strcmp(l_arg->err, r_arg->err) == 0);
 
         case LVAL_SYM:
-            return (strcmp(x->sym, y->sym) == 0);
+            return (strcmp(l_arg->sym, r_arg->sym) == 0);
 
         case LVAL_STR:
-            return (strcmp(x->str, y->str) == 0);
+            return (strcmp(l_arg->str, r_arg->str) == 0);
 
         case LVAL_FUN:
-            if (x->builtin || x->builtin)
-                return (x->builtin == y->builtin);
-            else
-                return (lval_eq(x->formals, y->formals) 
-                        && lval_eq(x->body, y->body));
+            if (l_arg->builtin || r_arg->builtin){
+                return (l_arg->builtin == r_arg->builtin);
+            }
+            
+            return (lval_eq(l_arg->formals, r_arg->formals) 
+                    && lval_eq(l_arg->body, r_arg->body));
 
         case LVAL_QEXPR:
         case LVAL_SEXPR:
-            if (x->count != y->count)
+            if (l_arg->count != r_arg->count){
                 return 0;
+            }
             
-            for (int i = 0; i < x->count; ++i)
-                if (!lval_eq(x->cell[i], y->cell[i]))
+            for (unsigned i = 0; i < l_arg->count; ++i){
+                if (!lval_eq(l_arg->cell[i], r_arg->cell[i])){
                     return 0;
+                }
+            }
 
             return 1;
 
         break;
+
+        default:
+            printf("[Internal] Compare Error - Unknown Type ID: %d", l_arg->type);
+            break;
     }
 
     return 0;
@@ -415,16 +427,16 @@ int lval_eq(lval* x, lval* y)
 /// Prelude Load ///
 ////////////////////
 
-lval* load_prelude(lenv* e)
+lval* load_prelude(lenv* env)
 {
     #define PRELUDE_PATH_SIZE 100
 
     char prelude_path[PRELUDE_PATH_SIZE];
 
     #ifdef _WIN32
-        char* envvar = "USERPROFILE";
+        const char* envvar = "USERPROFILE";
     #else
-        char* envvar = "HOME";
+        const char* envvar = "HOME";
     #endif  /// _WIN32
 
     if (!getenv(envvar))
@@ -441,10 +453,11 @@ lval* load_prelude(lenv* e)
     }    
     
     lval* prelude = lval_add(lval_sexpr(), lval_str(prelude_path));
-    lval* p = builtin_load(e, prelude);
+    lval* prld = builtin_load(env, prelude);
 
-    if (p->type == LVAL_ERR)
-        lval_println(p);
+    if (prld->type == LVAL_ERR){
+        lval_println(prld);
+    }
 
-    return p;
+    return prld;
 }

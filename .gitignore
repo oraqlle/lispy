@@ -1,16 +1,18 @@
 # Build folders
-build/*
-_build/*
+build/
+_build/
 
 # Dependency folders
-deps/*
-_deps/*
+deps/
+_deps/
 
 # Source Distributions
 *.tar.gz
 
 # Project configuration folders
-.vscode/*
+.vscode/
+.idea/
+.vs/
 
 # Prerequisites
 *.d
@@ -50,3 +52,20 @@ _deps/*
 
 # caches
 .cache/*
+
+# MacOS stores
+**/.DS_Store
+
+# Linter
+.clangd
+
+# CMake
+!CMakeLists.txt
+cmake-build-*/
+CMakeLists.txt.user
+CMakeUserPresets.json
+
+# Misc.
+prefix/
+compile_commands.json
+Testing/**
