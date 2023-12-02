@@ -8,7 +8,7 @@
 #include <stdlib.h>
 
 ///////////////////////////
-/// `lenv` Constructors ///
+// `lenv` Constructors
 ///////////////////////////
 
 /// @brief Constructs a new lenv.
@@ -19,7 +19,7 @@
 lenv* lenv_new(void);
 
 //////////////////////////
-/// `lenv` Destructors ///
+// `lenv` Destructors
 //////////////////////////
 
 /// @brief Destroys the lenv `env`.
@@ -31,7 +31,7 @@ lenv* lenv_new(void);
 void lenv_del(lenv* env);
 
 //////////////////////
-/// `lenv` Methods ///
+// `lenv` Methods
 //////////////////////
 
 /// @brief Gets an lval from an lenv.

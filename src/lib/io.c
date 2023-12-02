@@ -5,7 +5,7 @@
 #include <string.h>
 
 ///////////////////////
-/// `lval` Printing ///
+// `lval` Printing
 ///////////////////////
 
 void lval_print(const lval* obj)
@@ -60,7 +60,7 @@ void lval_println(const lval* obj)
 }
 
 ///////////////////////////
-/// Expression Printing ///
+// Expression Printing
 ///////////////////////////
 
 void lval_expr_print(const lval* obj, char open, char close)
@@ -79,7 +79,7 @@ void lval_expr_print(const lval* obj, char open, char close)
 }
 
 /////////////////
-/// String IO ///
+// String IO
 /////////////////
 
 void lval_print_str(const lval* obj)

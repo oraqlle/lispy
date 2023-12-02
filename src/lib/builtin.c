@@ -9,7 +9,7 @@
 #include <string.h>
 
 //////////////////////////
-/// Builtin Evaluators ///
+// Builtin Evaluators
 //////////////////////////
 
 lval* builtin(lenv* env, lval* arg, const char* func)
@@ -43,7 +43,7 @@ lval* builtin(lenv* env, lval* arg, const char* func)
 }
 
 /////////////////////////
-/// Builtin Operators ///
+// Builtin Operators
 /////////////////////////
 
 lval* builtin_op(lenv* env, lval* arg, const char* operand)
@@ -92,7 +92,7 @@ lval* builtin_op(lenv* env, lval* arg, const char* operand)
 }
 
 ////////////////////////////////////
-/// Builtin Arithmetic Operators ///
+// Builtin Arithmetic Operators
 ////////////////////////////////////
 
 lval* builtin_add(lenv* env, lval* arg)
@@ -116,7 +116,7 @@ lval* builtin_div(lenv* env, lval* arg)
 }
 
 //////////////////////////////
-/// Builtin List Operators ///
+// Builtin List Operators
 //////////////////////////////
 
 lval* builtin_head(lenv* env, lval* arg)
@@ -179,7 +179,7 @@ lval* builtin_join(lenv* env, lval* arg)
 }
 
 //////////////////////////////////
-/// Builtin Function Operators ///
+// Builtin Function Operators
 //////////////////////////////////
 
 lval* builtin_def(lenv* env, lval* arg)
@@ -245,7 +245,7 @@ lval* builtin_lambda(lenv* env, lval* arg)
 }
 
 //////////////////////////
-/// Ordering Operators ///
+// Ordering Operators
 //////////////////////////
 
 lval* builtin_ord(lenv* env, lval* arg, const char* operand)
@@ -297,7 +297,7 @@ lval* builtin_le(lenv* env, lval* arg)
 }
 
 //////////////////////////
-/// Equality Operators ///
+// Equality Operators
 //////////////////////////
 
 lval* builtin_cmp(lenv* env, lval* arg, const char* operand)
@@ -329,7 +329,7 @@ lval* builtin_ne(lenv* env, lval* arg)
 }
 
 ////////////////////////////
-/// Comparison Functions ///
+// Comparison Functions
 ////////////////////////////
 
 /// TODO
@@ -356,7 +356,7 @@ lval* builtin_if(lenv* env, lval* arg)
 }
 
 ////////////////////////////
-/// Builtin IO functions ///
+// Builtin IO functions
 ////////////////////////////
 
 lval* builtin_load(lenv* env, lval* arg)

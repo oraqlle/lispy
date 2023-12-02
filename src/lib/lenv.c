@@ -6,7 +6,7 @@
 #include <string.h>
 
 ///////////////////////////
-/// `lenv` Constructors ///
+// `lenv` Constructors
 ///////////////////////////
 
 lenv* lenv_new(void)
@@ -23,7 +23,7 @@ lenv* lenv_new(void)
 }
 
 //////////////////////////
-/// `lenv` Destructors ///
+// `lenv` Destructors
 //////////////////////////
 
 void lenv_del(lenv* env)
@@ -41,7 +41,7 @@ void lenv_del(lenv* env)
 }
 
 //////////////////////
-/// `lenv` Methods ///
+// `lenv` Methods
 //////////////////////
 
 lval* lenv_get(lenv* env, const lval* key)

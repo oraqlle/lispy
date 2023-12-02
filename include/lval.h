@@ -6,7 +6,7 @@
 #include <types.h>
 
 ///////////////////////////
-/// `lval` Constructors ///
+// `lval` Constructors 
 ///////////////////////////
 
 /// @brief Creates an lval of type LVAL_NUM.
@@ -77,7 +77,7 @@ lval* lval_fun(lbuiltin func);
 lval* lval_lambda(lval* formals, lval* body);
 
 /////////////////////////
-/// `lval` Destructor ///
+// `lval` Destructor
 /////////////////////////
 
 /// @brief Frees an lval.
@@ -89,7 +89,7 @@ lval* lval_lambda(lval* formals, lval* body);
 void lval_del(lval* obj);
 
 //////////////////////
-/// `lval` Methods ///
+// `lval` Methods
 //////////////////////
 
 /// @brief Adds the child l_arg to the parent `obj`.
@@ -175,7 +175,7 @@ lval* lval_join(lval* l_arg, lval* r_arg);
 int lval_eq(lval* l_arg, lval* r_arg);
 
 ////////////////////
-/// Prelude Load ///
+// Prelude Load
 ////////////////////
 
 /// TODO

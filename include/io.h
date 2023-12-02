@@ -4,11 +4,11 @@
 #include <lval.h>
 
 //////////////////////
-/// `lval` Reading ///
+// `lval` Reading
 //////////////////////
 
 ///////////////////////
-/// `lval` Printing ///
+// `lval` Printing
 ///////////////////////
 
 /// @brief Prints the lval
@@ -24,7 +24,7 @@ void lval_print(const lval* obj);
 void lval_println(const lval* obj);
 
 ///////////////////////////
-/// Expression Printing ///
+// Expression Printing
 ///////////////////////////
 
 /// @brief Prints the lval as an expression to stdout.
@@ -38,7 +38,7 @@ void lval_println(const lval* obj);
 void lval_expr_print(const lval* obj, char open, char close);
 
 /////////////////
-/// String IO ///
+// String IO
 /////////////////
 
 /// TODO

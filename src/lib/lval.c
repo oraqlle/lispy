@@ -12,7 +12,7 @@
 #include <string.h>
 
 ///////////////////////////
-/// `lval` Constructors ///
+// `lval` Constructors
 ///////////////////////////
 
 lval* lval_num(const long num)
@@ -99,7 +99,7 @@ lval* lval_lambda(lval* formals, lval* body) // NOLINT(bugprone-easily-swappable
 }
 
 /////////////////////////
-/// `lval` Destructor ///
+// `lval` Destructor
 /////////////////////////
 
 void lval_del(lval* obj)
@@ -142,7 +142,7 @@ void lval_del(lval* obj)
 }
 
 //////////////////////
-/// `lval` Methods ///
+// `lval` Methods
 //////////////////////
 
 lval* lval_add(lval* parent, lval* child)
@@ -407,7 +407,7 @@ int lval_eq(lval* l_arg, lval* r_arg)
 }
 
 ////////////////////
-/// Prelude Load ///
+// Prelude Load
 ////////////////////
 
 lval* load_prelude(lenv* env)

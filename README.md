@@ -1,6 +1,6 @@
 # Lispy
 
-The original implementation of Lispy in C. Lispy is a small but robust programming language that inherits many features from Lisp. Lispy comes with an REPL as well as an interpreter. Like other Lisps, Lispy uses _macros-like_ objects called Q-expressions to build out unevaluated code whose structure and content can manipulated and later evaluated. Lispy is built using [bpt](https://bpt.pizza/docs/latest/index.html).
+The original implementation of Lispy in C. Lispy is a small but robust programming language that inherits many features from Lisp. Lispy comes with a REPL as well as an interpreter. Like other Lisps, Lispy uses _macros-like_ objects called Q-expressions to build out unevaluated code whose structure and content can be manipulated and then later evaluated.
 
 ## Example
 
@@ -28,13 +28,72 @@ The original implementation of Lispy in C. Lispy is a small but robust programmi
 (print (map fib {0 1 2 3 4 5 6 7 8 9}))
 ```
 
+[Examples](examples/)
+
+## Prerequisites
+
 ```sh
-# Builds with bpt
-$ bpt build -t build.yaml -o build
-$ ./build/bin/lispy ./examples/fib.lpy
-{0 1 1 2 3 5 8 13 21 34}
+# Building
+C11 compliant compiler (GCC, Clang, MSVC)
+CMake >= 3.15.0
+vcpkg
+
+# Testing, coverage
+C++11 compliant compiler
+lcov
+
+# Linting, formatting and spelling
+clang-format
+clang-tidy
+cppcheck >= 2.7.0
+codespell >= 2.2.4
+
+# Docs
+doxygen
+jinja2
+Pygments
 ```
+
+## Building
+
+```sh
+cmake --preset=dev
+cmake --build --preset=dev
+```
+
+This project contains a few prebuilt presets for cross-platform configuration in the [`CMakePresets.json`](CMakePresets.json). It is common then to create your own presets in a `CMakeUserPresets.json` file to configure the project to your setup and for debugging. A sample one has been provided in [`CMakeUserPresets-Sample.json`](CMakeUserPresets-Sample.json) which contains the presets for different platforms in the form of `dev-<platform>`. There is also a plain `dev` preset which is an alias for `dev-linux`, which can be modified for your default platform. There are also `dev` presets for building and testing which simply require the `dev` preset.
+
+## Running
+
+### REPL
+
+```sh
+$ ./build/dev/lispy_interpreter
+Lispy v0.3.1
+Press Ctrl+D to exit.
+
+Lispy>
+```
+
+### Interpreter
+
+```sh
+./build/dev/lispy_interpreter examples/hello.lpy
+"hello world!"
+```
+
+## Tests
+
+```sh
+ctest --preset=dev
+
+#  ... or
+cmake --build --preset=dev -t test
+```
+
+> [!NOTE]
+> I haven't really written any tests yet.
 
 ## Credit
 
-Lispy is derived and inspired from the language created by Daniel Holden in his [Build Your Own Lisp](https://www.buildyourownlisp.com/) Book/Blog. Most of the design of this implementation reflects that of the source code in his implementation. Daniel Holden is also the creator of Q-expressions. If you are interesting in creating your own programming language or even just learning C, I highly recommend giving it a read.
+This implementation of Lispy is based on Daniel Holden's book [Build Your Own Lisp](https://www.buildyourownlisp.com/) Book/Blog. If you are interested in creating your own programming language or even just learning C, I highly recommend giving it a read.

@@ -4,7 +4,7 @@
 #include <types.h>
 
 //////////////////////////
-/// Builtin Evaluators ///
+// Builtin Evaluators
 //////////////////////////
 
 /// @brief Dispatches the builtin function `f` to the lval `a`.
@@ -19,7 +19,7 @@
 lval* builtin(lenv* env, lval* arg, const char* func);
 
 /////////////////////////
-/// Builtin Operators ///
+// Builtin Operators
 /////////////////////////
 
 /// @brief Evaluates the lval `a` as an operator.
@@ -35,7 +35,7 @@ lval* builtin(lenv* env, lval* arg, const char* func);
 lval* builtin_op(lenv* env, lval* arg, const char* operand);
 
 ////////////////////////////////////
-/// Builtin Arithmetic Operators ///
+// Builtin Arithmetic Operators
 ////////////////////////////////////
 
 /// @brief Built-in addition operator.
@@ -75,7 +75,7 @@ lval* builtin_mul(lenv* env, lval* arg);
 lval* builtin_div(lenv* env, lval* arg);
 
 //////////////////////////////
-/// Builtin List Operators ///
+// Builtin List Operators
 //////////////////////////////
 
 /// @brief Returns the head of a Q-Expression.
@@ -130,7 +130,7 @@ lval* builtin_eval(lenv* env, lval* arg);
 lval* builtin_join(lenv* env, lval* arg);
 
 //////////////////////////////////
-/// Builtin Function Operators ///
+// Builtin Function Operators
 //////////////////////////////////
 
 /// FIX
@@ -163,7 +163,7 @@ lval* builtin_put(lenv* env, lval* arg);
 lval* builtin_var(lenv* env, lval* arg, const char* func);
 
 //////////////////////////
-/// Ordering Operators ///
+// Ordering Operators
 //////////////////////////
 
 /// TODO
@@ -182,7 +182,7 @@ lval* builtin_ge(lenv* env, lval* arg);
 lval* builtin_le(lenv* env, lval* arg);
 
 //////////////////////////
-/// Equality Operators ///
+// Equality Operators
 //////////////////////////
 
 /// TODO
@@ -195,14 +195,14 @@ lval* builtin_eq(lenv* env, lval* arg);
 lval* builtin_ne(lenv* env, lval* arg);
 
 ////////////////////////////
-/// Comparison Functions ///
+// Comparison Functions
 ////////////////////////////
 
 /// TODO
 lval* builtin_if(lenv* env, lval* arg);
 
 ////////////////////////////
-/// Builtin IO functions ///
+// Builtin IO functions
 ////////////////////////////
 
 /// TODO
