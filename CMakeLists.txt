@@ -21,7 +21,7 @@ find_package(replxx CONFIG REQUIRED)
 
 add_library(
     lispy_interpreter_lib OBJECT
-    src/lib/builtins.c
+    src/lib/builtin.c
     src/lib/io.c
     src/lib/lenv.c
     src/lib/lval.c

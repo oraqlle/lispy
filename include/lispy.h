@@ -1,7 +1,7 @@
 #ifndef LISPY_H
 #define LISPY_H
 
-#include <builtins.h>
+#include <builtin.h>
 #include <io.h>
 #include <lenv.h>
 #include <lval.h>
