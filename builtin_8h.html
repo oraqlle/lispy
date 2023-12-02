@@ -71,18 +71,18 @@
               <a href="structlval.html" class="m-doc">lval</a>* arg,
               const char* func) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
             </dt>
-            <dd>Builtin Evaluators ///.</dd>
+            <dd>Dispatches the builtin function <code>f</code> to the lval <code>a</code>.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#abe2925960fb4feae20168c73d37a673a" class="m-doc">builtin_op</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
               <a href="structlval.html" class="m-doc">lval</a>* arg,
               const char* operand) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
             </dt>
-            <dd>Builtin Operators ///.</dd>
+            <dd>Evaluates the lval <code>a</code> as an operator.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#af8cb7835cfaf257c9b065aa6127979f4" class="m-doc">builtin_add</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
               <a href="structlval.html" class="m-doc">lval</a>* arg) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
             </dt>
-            <dd>Builtin Arithmetic Operators ///.</dd>
+            <dd>Built-in addition operator.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#aacf77ffed9670dfb318d02bd1ed79949" class="m-doc">builtin_sub</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
               <a href="structlval.html" class="m-doc">lval</a>* arg) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
@@ -102,7 +102,7 @@
               <span class="m-doc-wrap-bumper">auto <a href="#ad4c8cf6a4aa0b4338a7a95c552cc1288" class="m-doc">builtin_head</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
               <a href="structlval.html" class="m-doc">lval</a>* arg) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
             </dt>
-            <dd>Builtin List Operators ///.</dd>
+            <dd>Returns the head of a Q-Expression.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a434e50b2a7d06d0a5e04ddcd3ba9c8db" class="m-doc">builtin_tail</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
               <a href="structlval.html" class="m-doc">lval</a>* arg) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
@@ -127,7 +127,7 @@
               <span class="m-doc-wrap-bumper">auto <a href="#ae22cf33725a97ce2a992307fa89c0abc" class="m-doc">builtin_lambda</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
               <a href="structlval.html" class="m-doc">lval</a>* arg) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
             </dt>
-            <dd>Builtin Function Operators ///.</dd>
+            <dd>Defines the lambda operator.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a362ce6588ffc2396c7e1e53143663c07" class="m-doc">builtin_def</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
               <a href="structlval.html" class="m-doc">lval</a>* arg) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
@@ -144,12 +144,12 @@
               const char* func) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
             </dt>
             <dd>TODO.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#af1afc77ac65b94f0290eb3488dd82201" class="m-doc">builtin_ord</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
+            <dt id="af1afc77ac65b94f0290eb3488dd82201">
+              <span class="m-doc-wrap-bumper">auto <a href="#af1afc77ac65b94f0290eb3488dd82201" class="m-doc-self">builtin_ord</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
               <a href="structlval.html" class="m-doc">lval</a>* arg,
               const char* operand) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
             </dt>
-            <dd>Ordering Operators ///.</dd>
+            <dd>TODO.</dd>
             <dt id="acbcaa70120f20cc6d0fd833202510b43">
               <span class="m-doc-wrap-bumper">auto <a href="#acbcaa70120f20cc6d0fd833202510b43" class="m-doc-self">builtin_gt</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
               <a href="structlval.html" class="m-doc">lval</a>* arg) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
@@ -170,12 +170,12 @@
               <a href="structlval.html" class="m-doc">lval</a>* arg) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
             </dt>
             <dd>TODO.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a1daa378774c9fe7a02418360769a9ee8" class="m-doc">builtin_cmp</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
+            <dt id="a1daa378774c9fe7a02418360769a9ee8">
+              <span class="m-doc-wrap-bumper">auto <a href="#a1daa378774c9fe7a02418360769a9ee8" class="m-doc-self">builtin_cmp</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
               <a href="structlval.html" class="m-doc">lval</a>* arg,
               const char* operand) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
             </dt>
-            <dd>Equality Operators ///.</dd>
+            <dd>TODO.</dd>
             <dt id="a77e8010c1a2aee2df1ed4f582fc015c3">
               <span class="m-doc-wrap-bumper">auto <a href="#a77e8010c1a2aee2df1ed4f582fc015c3" class="m-doc-self">builtin_eq</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
               <a href="structlval.html" class="m-doc">lval</a>* arg) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
@@ -186,16 +186,16 @@
               <a href="structlval.html" class="m-doc">lval</a>* arg) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
             </dt>
             <dd>TODO.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a569ce3bfb1863a504b0cc8f55ba09d77" class="m-doc">builtin_if</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
+            <dt id="a569ce3bfb1863a504b0cc8f55ba09d77">
+              <span class="m-doc-wrap-bumper">auto <a href="#a569ce3bfb1863a504b0cc8f55ba09d77" class="m-doc-self">builtin_if</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
               <a href="structlval.html" class="m-doc">lval</a>* arg) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
             </dt>
-            <dd>Comparison Functions ///.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a019f80f506b1a328d4702ff0a5f887e6" class="m-doc">builtin_load</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
+            <dd>TODO.</dd>
+            <dt id="a019f80f506b1a328d4702ff0a5f887e6">
+              <span class="m-doc-wrap-bumper">auto <a href="#a019f80f506b1a328d4702ff0a5f887e6" class="m-doc-self">builtin_load</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
               <a href="structlval.html" class="m-doc">lval</a>* arg) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
             </dt>
-            <dd>Builtin IO functions ///.</dd>
+            <dd>TODO.</dd>
             <dt id="aee25bbafe3c19504565900530aae5716">
               <span class="m-doc-wrap-bumper">auto <a href="#aee25bbafe3c19504565900530aae5716" class="m-doc-self">builtin_print</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
               <a href="structlval.html" class="m-doc">lval</a>* arg) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
@@ -216,7 +216,7 @@
               <a href="structlval.html" class="m-doc">lval</a>* arg,
               const char* func)</span></span>
             </h3>
-            <p>Builtin Evaluators ///.</p>
+            <p>Dispatches the builtin function <code>f</code> to the lval <code>a</code>.</p>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
                 <tr>
@@ -225,7 +225,7 @@
                 </tr>
               </tfoot>
             </table>
-<p>Dispatches the builtin function <code>f</code> to the lval <code>a</code>.</p><p>Dispatches the builtin function <code>f</code> to the lval <code>a</code>. Returns an error if <code>f</code> is not a builtin function.</p>
+<p>Dispatches the builtin function <code>f</code> to the lval <code>a</code>. Returns an error if <code>f</code> is not a builtin function.</p>
           </div></section>
           <section class="m-doc-details" id="abe2925960fb4feae20168c73d37a673a"><div>
             <h3>
@@ -233,7 +233,7 @@
               <a href="structlval.html" class="m-doc">lval</a>* arg,
               const char* operand)</span></span>
             </h3>
-            <p>Builtin Operators ///.</p>
+            <p>Evaluates the lval <code>a</code> as an operator.</p>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
                 <tr>
@@ -242,14 +242,14 @@
                 </tr>
               </tfoot>
             </table>
-<p>Evaluates the lval <code>a</code> as an operator.</p><p>Evaluates the lval <code>a</code> as an operator. Returns an error if <code>a</code>&#x27;s children are not of type LVAL_NUM.</p>
+<p>Evaluates the lval <code>a</code> as an operator. Returns an error if <code>a</code>&#x27;s children are not of type LVAL_NUM.</p>
           </div></section>
           <section class="m-doc-details" id="af8cb7835cfaf257c9b065aa6127979f4"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af8cb7835cfaf257c9b065aa6127979f4" class="m-doc-self">builtin_add</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
               <a href="structlval.html" class="m-doc">lval</a>* arg)</span></span>
             </h3>
-            <p>Builtin Arithmetic Operators ///.</p>
+            <p>Built-in addition operator.</p>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
                 <tr>
@@ -258,7 +258,7 @@
                 </tr>
               </tfoot>
             </table>
-<p>Built-in addition operator.</p><p>Curly&#x27;s built-in addition operator.</p>
+<p>Curly&#x27;s built-in addition operator.</p>
           </div></section>
           <section class="m-doc-details" id="aacf77ffed9670dfb318d02bd1ed79949"><div>
             <h3>
@@ -313,7 +313,7 @@
               <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ad4c8cf6a4aa0b4338a7a95c552cc1288" class="m-doc-self">builtin_head</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
               <a href="structlval.html" class="m-doc">lval</a>* arg)</span></span>
             </h3>
-            <p>Builtin List Operators ///.</p>
+            <p>Returns the head of a Q-Expression.</p>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
                 <tr>
@@ -322,7 +322,7 @@
                 </tr>
               </tfoot>
             </table>
-<p>Returns the head of a Q-Expression.</p><p>Returns the head of a Q-Expression and discards the tail.</p>
+<p>Returns the head of a Q-Expression and discards the tail.</p>
           </div></section>
           <section class="m-doc-details" id="a434e50b2a7d06d0a5e04ddcd3ba9c8db"><div>
             <h3>
@@ -393,7 +393,7 @@
               <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ae22cf33725a97ce2a992307fa89c0abc" class="m-doc-self">builtin_lambda</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
               <a href="structlval.html" class="m-doc">lval</a>* arg)</span></span>
             </h3>
-            <p>Builtin Function Operators ///.</p>
+            <p>Defines the lambda operator.</p>
             <table class="m-table m-fullwidth m-flat">
               <tfoot>
                 <tr>
@@ -402,7 +402,7 @@
                 </tr>
               </tfoot>
             </table>
-<p>FIX</p><p>Defines the lambda operator</p><p>Defines the lambda operator as the <code>\</code> character.</p>
+<p>FIX</p><p>Defines the lambda operator as the <code>\</code> character.</p>
           </div></section>
           <section class="m-doc-details" id="a362ce6588ffc2396c7e1e53143663c07"><div>
             <h3>
@@ -419,40 +419,6 @@
               </tfoot>
             </table>
 <p>FIX</p><p>Allows the definition of new functions in the environment.</p>
-          </div></section>
-          <section class="m-doc-details" id="af1afc77ac65b94f0290eb3488dd82201"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af1afc77ac65b94f0290eb3488dd82201" class="m-doc-self">builtin_ord</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
-              <a href="structlval.html" class="m-doc">lval</a>* arg,
-              const char* operand)</span></span>
-            </h3>
-            <p>Ordering Operators ///.</p>
-<p>TODO</p>
-          </div></section>
-          <section class="m-doc-details" id="a1daa378774c9fe7a02418360769a9ee8"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a1daa378774c9fe7a02418360769a9ee8" class="m-doc-self">builtin_cmp</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
-              <a href="structlval.html" class="m-doc">lval</a>* arg,
-              const char* operand)</span></span>
-            </h3>
-            <p>Equality Operators ///.</p>
-<p>TODO</p>
-          </div></section>
-          <section class="m-doc-details" id="a569ce3bfb1863a504b0cc8f55ba09d77"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a569ce3bfb1863a504b0cc8f55ba09d77" class="m-doc-self">builtin_if</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
-              <a href="structlval.html" class="m-doc">lval</a>* arg)</span></span>
-            </h3>
-            <p>Comparison Functions ///.</p>
-<p>TODO</p>
-          </div></section>
-          <section class="m-doc-details" id="a019f80f506b1a328d4702ff0a5f887e6"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a019f80f506b1a328d4702ff0a5f887e6" class="m-doc-self">builtin_load</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
-              <a href="structlval.html" class="m-doc">lval</a>* arg)</span></span>
-            </h3>
-            <p>Builtin IO functions ///.</p>
-<p>TODO</p>
           </div></section>
           <section class="m-doc-details" id="a655e55fbde373b5cbb3675aa8dcf7f24"><div>
             <h3>

@@ -51,7 +51,7 @@
         <h1>
           Lispy
         </h1>
-<p><a name="md_README"></a> The original implementation of Lispy in C. Lispy is a small but robust programming language that inherits many features from Lisp. Lispy comes with an REPL as well as an interpreter. Like other Lisps, Lispy uses <em>macros-like</em> objects called Q-expressions to build out unevaluated code whose structure and content can manipulated and later evaluated. Lispy is built using <a href="https://bpt.pizza/docs/latest/index.html">bpt</a>.</p><section id="autotoc_md1"><h2><a href="#autotoc_md1">Example</a></h2><pre class="m-code"><span class="c1">; Fibonacci (this is a comment)</span>
+<p><a name="md_README"></a> The original implementation of Lispy in C. Lispy is a small but robust programming language that inherits many features from Lisp. Lispy comes with a REPL as well as an interpreter. Like other Lisps, Lispy uses <em>macros-like</em> objects called Q-expressions to build out unevaluated code whose structure and content can be manipulated and then later evaluated.</p><section id="autotoc_md1"><h2><a href="#autotoc_md1">Example</a></h2><pre class="m-code"><span class="c1">; Fibonacci (this is a comment)</span>
 
 <span class="c1">; `()` denotes a S-expression which will evaluate immediately</span>
 <span class="c1">; `{}` denotes a Q-expression which will remain unevaluated</span>
@@ -71,10 +71,34 @@
 
 <span class="c1">; Create list of numbers and apply `fib` to each element</span>
 <span class="c1">; Yielding a new list</span>
-<span class="p">(</span><span class="nb">print</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nv">fib</span><span class="w"> </span><span class="nv">{0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="nv">9}</span><span class="p">))</span></pre><pre class="m-code"><span class="c1"># Builds with bpt</span>
-$<span class="w"> </span>bpt<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>build.yaml<span class="w"> </span>-o<span class="w"> </span>build
-$<span class="w"> </span>./build/bin/lispy<span class="w"> </span>./examples/fib.lpy
-<span class="o">{</span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="m">13</span><span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">34</span><span class="o">}</span></pre></section><section id="autotoc_md2"><h2><a href="#autotoc_md2">Credit</a></h2><p>Lispy is derived and inspired from the language created by Daniel Holden in his <a href="https://www.buildyourownlisp.com/">Build Your Own Lisp</a> Book/Blog. Most of the design of this implementation reflects that of the source code in his implementation. Daniel Holden is also the creator of Q-expressions. If you are interesting in creating your own programming language or even just learning C, I highly recommend giving it a read.</p></section>
+<span class="p">(</span><span class="nb">print</span><span class="w"> </span><span class="p">(</span><span class="nb">map</span><span class="w"> </span><span class="nv">fib</span><span class="w"> </span><span class="nv">{0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="nv">9}</span><span class="p">))</span></pre><p><a href="examples/">Examples</a></p></section><section id="autotoc_md2"><h2><a href="#autotoc_md2">Prerequisites</a></h2><pre class="m-code"><span class="c1"># Building</span>
+C11<span class="w"> </span>compliant<span class="w"> </span>compiler<span class="w"> </span><span class="o">(</span>GCC,<span class="w"> </span>Clang,<span class="w"> </span>MSVC<span class="o">)</span>
+CMake<span class="w"> </span>&gt;<span class="o">=</span><span class="w"> </span><span class="m">3</span>.15.0
+vcpkg
+
+<span class="c1"># Testing, coverage</span>
+C++11<span class="w"> </span>compliant<span class="w"> </span>compiler
+lcov
+
+<span class="c1"># Linting, formatting and spelling</span>
+clang-format
+clang-tidy
+cppcheck<span class="w"> </span>&gt;<span class="o">=</span><span class="w"> </span><span class="m">2</span>.7.0
+codespell<span class="w"> </span>&gt;<span class="o">=</span><span class="w"> </span><span class="m">2</span>.2.4
+
+<span class="c1"># Docs</span>
+doxygen
+jinja2
+Pygments</pre></section><section id="autotoc_md3"><h2><a href="#autotoc_md3">Building</a></h2><pre class="m-code">cmake<span class="w"> </span>--preset<span class="o">=</span>dev
+cmake<span class="w"> </span>--build<span class="w"> </span>--preset<span class="o">=</span>dev</pre><p>This project contains a few prebuilt presets for cross-platform configuration in the <a href="CMakePresets.json"><code>CMakePresets.json</code></a>. It is common then to create your own presets in a <code>CMakeUserPresets.json</code> file to configure the project to your setup and for debugging. A sample one has been provided in <a href="CMakeUserPresets-Sample.json"><code>CMakeUserPresets-Sample.json</code></a> which contains the presets for different platforms in the form of <code>dev-&lt;platform&gt;</code>. There is also a plain <code>dev</code> preset which is an alias for <code>dev-linux</code>, which can be modified for your default platform. There are also <code>dev</code> presets for building and testing which simply require the <code>dev</code> preset.</p></section><section id="autotoc_md4"><h2><a href="#autotoc_md4">Running</a></h2><section id="autotoc_md5"><h3><a href="#autotoc_md5">REPL</a></h3><pre class="m-code">$<span class="w"> </span>./build/dev/lispy_interpreter
+Lispy<span class="w"> </span>v0.3.1
+Press<span class="w"> </span>Ctrl+D<span class="w"> </span>to<span class="w"> </span>exit.
+
+Lispy&gt;</pre></section><section id="autotoc_md6"><h3><a href="#autotoc_md6">Interpreter</a></h3><pre class="m-code">./build/dev/lispy_interpreter<span class="w"> </span>examples/hello.lpy
+<span class="s2">&quot;hello world!&quot;</span></pre></section></section><section id="autotoc_md7"><h2><a href="#autotoc_md7">Tests</a></h2><pre class="m-code">ctest<span class="w"> </span>--preset<span class="o">=</span>dev
+
+<span class="c1">#  ... or</span>
+cmake<span class="w"> </span>--build<span class="w"> </span>--preset<span class="o">=</span>dev<span class="w"> </span>-t<span class="w"> </span><span class="nb">test</span></pre><blockquote><p>[!NOTE] I haven&#x27;t really written any tests yet.</p></blockquote></section><section id="autotoc_md8"><h2><a href="#autotoc_md8">Credit</a></h2><p>This implementation of Lispy is based on Daniel Holden&#x27;s book <a href="https://www.buildyourownlisp.com/">Build Your Own Lisp</a> Book/Blog. If you are interested in creating your own programming language or even just learning C, I highly recommend giving it a read.</p></section>
       </div>
     </div>
   </div>

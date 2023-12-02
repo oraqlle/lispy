@@ -69,7 +69,7 @@
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#aa015307bdb6ef1d958d0cbd9ed441f16" class="m-doc">lval_num</a>(</span><span class="m-doc-wrap">long num) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
             </dt>
-            <dd><code>lval</code> Constructors ///</dd>
+            <dd>Creates an lval of type LVAL_NUM.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a11600155cb81c3bbb3a3acdfd413817d" class="m-doc">lval_err</a>(</span><span class="m-doc-wrap">const char* fmt,
               ...) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
@@ -103,12 +103,12 @@
             <dt>
               <span class="m-doc-wrap-bumper">void <a href="#a9b6b859a55ae1c9a16e7668c7f8cbf48" class="m-doc">lval_del</a>(</span><span class="m-doc-wrap"><a href="structlval.html" class="m-doc">lval</a>* obj)</span>
             </dt>
-            <dd><code>lval</code> Destructor ///</dd>
+            <dd>Frees an lval.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#a4ac7867956ff8805f1e646735977d51f" class="m-doc">lval_add</a>(</span><span class="m-doc-wrap"><a href="structlval.html" class="m-doc">lval</a>* parent,
               <a href="structlval.html" class="m-doc">lval</a>* child) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
             </dt>
-            <dd><code>lval</code> Methods ///</dd>
+            <dd>Adds the child l_arg to the parent <code>obj</code>.</dd>
             <dt>
               <span class="m-doc-wrap-bumper">auto <a href="#af670d2706c6fe15ae90678759cb0e9c5" class="m-doc">lval_copy</a>(</span><span class="m-doc-wrap">const <a href="structlval.html" class="m-doc">lval</a>* obj) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
             </dt>
@@ -149,10 +149,10 @@
               <a href="structlval.html" class="m-doc">lval</a>* r_arg) -&gt; int</span>
             </dt>
             <dd>TODO.</dd>
-            <dt>
-              <span class="m-doc-wrap-bumper">auto <a href="#a6c2ee8b474a4836e9d039ae1c54faf40" class="m-doc">load_prelude</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            <dt id="a6c2ee8b474a4836e9d039ae1c54faf40">
+              <span class="m-doc-wrap-bumper">auto <a href="#a6c2ee8b474a4836e9d039ae1c54faf40" class="m-doc-self">load_prelude</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
             </dt>
-            <dd>Prelude Load ///.</dd>
+            <dd>TODO.</dd>
           </dl>
         </section>
         <section>
@@ -161,7 +161,7 @@
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa015307bdb6ef1d958d0cbd9ed441f16" class="m-doc-self">lval_num</a>(</span><span class="m-doc-wrap">long num)</span></span>
             </h3>
-            <p><code>lval</code> Constructors ///</p>
+            <p>Creates an lval of type LVAL_NUM.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -179,7 +179,7 @@
                 </tr>
               </tfoot>
             </table>
-<p>Creates an lval of type LVAL_NUM.</p><p>Creates an lval of type LVAL_NUM and sets the obj to the provided number <code>num</code>.</p>
+<p>Creates an lval of type LVAL_NUM and sets the obj to the provided number <code>num</code>.</p>
           </div></section>
           <section class="m-doc-details" id="a11600155cb81c3bbb3a3acdfd413817d"><div>
             <h3>
@@ -317,7 +317,7 @@
             <h3>
               <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9b6b859a55ae1c9a16e7668c7f8cbf48" class="m-doc-self">lval_del</a>(</span><span class="m-doc-wrap"><a href="structlval.html" class="m-doc">lval</a>* obj)</span></span>
             </h3>
-            <p><code>lval</code> Destructor ///</p>
+            <p>Frees an lval.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -329,14 +329,14 @@
                 </tr>
               </tbody>
             </table>
-<p>Frees an lval.</p><p>Frees an lval and all of its children (if any) as well as any other allocated resources.</p>
+<p>Frees an lval and all of its children (if any) as well as any other allocated resources.</p>
           </div></section>
           <section class="m-doc-details" id="a4ac7867956ff8805f1e646735977d51f"><div>
             <h3>
               <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4ac7867956ff8805f1e646735977d51f" class="m-doc-self">lval_add</a>(</span><span class="m-doc-wrap"><a href="structlval.html" class="m-doc">lval</a>* parent,
               <a href="structlval.html" class="m-doc">lval</a>* child)</span></span>
             </h3>
-            <p><code>lval</code> Methods ///</p>
+            <p>Adds the child l_arg to the parent <code>obj</code>.</p>
             <table class="m-table m-fullwidth m-flat">
               <thead>
                 <tr><th colspan="2">Parameters</th></tr>
@@ -358,7 +358,7 @@
                 </tr>
               </tfoot>
             </table>
-<p>Adds the child l_arg to the parent <code>obj</code>.</p><p>Adds the child l_arg to the parent <code>obj</code>. Allocates memory to <code>obj</code>&#x27;s <code>cell</code> array and assigns l_arg to the last slot of the array.</p>
+<p>Adds the child l_arg to the parent <code>obj</code>. Allocates memory to <code>obj</code>&#x27;s <code>cell</code> array and assigns l_arg to the last slot of the array.</p>
           </div></section>
           <section class="m-doc-details" id="af670d2706c6fe15ae90678759cb0e9c5"><div>
             <h3>
@@ -528,13 +528,6 @@
               </tfoot>
             </table>
 <p>Joins the Q-Expression r_arg to l_arg by continually popping the first element off r_arg and adding it to l_arg. Returns l_arg.</p>
-          </div></section>
-          <section class="m-doc-details" id="a6c2ee8b474a4836e9d039ae1c54faf40"><div>
-            <h3>
-              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6c2ee8b474a4836e9d039ae1c54faf40" class="m-doc-self">load_prelude</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env)</span></span>
-            </h3>
-            <p>Prelude Load ///.</p>
-<p>TODO</p>
           </div></section>
         </section>
       </div>
