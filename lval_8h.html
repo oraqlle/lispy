@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>lval.h file | lispy</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i%7CSource+Code+Pro:400,400i,600" />
+  <link rel="stylesheet" href="m-dark+documentation.compiled.css" />
+  <link rel="icon" href="favicon-dark.png" type="image/png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#22272e" />
+</head>
+<body>
+<header><nav id="navigation">
+  <div class="m-container">
+    <div class="m-row">
+      <a href="index.html" id="m-navbar-brand" class="m-col-t-8 m-col-m-none m-left-m">lispy</a>
+      <div class="m-col-t-4 m-hide-m m-text-right m-nopadr">
+        <a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+          <path id="m-doc-search-icon-path" d="m6 0c-3.31 0-6 2.69-6 6 0 3.31 2.69 6 6 6 1.49 0 2.85-0.541 3.89-1.44-0.0164 0.338 0.147 0.759 0.5 1.15l3.22 3.79c0.552 0.614 1.45 0.665 2 0.115 0.55-0.55 0.499-1.45-0.115-2l-3.79-3.22c-0.392-0.353-0.812-0.515-1.15-0.5 0.895-1.05 1.44-2.41 1.44-3.89 0-3.31-2.69-6-6-6zm0 1.56a4.44 4.44 0 0 1 4.44 4.44 4.44 4.44 0 0 1-4.44 4.44 4.44 4.44 0 0 1-4.44-4.44 4.44 4.44 0 0 1 4.44-4.44z"/>
+        </svg></a>
+        <a id="m-navbar-show" href="#navigation" title="Show navigation"></a>
+        <a id="m-navbar-hide" href="#" title="Hide navigation"></a>
+      </div>
+      <div id="m-navbar-collapse" class="m-col-t-12 m-show-m m-col-m-none m-right-m">
+        <div class="m-row">
+          <ol class="m-col-t-6 m-col-m-none">
+            <li>
+              <a href="pages.html">Pages</a>
+              <ol>
+                <li><a href="about.html">About</a></li>
+              </ol>
+            </li>
+            <li><a href="namespaces.html">Namespaces</a></li>
+          </ol>
+          <ol class="m-col-t-6 m-col-m-none" start="3">
+            <li><a href="annotated.html">Classes</a></li>
+            <li><a href="files.html">Files</a></li>
+            <li class="m-show-m"><a href="#search" class="m-doc-search-icon" title="Search" onclick="return showSearch()"><svg style="height: 0.9rem;" viewBox="0 0 16 16">
+              <use href="#m-doc-search-icon-path" />
+            </svg></a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav></header>
+<main><article>
+  <div class="m-container m-container-inflatable">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <h1>
+          lval.h <span class="m-thin">file</span>
+        </h1>
+        <p><span></span></p>
+        <div class="m-block m-default">
+          <h3>Contents</h3>
+          <ul>
+            <li>
+              Reference
+              <ul>
+                <li><a href="#func-members">Functions</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <section id="func-members">
+          <h2><a href="#func-members">Functions</a></h2>
+          <dl class="m-doc">
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#aa015307bdb6ef1d958d0cbd9ed441f16" class="m-doc">lval_num</a>(</span><span class="m-doc-wrap">long num) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            </dt>
+            <dd><code>lval</code> Constructors ///</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a11600155cb81c3bbb3a3acdfd413817d" class="m-doc">lval_err</a>(</span><span class="m-doc-wrap">const char* fmt,
+              ...) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            </dt>
+            <dd>Creates an lval of type LVAL_ERR.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a199dbd71ad80708bf00b0f31f00f7684" class="m-doc">lval_sym</a>(</span><span class="m-doc-wrap">const char* sym) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            </dt>
+            <dd>Creates an lval of type LVAL_SYM.</dd>
+            <dt id="aacd9e244512efab3a8212fb1b63d71a6">
+              <span class="m-doc-wrap-bumper">auto <a href="#aacd9e244512efab3a8212fb1b63d71a6" class="m-doc-self">lval_str</a>(</span><span class="m-doc-wrap">const char* str) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            </dt>
+            <dd>TODO.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a800a7fcd5406be620827357873d59973" class="m-doc">lval_sexpr</a>(</span><span class="m-doc-wrap">void) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            </dt>
+            <dd>Creates an lval of type LVAL_SEXPR.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a30bb90dd5cb46179297e56b13c291949" class="m-doc">lval_qexpr</a>(</span><span class="m-doc-wrap">void) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            </dt>
+            <dd>Creates an lval of type LVAL_QEXPR.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af300535095776dbfcd80c7018a08e006" class="m-doc">lval_fun</a>(</span><span class="m-doc-wrap"><a href="types_8h.html#a66eae9c3c4b41b143a332d4fdaf7aa4f" class="m-doc">lbuiltin</a> func) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            </dt>
+            <dd>Constructs an lval of type LVAL_FUN.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a9fe5a678b358fa1d23b9ba751ff22e28" class="m-doc">lval_lambda</a>(</span><span class="m-doc-wrap"><a href="structlval.html" class="m-doc">lval</a>* formals,
+              <a href="structlval.html" class="m-doc">lval</a>* body) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            </dt>
+            <dd>Constructs a lambda lval.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">void <a href="#a9b6b859a55ae1c9a16e7668c7f8cbf48" class="m-doc">lval_del</a>(</span><span class="m-doc-wrap"><a href="structlval.html" class="m-doc">lval</a>* obj)</span>
+            </dt>
+            <dd><code>lval</code> Destructor ///</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a4ac7867956ff8805f1e646735977d51f" class="m-doc">lval_add</a>(</span><span class="m-doc-wrap"><a href="structlval.html" class="m-doc">lval</a>* parent,
+              <a href="structlval.html" class="m-doc">lval</a>* child) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            </dt>
+            <dd><code>lval</code> Methods ///</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#af670d2706c6fe15ae90678759cb0e9c5" class="m-doc">lval_copy</a>(</span><span class="m-doc-wrap">const <a href="structlval.html" class="m-doc">lval</a>* obj) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            </dt>
+            <dd>Copies an lval.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a10db98f918f955ddba37b9257cf21c48" class="m-doc">lval_pop</a>(</span><span class="m-doc-wrap"><a href="structlval.html" class="m-doc">lval</a>* obj,
+              unsigned ith) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            </dt>
+            <dd>Pops the ith element off of the lval <code>obj</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a0f670aace9ed096adf9317624cfaed77" class="m-doc">lval_take</a>(</span><span class="m-doc-wrap"><a href="structlval.html" class="m-doc">lval</a>* obj,
+              unsigned ith) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            </dt>
+            <dd>Takes the ith element off of the lval <code>obj</code>.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a80fa71c4956895a3f11abf49f1211279" class="m-doc">lval_eval</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
+              <a href="structlval.html" class="m-doc">lval</a>* obj) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            </dt>
+            <dd>Evaluates the lval <code>obj</code>.</dd>
+            <dt id="adb1d991b426f31a203516a609d1b5996">
+              <span class="m-doc-wrap-bumper">auto <a href="#adb1d991b426f31a203516a609d1b5996" class="m-doc-self">lval_call</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
+              <a href="structlval.html" class="m-doc">lval</a>* func,
+              <a href="structlval.html" class="m-doc">lval</a>* arg) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            </dt>
+            <dd>TODO.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#ab28ae54ec2b6893ace69318b6691b4ab" class="m-doc">lval_eval_sexpr</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
+              <a href="structlval.html" class="m-doc">lval</a>* sexpr) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            </dt>
+            <dd>Evaluates the lval <code>obj</code> as an S-Expression.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a7ee112a15e8f408c7da9ae71b7ab1982" class="m-doc">lval_join</a>(</span><span class="m-doc-wrap"><a href="structlval.html" class="m-doc">lval</a>* l_arg,
+              <a href="structlval.html" class="m-doc">lval</a>* r_arg) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            </dt>
+            <dd>Joins the Q-Expression r_arg to l_arg.</dd>
+            <dt id="acb35618ffcd57aed4b3372334b8d68e1">
+              <span class="m-doc-wrap-bumper">auto <a href="#acb35618ffcd57aed4b3372334b8d68e1" class="m-doc-self">lval_eq</a>(</span><span class="m-doc-wrap"><a href="structlval.html" class="m-doc">lval</a>* l_arg,
+              <a href="structlval.html" class="m-doc">lval</a>* r_arg) -&gt; int</span>
+            </dt>
+            <dd>TODO.</dd>
+            <dt>
+              <span class="m-doc-wrap-bumper">auto <a href="#a6c2ee8b474a4836e9d039ae1c54faf40" class="m-doc">load_prelude</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env) -&gt; <a href="structlval.html" class="m-doc">lval</a>*</span>
+            </dt>
+            <dd>Prelude Load ///.</dd>
+          </dl>
+        </section>
+        <section>
+          <h2>Function documentation</h2>
+          <section class="m-doc-details" id="aa015307bdb6ef1d958d0cbd9ed441f16"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#aa015307bdb6ef1d958d0cbd9ed441f16" class="m-doc-self">lval_num</a>(</span><span class="m-doc-wrap">long num)</span></span>
+            </h3>
+            <p><code>lval</code> Constructors ///</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">num</td>
+                  <td>- type: const long</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>lval*</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates an lval of type LVAL_NUM.</p><p>Creates an lval of type LVAL_NUM and sets the obj to the provided number <code>num</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="a11600155cb81c3bbb3a3acdfd413817d"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a11600155cb81c3bbb3a3acdfd413817d" class="m-doc-self">lval_err</a>(</span><span class="m-doc-wrap">const char* fmt,
+              ...)</span></span>
+            </h3>
+            <p>Creates an lval of type LVAL_ERR.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">fmt</td>
+                  <td>- type: char*</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>lval*</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates an lval of type LVAL_ERR and sets the obj to the provided error message l_arg.</p>
+          </div></section>
+          <section class="m-doc-details" id="a199dbd71ad80708bf00b0f31f00f7684"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a199dbd71ad80708bf00b0f31f00f7684" class="m-doc-self">lval_sym</a>(</span><span class="m-doc-wrap">const char* sym)</span></span>
+            </h3>
+            <p>Creates an lval of type LVAL_SYM.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">sym</td>
+                  <td>- type: char*</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>lval*</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates an lval of type LVAL_SYM and sets the obj to the provided symbol or operator l_arg.</p>
+          </div></section>
+          <section class="m-doc-details" id="a800a7fcd5406be620827357873d59973"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a800a7fcd5406be620827357873d59973" class="m-doc-self">lval_sexpr</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Creates an lval of type LVAL_SEXPR.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>lval*</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates an lval of type LVAL_SEXPR which is an empty S-Expression.</p>
+          </div></section>
+          <section class="m-doc-details" id="a30bb90dd5cb46179297e56b13c291949"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a30bb90dd5cb46179297e56b13c291949" class="m-doc-self">lval_qexpr</a>(</span><span class="m-doc-wrap">void)</span></span>
+            </h3>
+            <p>Creates an lval of type LVAL_QEXPR.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <tfoot>
+                <tr>
+                  <th style="width: 1%">Returns</th>
+                  <td>lval*</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Creates an lval of type LVAL_QEXPR which is an empty Q-Expression.</p>
+          </div></section>
+          <section class="m-doc-details" id="af300535095776dbfcd80c7018a08e006"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af300535095776dbfcd80c7018a08e006" class="m-doc-self">lval_fun</a>(</span><span class="m-doc-wrap"><a href="types_8h.html#a66eae9c3c4b41b143a332d4fdaf7aa4f" class="m-doc">lbuiltin</a> func)</span></span>
+            </h3>
+            <p>Constructs an lval of type LVAL_FUN.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">func</td>
+                  <td>- type: lbuiltin</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>lval*</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Constructs an lval of type LVAL_FUN and sets the obj to the provided builtin function <code>func</code>.</p>
+          </div></section>
+          <section class="m-doc-details" id="a9fe5a678b358fa1d23b9ba751ff22e28"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9fe5a678b358fa1d23b9ba751ff22e28" class="m-doc-self">lval_lambda</a>(</span><span class="m-doc-wrap"><a href="structlval.html" class="m-doc">lval</a>* formals,
+              <a href="structlval.html" class="m-doc">lval</a>* body)</span></span>
+            </h3>
+            <p>Constructs a lambda lval.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">formals</td>
+                  <td>- type: lval*</td>
+                </tr>
+                <tr>
+                  <td>body</td>
+                  <td>- type: lval*</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>lval*</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Constructs a lambda lval.</p>
+          </div></section>
+          <section class="m-doc-details" id="a9b6b859a55ae1c9a16e7668c7f8cbf48"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper">void </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a9b6b859a55ae1c9a16e7668c7f8cbf48" class="m-doc-self">lval_del</a>(</span><span class="m-doc-wrap"><a href="structlval.html" class="m-doc">lval</a>* obj)</span></span>
+            </h3>
+            <p><code>lval</code> Destructor ///</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">obj</td>
+                  <td>- type: lval*</td>
+                </tr>
+              </tbody>
+            </table>
+<p>Frees an lval.</p><p>Frees an lval and all of its children (if any) as well as any other allocated resources.</p>
+          </div></section>
+          <section class="m-doc-details" id="a4ac7867956ff8805f1e646735977d51f"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a4ac7867956ff8805f1e646735977d51f" class="m-doc-self">lval_add</a>(</span><span class="m-doc-wrap"><a href="structlval.html" class="m-doc">lval</a>* parent,
+              <a href="structlval.html" class="m-doc">lval</a>* child)</span></span>
+            </h3>
+            <p><code>lval</code> Methods ///</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">parent</td>
+                  <td>- type: lval*</td>
+                </tr>
+                <tr>
+                  <td>child</td>
+                  <td>- type: const lval*</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>lval*</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Adds the child l_arg to the parent <code>obj</code>.</p><p>Adds the child l_arg to the parent <code>obj</code>. Allocates memory to <code>obj</code>&#x27;s <code>cell</code> array and assigns l_arg to the last slot of the array.</p>
+          </div></section>
+          <section class="m-doc-details" id="af670d2706c6fe15ae90678759cb0e9c5"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#af670d2706c6fe15ae90678759cb0e9c5" class="m-doc-self">lval_copy</a>(</span><span class="m-doc-wrap">const <a href="structlval.html" class="m-doc">lval</a>* obj)</span></span>
+            </h3>
+            <p>Copies an lval.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">obj</td>
+                  <td>- type: lval*</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>lval*</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Copies an lval and all of its children (if any) as well as any other allocated resources.</p>
+          </div></section>
+          <section class="m-doc-details" id="a10db98f918f955ddba37b9257cf21c48"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a10db98f918f955ddba37b9257cf21c48" class="m-doc-self">lval_pop</a>(</span><span class="m-doc-wrap"><a href="structlval.html" class="m-doc">lval</a>* obj,
+              unsigned ith)</span></span>
+            </h3>
+            <p>Pops the ith element off of the lval <code>obj</code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">obj</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>ith</td>
+                  <td>- type: int</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>lval*</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Pops the ith element off of the lval <code>obj</code> and moves the receding elements up. Returns the popped element.</p>
+          </div></section>
+          <section class="m-doc-details" id="a0f670aace9ed096adf9317624cfaed77"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a0f670aace9ed096adf9317624cfaed77" class="m-doc-self">lval_take</a>(</span><span class="m-doc-wrap"><a href="structlval.html" class="m-doc">lval</a>* obj,
+              unsigned ith)</span></span>
+            </h3>
+            <p>Takes the ith element off of the lval <code>obj</code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">obj</td>
+                  <td>- type: lval*</td>
+                </tr>
+                <tr>
+                  <td>ith</td>
+                  <td>- type: int</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>lval*</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Takes the ith element off of the lval <code>obj</code> and discards all other objs. Returns the taken element.</p>
+          </div></section>
+          <section class="m-doc-details" id="a80fa71c4956895a3f11abf49f1211279"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a80fa71c4956895a3f11abf49f1211279" class="m-doc-self">lval_eval</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
+              <a href="structlval.html" class="m-doc">lval</a>* obj)</span></span>
+            </h3>
+            <p>Evaluates the lval <code>obj</code>.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">env</td>
+                  <td>- type: lenv*</td>
+                </tr>
+                <tr>
+                  <td>obj</td>
+                  <td>- type: lval*</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>lval*</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Evaluates the lval <code>obj</code>. Returns <code>obj</code> as-is it is not an S-Expression.</p>
+          </div></section>
+          <section class="m-doc-details" id="ab28ae54ec2b6893ace69318b6691b4ab"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#ab28ae54ec2b6893ace69318b6691b4ab" class="m-doc-self">lval_eval_sexpr</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env,
+              <a href="structlval.html" class="m-doc">lval</a>* sexpr)</span></span>
+            </h3>
+            <p>Evaluates the lval <code>obj</code> as an S-Expression.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">env</td>
+                  <td>- type: lenv*</td>
+                </tr>
+                <tr>
+                  <td>sexpr</td>
+                  <td>- type: lval*</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>lval*</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Evaluates the lval <code>obj</code> as an S-Expression. Returns <code>obj</code> as-is if it has no children or returns the child if it only has one child. Returns an error if the child does not start with a symbol.</p>
+          </div></section>
+          <section class="m-doc-details" id="a7ee112a15e8f408c7da9ae71b7ab1982"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a7ee112a15e8f408c7da9ae71b7ab1982" class="m-doc-self">lval_join</a>(</span><span class="m-doc-wrap"><a href="structlval.html" class="m-doc">lval</a>* l_arg,
+              <a href="structlval.html" class="m-doc">lval</a>* r_arg)</span></span>
+            </h3>
+            <p>Joins the Q-Expression r_arg to l_arg.</p>
+            <table class="m-table m-fullwidth m-flat">
+              <thead>
+                <tr><th colspan="2">Parameters</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="width: 1%">l_arg</td>
+                  <td>- type: lval*</td>
+                </tr>
+                <tr>
+                  <td>r_arg</td>
+                  <td>- type: lval*</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Returns</th>
+                  <td>lval*</td>
+                </tr>
+              </tfoot>
+            </table>
+<p>Joins the Q-Expression r_arg to l_arg by continually popping the first element off r_arg and adding it to l_arg. Returns l_arg.</p>
+          </div></section>
+          <section class="m-doc-details" id="a6c2ee8b474a4836e9d039ae1c54faf40"><div>
+            <h3>
+              <span class="m-doc-wrap-bumper"><a href="structlval.html" class="m-doc">lval</a>* </span><span class="m-doc-wrap"><span class="m-doc-wrap-bumper"><a href="#a6c2ee8b474a4836e9d039ae1c54faf40" class="m-doc-self">load_prelude</a>(</span><span class="m-doc-wrap"><a href="structlenv.html" class="m-doc">lenv</a>* env)</span></span>
+            </h3>
+            <p>Prelude Load ///.</p>
+<p>TODO</p>
+          </div></section>
+        </section>
+      </div>
+    </div>
+  </div>
+</article></main>
+<div class="m-doc-search" id="search">
+  <a href="#!" onclick="return hideSearch()"></a>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-m-8 m-push-m-2">
+        <div class="m-doc-search-header m-text m-small">
+          <div><span class="m-label m-default">Tab</span> / <span class="m-label m-default">T</span> to search, <span class="m-label m-default">Esc</span> to close</div>
+          <div id="search-symbolcount">&hellip;</div>
+        </div>
+        <div class="m-doc-search-content">
+          <form>
+            <input type="search" name="q" id="search-input" placeholder="Loading &hellip;" disabled="disabled" autofocus="autofocus" autocomplete="off" spellcheck="false" />
+          </form>
+          <noscript class="m-text m-danger m-text-center">Unlike everything else in the docs, the search functionality <em>requires</em> JavaScript.</noscript>
+          <div id="search-help" class="m-text m-dim m-text-center">
+            <p class="m-noindent">Search for symbols, directories, files, pages or
+            modules. You can omit any prefix from the symbol or file path; adding a
+            <code>:</code> or <code>/</code> suffix lists all members of given symbol or
+            directory.</p>
+            <p class="m-noindent">Use <span class="m-label m-dim">&darr;</span>
+            / <span class="m-label m-dim">&uarr;</span> to navigate through the list,
+            <span class="m-label m-dim">Enter</span> to go.
+            <span class="m-label m-dim">Tab</span> autocompletes common prefix, you can
+            copy a link to the result using <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">L</span> while <span class="m-label m-dim">⌘</span>
+            <span class="m-label m-dim">M</span> produces a Markdown link.</p>
+          </div>
+          <div id="search-notfound" class="m-text m-warning m-text-center">Sorry, nothing was found.</div>
+          <ul id="search-results"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="search-v1.js"></script>
+<script src="searchdata-v1.js" async="async"></script>
+<footer><nav>
+  <div class="m-container">
+    <div class="m-row">
+      <div class="m-col-l-10 m-push-l-1">
+        <p>lispy. Created with <a href="https://doxygen.org/">Doxygen</a> 1.9.1 and <a href="https://mcss.mosra.cz/">m.css</a>.</p>
+      </div>
+    </div>
+  </div>
+</nav></footer>
+</body>
+</html>
