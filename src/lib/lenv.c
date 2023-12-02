@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 ///////////////////////////
 /// `lenv` Constructors ///
 ///////////////////////////
@@ -23,15 +22,13 @@ lenv* lenv_new(void)
     return env;
 }
 
-
 //////////////////////////
 /// `lenv` Destructors ///
 //////////////////////////
 
 void lenv_del(lenv* env)
 {
-    for (unsigned i = 0; i < env->count; i++)
-    {
+    for (unsigned i = 0; i < env->count; i++) {
         free(env->syms[i]);
         lval_del(env->vals[i]);
     }
@@ -43,32 +40,29 @@ void lenv_del(lenv* env)
     free(env);
 }
 
-
 //////////////////////
 /// `lenv` Methods ///
 //////////////////////
 
 lval* lenv_get(lenv* env, const lval* key)
 {
-    for (unsigned i = 0; i < env->count; i++){
-        if (strcmp(env->syms[i], key->sym) == 0){
+    for (unsigned i = 0; i < env->count; i++) {
+        if (strcmp(env->syms[i], key->sym) == 0) {
             return lval_copy(env->vals[i]);
         }
     }
-    
-    if (env->par){
+
+    if (env->par) {
         return lenv_get(env->par, key);
     }
-    
+
     return lval_err("Unbound symbol '%s'", key->sym);
 }
 
-
 void lenv_put(lenv* env, const lval* key, lval* value)
 {
-    for (unsigned i = 0; i < env->count; i++){
-        if (strcmp(env->syms[i], key->sym) == 0)
-        {
+    for (unsigned i = 0; i < env->count; i++) {
+        if (strcmp(env->syms[i], key->sym) == 0) {
             lval_del(env->vals[i]);
             env->vals[i] = lval_copy(value);
             return;
@@ -81,7 +75,7 @@ void lenv_put(lenv* env, const lval* key, lval* value)
 
     env->vals[env->count - 1] = lval_copy(value);
     env->syms[env->count - 1] = malloc(strlen(key->sym) + 1);
-    strcpy(env->syms[env->count - 1], key->sym);  // NOLINT(clang-analyzer-security.insecureAPI.strcpy)
+    strcpy(env->syms[env->count - 1], key->sym); // NOLINT(clang-analyzer-security.insecureAPI.strcpy)
 }
 
 lenv* lenv_copy(const lenv* env)
@@ -93,16 +87,14 @@ lenv* lenv_copy(const lenv* env)
     nenv->syms = malloc(sizeof(char*) * nenv->count);
     nenv->vals = malloc(sizeof(lval*) * nenv->count);
 
-    for (unsigned i = 0; i < env->count; i++) 
-    {
+    for (unsigned i = 0; i < env->count; i++) {
         nenv->syms[i] = malloc(strlen(env->syms[i]) + 1);
         strcpy(nenv->syms[i], env->syms[i]); // NOLINT(clang-analyzer-security.insecureAPI.strcpy)
         nenv->vals[i] = lval_copy(env->vals[i]);
     }
-    
+
     return nenv;
 }
-
 
 void lenv_def(lenv* env, const lval* key, lval* value)
 {
@@ -113,7 +105,6 @@ void lenv_def(lenv* env, const lval* key, lval* value)
     lenv_put(env, key, value);
 }
 
-
 void lenv_add_builtin(lenv* env, const char* name, lbuiltin func)
 {
     lval* key = lval_sym(name);
@@ -123,18 +114,17 @@ void lenv_add_builtin(lenv* env, const char* name, lbuiltin func)
     lval_del(value);
 }
 
-
 void lenv_add_builtins(lenv* env)
 {
-    lenv_add_builtin(env, "load", builtin_load);    
-    lenv_add_builtin(env, "print", builtin_print);    
+    lenv_add_builtin(env, "load", builtin_load);
+    lenv_add_builtin(env, "print", builtin_print);
     // lenv_add_builtin(env, "input", builtin_);
     lenv_add_builtin(env, "error", builtin_error);
 
     lenv_add_builtin(env, "\\", builtin_lambda);
     lenv_add_builtin(env, "def", builtin_def);
     lenv_add_builtin(env, "=", builtin_put);
-  
+
     lenv_add_builtin(env, "list", builtin_list);
     lenv_add_builtin(env, "head", builtin_head);
     lenv_add_builtin(env, "tail", builtin_tail);

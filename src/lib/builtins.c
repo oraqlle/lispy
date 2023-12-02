@@ -14,27 +14,27 @@
 
 lval* builtin(lenv* env, lval* arg, const char* func)
 {
-    if (strcmp(func, "list") == 0){
+    if (strcmp(func, "list") == 0) {
         return builtin_list(env, arg);
     }
 
-    if (strcmp(func, "head") == 0){
+    if (strcmp(func, "head") == 0) {
         return builtin_head(env, arg);
     }
 
-    if (strcmp(func, "tail") == 0){
+    if (strcmp(func, "tail") == 0) {
         return builtin_tail(env, arg);
     }
 
-    if (strcmp(func, "eval") == 0){
+    if (strcmp(func, "eval") == 0) {
         return builtin_eval(env, arg);
     }
 
-    if (strcmp(func, "join") == 0){
+    if (strcmp(func, "join") == 0) {
         return builtin_join(env, arg);
     }
 
-    if (strstr("+-*/", func)){
+    if (strstr("+-*/", func)) {
         return builtin_op(env, arg, func);
     }
 
@@ -42,25 +42,23 @@ lval* builtin(lenv* env, lval* arg, const char* func)
     return lval_err("Unknown function!");
 }
 
-
 /////////////////////////
 /// Builtin Operators ///
 /////////////////////////
 
 lval* builtin_op(lenv* env, lval* arg, const char* operand)
 {
-    for (unsigned i = 0; i < arg->count; i++){
+    for (unsigned i = 0; i < arg->count; i++) {
         LASSERT_TYPE(operand, arg, i, LVAL_NUM)
     }
 
     lval* l_expr = lval_pop(arg, 0);
 
-    if ((strcmp(operand, "-") == 0) && arg->count == 0){
+    if ((strcmp(operand, "-") == 0) && arg->count == 0) {
         l_expr->num = -l_expr->num;
     }
 
-    while (arg->count > 0)
-    {
+    while (arg->count > 0) {
         lval* r_expr = lval_pop(arg, 0);
 
         if (strcmp(operand, "+") == 0) {
@@ -75,10 +73,8 @@ lval* builtin_op(lenv* env, lval* arg, const char* operand)
             l_expr->num *= r_expr->num;
         }
 
-        if (strcmp(operand, "/") == 0)
-        {
-            if (r_expr->num == 0)
-            {
+        if (strcmp(operand, "/") == 0) {
+            if (r_expr->num == 0) {
                 lval_del(l_expr);
                 lval_del(r_expr);
                 l_expr = lval_err("Division by zero!");
@@ -95,34 +91,29 @@ lval* builtin_op(lenv* env, lval* arg, const char* operand)
     return l_expr;
 }
 
-
 ////////////////////////////////////
 /// Builtin Arithmetic Operators ///
 ////////////////////////////////////
 
 lval* builtin_add(lenv* env, lval* arg)
-{ 
-    return builtin_op(env, arg, "+"); 
+{
+    return builtin_op(env, arg, "+");
 }
-
 
 lval* builtin_sub(lenv* env, lval* arg)
-{ 
-    return builtin_op(env, arg, "-"); 
+{
+    return builtin_op(env, arg, "-");
 }
-
 
 lval* builtin_mul(lenv* env, lval* arg)
-{ 
-    return builtin_op(env, arg, "*"); 
+{
+    return builtin_op(env, arg, "*");
 }
-
 
 lval* builtin_div(lenv* env, lval* arg)
-{ 
-    return builtin_op(env, arg, "/"); 
+{
+    return builtin_op(env, arg, "/");
 }
-
 
 //////////////////////////////
 /// Builtin List Operators ///
@@ -143,25 +134,22 @@ lval* builtin_head(lenv* env, lval* arg)
     return taken;
 }
 
-
 lval* builtin_tail(lenv* env, lval* arg)
 {
     LASSERT_NUM("tail", arg, 1)
     LASSERT_TYPE("tail", arg, 0, LVAL_QEXPR)
     LASSERT_NOT_EMPTY("tail", arg, 0)
-    
+
     lval* taken = lval_take(arg, 0);
     lval_del(lval_pop(taken, 0));
     return taken;
 }
-
 
 lval* builtin_list(lenv* env, lval* arg)
 {
     arg->type = LVAL_QEXPR;
     return arg;
 }
-
 
 lval* builtin_eval(lenv* env, lval* arg)
 {
@@ -173,25 +161,22 @@ lval* builtin_eval(lenv* env, lval* arg)
     return lval_eval(env, taken);
 }
 
-
 lval* builtin_join(lenv* env, lval* arg)
 {
     for (unsigned i = 0; i < arg->count; i++) {
-    LASSERT_TYPE("join", arg, i, LVAL_QEXPR)
+        LASSERT_TYPE("join", arg, i, LVAL_QEXPR)
     }
-    
+
     lval* l_arg = lval_pop(arg, 0);
-    
-    while (arg->count)
-    {
+
+    while (arg->count) {
         lval* r_arg = lval_pop(arg, 0);
         l_arg = lval_join(l_arg, r_arg);
     }
-    
+
     lval_del(arg);
     return l_arg;
 }
-
 
 //////////////////////////////////
 /// Builtin Function Operators ///
@@ -202,12 +187,10 @@ lval* builtin_def(lenv* env, lval* arg)
     return builtin_var(env, arg, "def");
 }
 
-
 lval* builtin_put(lenv* env, lval* arg)
 {
     return builtin_var(env, arg, "=");
 }
-
 
 lval* builtin_var(lenv* env, lval* arg, const char* func)
 {
@@ -217,18 +200,19 @@ lval* builtin_var(lenv* env, lval* arg, const char* func)
 
     for (unsigned i = 0; i < syms->count; ++i) {
         LASSERT(arg, (syms->cell[i]->type == LVAL_SYM),
-                "Function '%s' cannot define non-symbol. "
-                "Got %s, Expected %s.", func,
-                ltype_name(syms->cell[i]->type),
-                ltype_name(LVAL_SYM))
+            "Function '%s' cannot define non-symbol. "
+            "Got %s, Expected %s.",
+            func,
+            ltype_name(syms->cell[i]->type),
+            ltype_name(LVAL_SYM))
     }
 
     LASSERT(arg, (syms->count == arg->count - 1),
-            "Function %s passed too many arguments for symbols. "
-            "Got %i, Expected %i.", func, syms->count, arg->count - 1)
+        "Function %s passed too many arguments for symbols. "
+        "Got %i, Expected %i.",
+        func, syms->count, arg->count - 1)
 
-    for (unsigned i = 0; i < syms->count; ++i)
-    {
+    for (unsigned i = 0; i < syms->count; ++i) {
         if (strcmp(func, "def") == 0) {
             lenv_def(env, syms->cell[i], arg->cell[i + 1]);
         }
@@ -242,7 +226,6 @@ lval* builtin_var(lenv* env, lval* arg, const char* func)
     return lval_sexpr();
 }
 
-
 lval* builtin_lambda(lenv* env, lval* arg)
 {
     LASSERT_NUM("\\", arg, 2)
@@ -251,8 +234,8 @@ lval* builtin_lambda(lenv* env, lval* arg)
 
     for (unsigned i = 0; i < arg->cell[0]->count; i++) {
         LASSERT(arg, (arg->cell[0]->cell[i]->type == LVAL_SYM),
-                "Cannot define non-symbol. Got %s, Expected %s.",
-                ltype_name(arg->cell[0]->cell[i]->type), ltype_name(LVAL_SYM))
+            "Cannot define non-symbol. Got %s, Expected %s.",
+            ltype_name(arg->cell[0]->cell[i]->type), ltype_name(LVAL_SYM))
     }
 
     lval* formals = lval_pop(arg, 0);
@@ -260,7 +243,6 @@ lval* builtin_lambda(lenv* env, lval* arg)
     lval_del(arg);
     return lval_lambda(formals, body);
 }
-
 
 //////////////////////////
 /// Ordering Operators ///
@@ -294,18 +276,15 @@ lval* builtin_ord(lenv* env, lval* arg, const char* operand)
     return lval_num(rint);
 }
 
-
 lval* builtin_gt(lenv* env, lval* arg)
 {
     return builtin_ord(env, arg, ">");
 }
 
-
 lval* builtin_lt(lenv* env, lval* arg)
 {
     return builtin_ord(env, arg, "<");
 }
-
 
 lval* builtin_ge(lenv* env, lval* arg)
 {
@@ -317,7 +296,6 @@ lval* builtin_le(lenv* env, lval* arg)
     return builtin_ord(env, arg, "<=");
 }
 
-
 //////////////////////////
 /// Equality Operators ///
 //////////////////////////
@@ -328,7 +306,7 @@ lval* builtin_cmp(lenv* env, lval* arg, const char* operand)
 
     int result = 0;
 
-    if (strcmp(operand, "==") == 0){ 
+    if (strcmp(operand, "==") == 0) {
         result = lval_eq(arg->cell[0], arg->cell[1]);
     }
 
@@ -340,18 +318,15 @@ lval* builtin_cmp(lenv* env, lval* arg, const char* operand)
     return lval_num(result);
 }
 
-
 lval* builtin_eq(lenv* env, lval* arg)
 {
     return builtin_cmp(env, arg, "==");
 }
 
-
 lval* builtin_ne(lenv* env, lval* arg)
 {
     return builtin_cmp(env, arg, "!=");
 }
-
 
 ////////////////////////////
 /// Comparison Functions ///
@@ -380,7 +355,6 @@ lval* builtin_if(lenv* env, lval* arg)
     return evald_expr;
 }
 
-
 ////////////////////////////
 /// Builtin IO functions ///
 ////////////////////////////
@@ -392,8 +366,7 @@ lval* builtin_load(lenv* env, lval* arg)
 
     FILE* file = fopen(arg->cell[0]->str, "rb");
 
-    if (file == NULL)
-    {
+    if (file == NULL) {
         lval* err = lval_err("Could not load library %s", arg->cell[0]->str);
         lval_del(arg);
         return err;
@@ -410,17 +383,16 @@ lval* builtin_load(lenv* env, lval* arg)
     lval* expr = lval_read_expr(input, &pos, '\0');
     free(input);
 
-    if (expr->type != LVAL_ERR){
-        while (expr->count)
-        {
+    if (expr->type != LVAL_ERR) {
+        while (expr->count) {
             lval* evald_expr = lval_eval(env, lval_pop(expr, 0));
-            if (evald_expr->type == LVAL_ERR){
+            if (evald_expr->type == LVAL_ERR) {
                 lval_println(evald_expr);
             }
-            
+
             lval_del(evald_expr);
         }
-    }    else{
+    } else {
         lval_println(expr);
     }
 
@@ -430,11 +402,9 @@ lval* builtin_load(lenv* env, lval* arg)
     return lval_sexpr();
 }
 
-
 lval* builtin_print(lenv* env, lval* arg)
 {
-    for (unsigned i = 0; i < arg->count; ++i)
-    {
+    for (unsigned i = 0; i < arg->count; ++i) {
         lval_print(arg->cell[i]);
         putchar(' ');
     }
@@ -445,10 +415,8 @@ lval* builtin_print(lenv* env, lval* arg)
     return lval_sexpr();
 }
 
-
 /// TODO
 // lval* builtin_input(lenv* env, lval* arg);
-
 
 lval* builtin_error(lenv* env, lval* arg)
 {

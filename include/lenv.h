@@ -7,7 +7,6 @@
 
 #include <stdlib.h>
 
-
 ///////////////////////////
 /// `lenv` Constructors ///
 ///////////////////////////
@@ -18,7 +17,6 @@
 ///
 /// @return lenv*
 lenv* lenv_new(void);
-
 
 //////////////////////////
 /// `lenv` Destructors ///
@@ -32,15 +30,14 @@ lenv* lenv_new(void);
 /// @param e - type: lenv*
 void lenv_del(lenv* env);
 
-
 //////////////////////
 /// `lenv` Methods ///
 //////////////////////
 
 /// @brief Gets an lval from an lenv.
-/// 
-/// @details Returns a copy of the lval 
-/// `k` from the lenv `env` if it exists 
+///
+/// @details Returns a copy of the lval
+/// `k` from the lenv `env` if it exists
 /// otherwise returns an error.
 ///
 /// @param e - type: lenv*
@@ -48,15 +45,13 @@ void lenv_del(lenv* env);
 /// @return lval*
 lval* lenv_get(lenv* env, const lval* key);
 
-
 /// TODO
 lenv* lenv_copy(const lenv* env);
-
 
 /// @brief Sets an lval in an lenv.
 ///
 /// @details Sets an lval in an lenv.
-/// Replaces any existing entry with 
+/// Replaces any existing entry with
 /// the same key.
 ///
 /// @param e - type: lenv*
@@ -64,10 +59,8 @@ lenv* lenv_copy(const lenv* env);
 /// @param v - type: lval*
 void lenv_put(lenv* env, const lval* key, lval* value);
 
-
 /// TODO
 void lenv_def(lenv* env, const lval* key, lval* value);
-
 
 /// @brief Adds a builtin function to the environment.
 ///
@@ -79,7 +72,6 @@ void lenv_def(lenv* env, const lval* key, lval* value);
 /// @param f - type: lbuiltin
 void lenv_add_builtin(lenv* env, const char* name, lbuiltin func);
 
-
 /// @brief Adds all the builtin functions to the environment.
 ///
 /// @details Adds all the builtin functions to the environment.
@@ -87,5 +79,4 @@ void lenv_add_builtin(lenv* env, const char* name, lbuiltin func);
 /// @param e - type: lenv*
 void lenv_add_builtins(lenv* env);
 
-
-#endif  /// LISPY_LENV_H
+#endif /// LISPY_LENV_H

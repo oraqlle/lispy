@@ -12,4 +12,4 @@
 /// @return char*
 const char* ltype_name(int type_id);
 
-#endif  /// LISPY_UTILITIES_H
+#endif /// LISPY_UTILITIES_H

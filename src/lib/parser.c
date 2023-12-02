@@ -7,16 +7,14 @@ lval* lval_read_expr(const char* str, int* idx, char end)
 {
     lval* rexpr = (end == '}') ? lval_qexpr() : lval_sexpr();
 
-    while (str[*idx] != end)
-    {
+    while (str[*idx] != end) {
         lval* rval = lval_read(str, idx);
 
-        if (rval->type == LVAL_ERR)
-        {
+        if (rval->type == LVAL_ERR) {
             lval_del(rexpr);
             return rval;
         }
-        
+
         lval_add(rexpr, rval);
     }
 
@@ -25,11 +23,9 @@ lval* lval_read_expr(const char* str, int* idx, char end)
     return rexpr;
 }
 
-
 lval* lval_read(const char* str, int* idx)
 {
-    while (strchr(" \t\v\r\n;", str[*idx]) && str[*idx] != '\0')
-    {
+    while (strchr(" \t\v\r\n;", str[*idx]) && str[*idx] != '\0') {
         if (str[*idx] == ';') {
             while (str[*idx] != '\n' && str[*idx] != '\0') {
                 (*idx)++;
@@ -41,35 +37,31 @@ lval* lval_read(const char* str, int* idx)
 
     lval* rexpr = NULL;
 
-    if (str[*idx] == '\0'){
+    if (str[*idx] == '\0') {
         return lval_err("Unexpected end of input");
     }
-    
-    if (str[*idx] == '(')
-    {
+
+    if (str[*idx] == '(') {
         (*idx)++;
         rexpr = lval_read_expr(str, idx, ')');
-    }
-    else if (str[*idx] == '{')
-    {
+    } else if (str[*idx] == '{') {
         (*idx)++;
         rexpr = lval_read_expr(str, idx, '}');
-    }
-    else if (strchr(
-             "abcdefghijklmnopqrstuvwxyz"
-             "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-             "0123456789_+-*\\/=<>!&", str[*idx])){
+    } else if (strchr(
+                   "abcdefghijklmnopqrstuvwxyz"
+                   "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                   "0123456789_+-*\\/=<>!&",
+                   str[*idx])) {
         rexpr = lval_read_sym(str, idx);
-             }else if (strchr("\"", str[*idx])){
+    } else if (strchr("\"", str[*idx])) {
         rexpr = lval_read_str(str, idx);
-             }else{
+    } else {
         rexpr = lval_err("Unexpected character %c", str[*idx]);
-             }
+    }
 
-    while (strchr(" \t\v\r\n", str[*idx]) && str[*idx] != '\0')
-    {
-        if (str[*idx] == ';'){
-            while (str[*idx] != '\n' && str[*idx] != '\0'){
+    while (strchr(" \t\v\r\n", str[*idx]) && str[*idx] != '\0') {
+        if (str[*idx] == ';') {
+            while (str[*idx] != '\n' && str[*idx] != '\0') {
                 (*idx)++;
             }
         }
@@ -80,31 +72,26 @@ lval* lval_read(const char* str, int* idx)
     return rexpr;
 }
 
-
 lval* lval_read_str(const char* str, int* idx)
 {
     char* part = calloc(1, 1);
 
     (*idx)++;
 
-    while (str[*idx] != '"')
-    {
+    while (str[*idx] != '"') {
         char chr = str[*idx];
 
-        if (chr == '\0')
-        {
+        if (chr == '\0') {
             free(part);
             return lval_err("Unexpected end of input");
         }
 
-        if (chr == '\\')
-        {
+        if (chr == '\\') {
             (*idx)++;
 
-            if (strchr("abfnrtv\\\'\"", str[*idx])){
+            if (strchr("abfnrtv\\\'\"", str[*idx])) {
                 chr = lval_str_unescape(str[*idx]);
-            } else
-            {
+            } else {
                 free(part);
                 return lval_err("Invalid escape sequence \\%c", str[*idx]);
             }
@@ -112,10 +99,10 @@ lval* lval_read_str(const char* str, int* idx)
 
         char* old_part = part;
         part = realloc(part, strlen(part) + 2);
-        
+
         if (!part) {
             free(old_part);
-            exit(1);  // NOLINT(concurrency-mt-unsafe)
+            exit(1); // NOLINT(concurrency-mt-unsafe)
         }
 
         part[strlen(part) + 1] = '\0';
@@ -132,22 +119,22 @@ lval* lval_read_str(const char* str, int* idx)
     return rexpr;
 }
 
-
 lval* lval_read_sym(const char* str, int* idx)
 {
     char* part = calloc(1, 1);
 
     while (strchr(
-           "abcdefghijklmnopqrstuvwxyz"
-           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-           "0123456789_+-*\\/=<>!&", str[*idx]) && str[*idx] != '\0')
-    {
+               "abcdefghijklmnopqrstuvwxyz"
+               "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+               "0123456789_+-*\\/=<>!&",
+               str[*idx])
+        && str[*idx] != '\0') {
         char* old_part = part;
         part = realloc(part, strlen(part) + 2);
-        
+
         if (!part) {
             free(old_part);
-            exit(1);  // NOLINT(concurrency-mt-unsafe)
+            exit(1); // NOLINT(concurrency-mt-unsafe)
         }
 
         part[strlen(part) + 1] = '\0';
@@ -158,26 +145,23 @@ lval* lval_read_sym(const char* str, int* idx)
     int is_num = strchr("-0123456789", part[0]) != NULL;
 
     for (size_t j = 1; j < strlen(part); j++) {
-        if (strchr("0123456789", part[j]) == NULL)
-        {
+        if (strchr("0123456789", part[j]) == NULL) {
             is_num = 0;
             break;
         }
     }
 
-    if (strlen(part) == 1 && part[0] == '-'){
+    if (strlen(part) == 1 && part[0] == '-') {
         is_num = 0;
     }
 
     lval* rexpr = NULL;
 
-    if (is_num)
-    {
+    if (is_num) {
         errno = 0;
-        long num = strtol(part, NULL, 10);  // NOLINT(readability-magic-numbers)
+        long num = strtol(part, NULL, 10); // NOLINT(readability-magic-numbers)
         rexpr = (errno != ERANGE) ? lval_num(num) : lval_err("Invalid Number %s", part);
-    }
-    else{
+    } else {
         rexpr = lval_sym(part);
     }
 
@@ -186,62 +170,58 @@ lval* lval_read_sym(const char* str, int* idx)
     return rexpr;
 }
 
-
-char lval_str_unescape(char chr) 
+char lval_str_unescape(char chr)
 {
-    switch (chr) 
-    {
-        case 'a':
-            return '\a';
-        case 'b':
-            return '\b';
-        case 'f':
-            return '\f';
-        case 'n':
-            return '\n';
-        case 'r':
-            return '\r';
-        case 't':
-            return '\t';
-        case 'v':
-            return '\v';
-        case '\\':
-            return '\\';
-        case '\'':
-            return '\'';
-        case '\"':
-            return '\"';
-        default:
-            return '\0';
+    switch (chr) {
+    case 'a':
+        return '\a';
+    case 'b':
+        return '\b';
+    case 'f':
+        return '\f';
+    case 'n':
+        return '\n';
+    case 'r':
+        return '\r';
+    case 't':
+        return '\t';
+    case 'v':
+        return '\v';
+    case '\\':
+        return '\\';
+    case '\'':
+        return '\'';
+    case '\"':
+        return '\"';
+    default:
+        return '\0';
     }
 }
 
-
 const char* lval_str_escape(char chr)
 {
-    switch (chr) 
-    {
-        case '\a':
-            return "\\a";
-        case '\b':
-            return "\\b";
-        case '\f':
-            return "\\f";
-        case '\n':
-            return "\\n";
-        case '\r':
-            return "\\r";
-        case '\t':
-            return "\\t";
-        case '\v':
-            return "\\v";
-        case '\\':
-            return "\\\\";
-        case '\'':
-            return "\\\'";
-        case '\"':
-            return "\\\"";
-        default:
-            return "";
+    switch (chr) {
+    case '\a':
+        return "\\a";
+    case '\b':
+        return "\\b";
+    case '\f':
+        return "\\f";
+    case '\n':
+        return "\\n";
+    case '\r':
+        return "\\r";
+    case '\t':
+        return "\\t";
+    case '\v':
+        return "\\v";
+    case '\\':
+        return "\\\\";
+    case '\'':
+        return "\\\'";
+    case '\"':
+        return "\\\"";
+    default:
+        return "";
     }
 }
