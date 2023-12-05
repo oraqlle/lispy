@@ -50,6 +50,7 @@ codespell >= 2.2.4
 
 # Docs
 doxygen
+python >= 3.6
 jinja2
 Pygments
 ```
@@ -93,6 +94,25 @@ cmake --build --preset=dev -t test
 
 > [!NOTE]
 > I haven't really written any tests yet.
+
+## Installing
+
+If you wish to install the interpreter run the above build commands followed this command:
+
+```sh
+cmake --install build/dev --prefix="path/to/install/location"
+```
+
+> [!NOTE]
+> You can omit the `--prefix=` flag to install to the default location however this may require sudo/admin access.
+
+> [!WARNING]
+> This will install the debug/dev configuration of the interpreter. You can build one of the ci-<platform> presets to generate a release build configuration and run:
+>
+> ```sh
+> cmake --build build/ci-<platform>
+> cmake --install build/ci-<platform> --prefix="path/to/install/location"
+>```
 
 ## Credit
 

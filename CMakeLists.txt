@@ -44,7 +44,7 @@ find_package(replxx CONFIG REQUIRED)
 add_executable(lispy_interpreter src/bin/lispy.c)
 add_executable(lispy_interpreter::exe ALIAS lispy_interpreter)
 
-set_property(TARGET lispy_interpreter PROPERTY OUTPUT_NAME lispy_interpreter)
+set_property(TARGET lispy_interpreter PROPERTY OUTPUT_NAME lispy)
 
 target_compile_features(lispy_interpreter PRIVATE c_std_11)
 
@@ -54,18 +54,25 @@ target_link_libraries(lispy_interpreter PRIVATE replxx::replxx)
 # ---- Install rules ----
 
 if(NOT CMAKE_SKIP_INSTALL_RULES)
-  include(cmake/install-rules.cmake)
+    include(cmake/install-rules.cmake)
+
+    add_custom_command(
+        TARGET lispy_interpreter POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            ${CMAKE_CURRENT_SOURCE_DIR}/stdlib/prelude.lpy
+            $ENV{HOME}/.lispy/stdlib/prelude.lpy   
+    )
 endif()
 
 # ---- Developer mode ----
 
 if(NOT lispy_interpreter_DEVELOPER_MODE)
-  return()
+    return()
 elseif(NOT PROJECT_IS_TOP_LEVEL)
-  message(
-      AUTHOR_WARNING
-      "Developer mode is intended for developers of the Lispy interpreter"
-  )
+    message(
+        AUTHOR_WARNING
+        "Developer mode is intended for developers of the Lispy interpreter"
+    )
 endif()
 
 include(cmake/dev-mode.cmake)
